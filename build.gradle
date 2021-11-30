@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+sourceCompatibility = 1.16
+targetCompatibility = 1.16
+
+group 'honeyroasted.cello'
+version '0.0.0'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation("org.ow2.asm:asm:9.2",
+            "org.ow2.asm:asm-commons:9.2",
+            "com.github.HoneyRoasted:JavaType:1.0.1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1",
+            "org.ow2.asm:asm-util:9.2")
+}
+
+task ghpagesJavadocs(type: Javadoc) {
+    destinationDir = file("/docs")
+
+    source = sourceSets.main.allJava
+    classpath = configurations.runtimeClasspath
+}
+
+task fatJar(type: Jar) {
+    from configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    with jar
+
+    exclude("**/module-info.class")
+
+    classifier("fat")
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+
+    classifier("javadoc")
+}
+
+artifacts {
+    archives javadocJar, fatJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = rootProject.name
+
+            from components.java
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
