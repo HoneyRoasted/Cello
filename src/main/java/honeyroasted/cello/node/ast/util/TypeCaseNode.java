@@ -1,7 +1,9 @@
-package honeyroasted.cello.node.ast;
+package honeyroasted.cello.node.ast.util;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.Scope;
+import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.node.ast.CodeNode;
+import honeyroasted.cello.node.ast.TypedNode;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.informal.TypeInformal;
@@ -30,17 +32,17 @@ public class TypeCaseNode extends AbstractPropertyHolder implements TypedNode {
     private TypedNode chosen;
 
     @Override
-    public Verification<CodeNode> typeCheck(Environment environment, Scope scope) {
+    public Verification<CodeNode> verify(Environment environment, LocalScope localScope) {
         Verification.Builder<CodeNode> builder = Verification.builder();
 
         for (Map.Entry<Supplier<Boolean>, TypedNode> entry : this.cases.entrySet()) {
             Supplier<Boolean> test = entry.getKey();
             TypedNode node = entry.getValue();
 
-            Verification<CodeNode> typeCheck = node.typeCheck(environment, scope.copy());
+            Verification<CodeNode> typeCheck = node.verify(environment, localScope.copy());
             builder.child(typeCheck);
             if (typeCheck.success() && test.get()) {
-                node.typeCheck(environment, scope);
+                node.verify(environment, localScope);
                 this.chosen = node;
                 return builder.orChildren().value(this).build();
             }
@@ -50,8 +52,8 @@ public class TypeCaseNode extends AbstractPropertyHolder implements TypedNode {
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, Scope scope) {
-        this.chosen.apply(adapter, environment, scope);
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+        this.chosen.apply(adapter, environment, localScope);
     }
 
     @Override

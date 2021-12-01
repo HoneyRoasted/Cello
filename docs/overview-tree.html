@@ -53,9 +53,13 @@ loadScripts(document, 'script');</script>
 <h1 class="title">Hierarchy For All Packages</h1>
 <span class="package-hierarchy-label">Package Hierarchies:</span>
 <ul class="horizontal">
+<li><a href="honeyroasted/cello/package-tree.html">honeyroasted.cello</a>, </li>
 <li><a href="honeyroasted/cello/environment/package-tree.html">honeyroasted.cello.environment</a>, </li>
 <li><a href="honeyroasted/cello/node/package-tree.html">honeyroasted.cello.node</a>, </li>
 <li><a href="honeyroasted/cello/node/ast/package-tree.html">honeyroasted.cello.node.ast</a>, </li>
+<li><a href="honeyroasted/cello/node/ast/instruction/package-tree.html">honeyroasted.cello.node.ast.instruction</a>, </li>
+<li><a href="honeyroasted/cello/node/ast/util/package-tree.html">honeyroasted.cello.node.ast.util</a>, </li>
+<li><a href="honeyroasted/cello/node/verify/package-tree.html">honeyroasted.cello.node.verify</a>, </li>
 <li><a href="honeyroasted/cello/properties/package-tree.html">honeyroasted.cello.properties</a></li>
 </ul>
 </div>
@@ -64,9 +68,22 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">Object</span></a>
 <ul>
-<li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/AbstractPropertyHolder.html" title="class in honeyroasted.cello.properties"><span class="type-name-link">AbstractPropertyHolder</span></a> (implements honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a>)</li>
+<li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/AbstractPropertyHolder.html" title="class in honeyroasted.cello.properties"><span class="type-name-link">AbstractPropertyHolder</span></a> (implements honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a>)
+<ul>
+<li class="circle">honeyroasted.cello.node.ast.util.<a href="honeyroasted/cello/node/ast/util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util"><span class="type-name-link">AlternativeProcessNode</span></a>&lt;T&gt; (implements honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/CodeNode.html" title="interface in honeyroasted.cello.node.ast">CodeNode</a>&lt;T&gt;)</li>
+<li class="circle">honeyroasted.cello.node.ast.instruction.<a href="honeyroasted/cello/node/ast/instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction"><span class="type-name-link">LocalGet</span></a> (implements honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/TypedNode.html" title="interface in honeyroasted.cello.node.ast">TypedNode</a>&lt;T&gt;)</li>
+<li class="circle">honeyroasted.cello.node.ast.instruction.<a href="honeyroasted/cello/node/ast/instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction"><span class="type-name-link">LocalSet</span></a> (implements honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/TypedNode.html" title="interface in honeyroasted.cello.node.ast">TypedNode</a>&lt;T&gt;)</li>
+<li class="circle">honeyroasted.cello.node.ast.util.<a href="honeyroasted/cello/node/ast/util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util"><span class="type-name-link">TypeCaseNode</span></a> (implements honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/TypedNode.html" title="interface in honeyroasted.cello.node.ast">TypedNode</a>&lt;T&gt;)</li>
+<li class="circle">honeyroasted.cello.node.ast.util.<a href="honeyroasted/cello/node/ast/util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util"><span class="type-name-link">UntypedNode</span></a> (implements honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/CodeNode.html" title="interface in honeyroasted.cello.node.ast">CodeNode</a>&lt;T&gt;)</li>
+</ul>
+</li>
+<li class="circle">honeyroasted.cello.node.ast.instruction.<a href="honeyroasted/cello/node/ast/instruction/LocalDefine.html" title="class in honeyroasted.cello.node.ast.instruction"><span class="type-name-link">LocalDefine</span></a></li>
+<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/LocalScope.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">LocalScope</span></a></li>
 <li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/Properties.html" title="class in honeyroasted.cello.properties"><span class="type-name-link">Properties</span></a></li>
-<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Scope.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">Scope</span></a></li>
+<li class="circle">honeyroasted.cello.node.ast.util.<a href="honeyroasted/cello/node/ast/util/TypeCaseNode.Builder.html" title="class in honeyroasted.cello.node.ast.util"><span class="type-name-link">TypeCaseNode.Builder</span></a></li>
+<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Var.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">Var</span></a></li>
+<li class="circle">honeyroasted.cello.node.verify.<a href="honeyroasted/cello/node/verify/Verification.html" title="class in honeyroasted.cello.node.verify"><span class="type-name-link">Verification</span></a>&lt;T&gt;</li>
+<li class="circle">honeyroasted.cello.node.verify.<a href="honeyroasted/cello/node/verify/Verification.Builder.html" title="class in honeyroasted.cello.node.verify"><span class="type-name-link">Verification.Builder</span></a>&lt;T&gt;</li>
 </ul>
 </li>
 </ul>
@@ -75,22 +92,41 @@ loadScripts(document, 'script');</script>
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
 <li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Environment.html" title="interface in honeyroasted.cello.environment"><span class="type-name-link">Environment</span></a></li>
+<li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties"><span class="type-name-link">PropertyHolder</span></a>
+<ul>
 <li class="circle">honeyroasted.cello.node.<a href="honeyroasted/cello/node/Node.html" title="interface in honeyroasted.cello.node"><span class="type-name-link">Node</span></a>
 <ul>
-<li class="circle">honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/CodeNode.html" title="interface in honeyroasted.cello.node.ast"><span class="type-name-link">CodeNode</span></a>
+<li class="circle">honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/CodeNode.html" title="interface in honeyroasted.cello.node.ast"><span class="type-name-link">CodeNode</span></a>&lt;T&gt;
 <ul>
-<li class="circle">honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/TypedNode.html" title="interface in honeyroasted.cello.node.ast"><span class="type-name-link">TypedNode</span></a></li>
+<li class="circle">honeyroasted.cello.node.ast.<a href="honeyroasted/cello/node/ast/TypedNode.html" title="interface in honeyroasted.cello.node.ast"><span class="type-name-link">TypedNode</span></a>&lt;T&gt;</li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties"><span class="type-name-link">PropertyHolder</span></a></li>
+</ul>
+</li>
+<li class="circle">honeyroasted.cello.<a href="honeyroasted/cello/TriConsumer.html" title="interface in honeyroasted.cello"><span class="type-name-link">TriConsumer</span></a>&lt;A,&#8203;B,&#8203;C&gt;</li>
+<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/TypeUtil.html" title="interface in honeyroasted.cello.environment"><span class="type-name-link">TypeUtil</span></a></li>
 </ul>
 </section>
 <section class="hierarchy">
 <h2 title="Annotation Interface Hierarchy">Annotation Interface Hierarchy</h2>
 <ul>
 <li class="circle">honeyroasted.cello.node.<a href="honeyroasted/cello/node/Child.html" title="annotation in honeyroasted.cello.node"><span class="type-name-link">Child</span></a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
+</ul>
+</section>
+<section class="hierarchy">
+<h2 title="Enum Class Hierarchy">Enum Class Hierarchy</h2>
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">Object</span></a>
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">Enum</span></a>&lt;E&gt; (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;T&gt;, java.lang.constant.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/constant/Constable.html" title="class or interface in java.lang.constant" class="external-link">Constable</a>, java.io.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
+<ul>
+<li class="circle">honeyroasted.cello.node.verify.<a href="honeyroasted/cello/node/verify/Verification.ErrorCode.html" title="enum class in honeyroasted.cello.node.verify"><span class="type-name-link">Verification.ErrorCode</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </section>
 </main>

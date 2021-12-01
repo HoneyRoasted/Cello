@@ -1,6 +1,7 @@
 package honeyroasted.cello.node.verify;
 
 import honeyroasted.cello.node.ast.CodeNode;
+import honeyroasted.javatype.informal.TypeInformal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,19 +13,27 @@ public class Verification<T> {
     private String message;
     private T value;
     private Throwable error;
+    private ErrorCode errorCode;
 
     private List<Verification<?>> children;
 
-    public Verification(boolean success, String message, T value, Throwable error, List<Verification<?>> children) {
+    public Verification(boolean success, String message, T value, Throwable error, List<Verification<?>> children, ErrorCode errorCode) {
         this.success = success;
         this.message = message;
         this.value = value;
         this.error = error;
         this.children = children;
+        this.errorCode = errorCode;
     }
 
     public static <T> Builder<T> builder() {
         return new Builder<>();
+    }
+
+    public static <T> Builder<T> builder(T value) {
+        Builder<T> b = builder();
+        b.value(value);
+        return b;
     }
 
     public boolean success() {
@@ -44,15 +53,7 @@ public class Verification<T> {
     }
 
     public static <T> Verification<T> success(T val) {
-        return new Verification<>(true, "Success", val, null, Collections.emptyList());
-    }
-
-    public static <T> Verification<T> failure(String message) {
-        return failure(message, null);
-    }
-
-    public static <T> Verification<T> failure(String message, Throwable throwable) {
-        return new Verification<>(false, message, null, throwable, Collections.emptyList());
+        return Verification.<T>builder().value(val).build();
     }
 
     public static class Builder<T> {
@@ -61,9 +62,23 @@ public class Verification<T> {
         private T value = null;
         private Throwable error = null;
         private List<Verification<?>> children = new ArrayList<>();
+        private ErrorCode errorCode = ErrorCode.UNKNOWN;
 
         public Verification<T> build() {
-            return new Verification<>(this.success, this.message, this.value, this.error, this.children);
+            return new Verification<>(this.success, this.message, this.value, this.error, this.children,
+                    this.success && this.errorCode == ErrorCode.UNKNOWN ? ErrorCode.NONE : this.errorCode);
+        }
+
+        public ErrorCode errorCode() {
+            return errorCode;
+        }
+
+        public Builder<T> errorCode(ErrorCode errorCode) {
+            if (errorCode != ErrorCode.NONE) {
+                this.success(false);
+            }
+            this.errorCode = errorCode;
+            return this;
         }
 
         public boolean success() {
@@ -77,6 +92,21 @@ public class Verification<T> {
 
         public String message() {
             return this.message;
+        }
+
+        public Builder<T> typeError(TypeInformal left, TypeInformal right) {
+            return this.errorCode(ErrorCode.TYPE_ERROR)
+                    .message(left.externalName() + " is not assignable to " + right.externalName());
+        }
+
+        public Builder<T> varNotFoundError(String name) {
+            return this.errorCode(ErrorCode.VAR_NOT_FOUND_ERROR)
+                    .message("No variable named '" + name + "' exists in local scope");
+        }
+
+        public Builder<T> noChildError() {
+            return this.errorCode(ErrorCode.CHILD_FAILED)
+                    .message("Child node either failed or had no value");
         }
 
         public Builder<T> message(String message) {
@@ -140,6 +170,14 @@ public class Verification<T> {
             return this;
         }
 
+    }
+
+    public enum ErrorCode {
+        NONE,
+        UNKNOWN,
+        TYPE_ERROR,
+        VAR_NOT_FOUND_ERROR,
+        CHILD_FAILED
     }
 
 }
