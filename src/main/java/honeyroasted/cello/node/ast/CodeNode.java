@@ -9,16 +9,16 @@ import org.objectweb.asm.commons.InstructionAdapter;
 
 public interface CodeNode<T extends CodeNode, K extends CodeNode> extends Node {
 
-    default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        throw new UnsupportedOperationException("Unprocessed node");
+    default K preprocess() {
+        return (K) this;
     }
 
     default Verification<T> verify(Environment environment, LocalScope localScope) {
         return Verification.success((T) this);
     }
 
-    default K preprocess() {
-        return (K) this;
+    default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+        throw new UnsupportedOperationException("Unprocessed node");
     }
 
     default K preprocessFully() {

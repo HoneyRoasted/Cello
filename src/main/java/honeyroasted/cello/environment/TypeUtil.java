@@ -31,4 +31,7 @@ public interface TypeUtil {
         }
     }
 
+    static boolean isPrimitive(TypeInformal type) {
+        return type instanceof TypeFilled && ((TypeFilled) type).type().namespace().isPrimitive();
+    }
 }

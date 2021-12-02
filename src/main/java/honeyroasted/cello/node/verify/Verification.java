@@ -118,6 +118,11 @@ public class Verification<T> {
                     .message("Child node either failed or had no value");
         }
 
+        public Builder<T> invalidConstant(Class<?> aClass) {
+            return this.errorCode(ErrorCode.INVALID_CONSTANT_ERROR)
+                    .message("Invalid constant type " + aClass.getName());
+        }
+
         public Builder<T> message(String message) {
             this.message = message;
             return this;
@@ -178,7 +183,6 @@ public class Verification<T> {
             }
             return this;
         }
-
     }
 
     public enum ErrorCode {
@@ -189,6 +193,7 @@ public class Verification<T> {
         VAR_ALREADY_DEFINED_ERROR,
         CHILD_FAILED_ERROR,
         INVALID_TYPE_ERROR,
+        INVALID_CONSTANT_ERROR;
     }
 
 }
