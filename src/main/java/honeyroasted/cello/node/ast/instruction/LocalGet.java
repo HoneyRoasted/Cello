@@ -13,7 +13,7 @@ import org.objectweb.asm.commons.InstructionAdapter;
 
 import java.util.Optional;
 
-public class LocalGet extends AbstractPropertyHolder implements TypedNode {
+public class LocalGet extends AbstractPropertyHolder implements TypedNode<LocalGet, LocalGet> {
     private String name;
 
     private TypeInformal expected;
@@ -31,7 +31,7 @@ public class LocalGet extends AbstractPropertyHolder implements TypedNode {
     @Override
     public Verification<LocalGet> verify(Environment environment, LocalScope localScope) {
         Optional<Var> varOpt = localScope.fetch(this.name);
-        if (varOpt.isPresent()) {
+        if (varOpt.isPresent() && varOpt.get().initialized()) {
             TypeInformal type = varOpt.get().type();
             if (this.expected != null && type.isAssignableTo(expected)) {
                 this.type = this.expected;

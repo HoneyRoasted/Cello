@@ -7,7 +7,7 @@ import honeyroasted.cello.node.ast.util.UntypedNode;
 import honeyroasted.cello.node.verify.Verification;
 import org.objectweb.asm.commons.InstructionAdapter;
 
-public interface CodeNode<T extends CodeNode> extends Node {
+public interface CodeNode<T extends CodeNode, K extends CodeNode> extends Node {
 
     default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         throw new UnsupportedOperationException("Unprocessed node");
@@ -17,11 +17,21 @@ public interface CodeNode<T extends CodeNode> extends Node {
         return Verification.success((T) this);
     }
 
-    default Verification<T> preprocess() {
-        return Verification.success((T) this);
+    default K preprocess() {
+        return (K) this;
     }
 
-    default CodeNode<?> untyped() {
+    default K preprocessFully() {
+        CodeNode prev = this;
+        K val = preprocess();
+        while (prev != val) {
+            prev = val;
+            val = (K) val.preprocess();
+        }
+        return val;
+    }
+
+    default CodeNode<?, ?> untyped() {
         return new UntypedNode(this);
     }
 

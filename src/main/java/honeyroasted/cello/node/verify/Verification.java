@@ -1,10 +1,9 @@
 package honeyroasted.cello.node.verify;
 
-import honeyroasted.cello.node.ast.CodeNode;
 import honeyroasted.javatype.informal.TypeInformal;
+import honeyroasted.javatype.reflection.ReflectionTypes;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,6 +93,16 @@ public class Verification<T> {
             return this.message;
         }
 
+        public Builder<T> varAlreadyDefinedError(String name) {
+            return this.errorCode(ErrorCode.VAR_ALREADY_DEFINED_ERROR)
+                    .message("Variable '" + name + "' has already been defined");
+        }
+
+        public Builder<T> invalidTypeError(TypeInformal type) {
+            return this.errorCode(ErrorCode.INVALID_TYPE_ERROR)
+                    .message("Invalid type '" + (type == null ? "null" : type.externalName()) + "'");
+        }
+
         public Builder<T> typeError(TypeInformal left, TypeInformal right) {
             return this.errorCode(ErrorCode.TYPE_ERROR)
                     .message(left.externalName() + " is not assignable to " + right.externalName());
@@ -105,7 +114,7 @@ public class Verification<T> {
         }
 
         public Builder<T> noChildError() {
-            return this.errorCode(ErrorCode.CHILD_FAILED)
+            return this.errorCode(ErrorCode.CHILD_FAILED_ERROR)
                     .message("Child node either failed or had no value");
         }
 
@@ -177,7 +186,9 @@ public class Verification<T> {
         UNKNOWN,
         TYPE_ERROR,
         VAR_NOT_FOUND_ERROR,
-        CHILD_FAILED
+        VAR_ALREADY_DEFINED_ERROR,
+        CHILD_FAILED_ERROR,
+        INVALID_TYPE_ERROR,
     }
 
 }

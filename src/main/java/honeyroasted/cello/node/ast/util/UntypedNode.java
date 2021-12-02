@@ -11,7 +11,7 @@ import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;
 
-public class UntypedNode extends AbstractPropertyHolder implements CodeNode<UntypedNode> {
+public class UntypedNode extends AbstractPropertyHolder implements CodeNode<UntypedNode, UntypedNode> {
     private CodeNode node;
 
     public UntypedNode(CodeNode node) {
@@ -19,18 +19,9 @@ public class UntypedNode extends AbstractPropertyHolder implements CodeNode<Unty
     }
 
     @Override
-    public Verification<UntypedNode> preprocess() {
-        Verification.Builder<UntypedNode> builder = Verification.builder(this);
-
-        Verification<CodeNode> value = this.node.preprocess();
-        builder.child(value);
-
-        if (value.success() && value.value().isPresent()) {
-            this.node = value.value().get();
-            return builder.success(true).build();
-        } else {
-            return builder.noChildError().build();
-        }
+    public UntypedNode preprocess() {
+        this.node = this.node.preprocess();
+        return this;
     }
 
     @Override
@@ -52,7 +43,7 @@ public class UntypedNode extends AbstractPropertyHolder implements CodeNode<Unty
     public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         this.node.apply(adapter, environment, localScope);
         if (this.node instanceof TypedNode) {
-            TypeInformal type = ((TypedNode<?>) this.node).type();
+            TypeInformal type = ((TypedNode<?, ?>) this.node).type();
             int size = TypeUtil.size(type);
 
             if (size % 2 == 1) {

@@ -31,8 +31,9 @@ public class LocalScope {
     }
 
     public LocalScope copy() {
-        return new LocalScope(this.parent == null ? null : this.parent.copy(),
-                new LinkedHashMap<>(this.vars), this.counter);
+        Map<String, Var> varsCopy = new LinkedHashMap<>(this.vars);
+        varsCopy.replaceAll((k, v) -> v.copy());
+        return new LocalScope(this.parent == null ? null : this.parent.copy(), varsCopy, this.counter);
     }
 
     private int defineIndex(TypeInformal type) {

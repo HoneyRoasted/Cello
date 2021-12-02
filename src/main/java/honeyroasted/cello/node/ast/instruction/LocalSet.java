@@ -15,7 +15,7 @@ import org.objectweb.asm.commons.InstructionAdapter;
 
 import java.util.Optional;
 
-public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalSet> {
+public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalSet, LocalSet> {
     private String name;
     private TypedNode value;
 
@@ -28,18 +28,9 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
     private TypeInformal type;
 
     @Override
-    public Verification<LocalSet> preprocess() {
-        Verification.Builder<LocalSet> builder = Verification.builder(this);
-
-        Verification<TypedNode> value = this.value.preprocess();
-        builder.child(value);
-
-        if (value.success() && value.value().isPresent()) {
-            this.value = value.value().get();
-            return builder.success(true).build();
-        } else {
-            return builder.noChildError().build();
-        }
+    public LocalSet preprocess() {
+        this.value = this.value.preprocessFully();
+        return this;
     }
 
     @Override
@@ -67,6 +58,7 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
                         this.type = type;
                     }
 
+                    varOpt.get().setInitialized(true);
                     return builder.success(true).build();
                 } else {
                     return builder.success(false)
@@ -91,10 +83,11 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
         }
         adapter.store(localScope.fetch(this.name).get().index(),
                 TypeUtil.asmType(this.type));
+        localScope.fetch(this.name).get().setInitialized(true);
     }
 
     @Override
-    public CodeNode<?> untyped() {
+    public CodeNode<?, ?> untyped() {
         return new AlternativeProcessNode<>(this,
                 (adapter, environment, localScope) -> {
                    this.value.apply(adapter, environment, localScope);

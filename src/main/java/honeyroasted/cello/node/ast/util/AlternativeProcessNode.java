@@ -8,7 +8,7 @@ import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import org.objectweb.asm.commons.InstructionAdapter;
 
-public class AlternativeProcessNode<T extends CodeNode> extends AbstractPropertyHolder implements CodeNode<T> {
+public class AlternativeProcessNode<T extends CodeNode, K extends CodeNode> extends AbstractPropertyHolder implements CodeNode<T, AlternativeProcessNode> {
     private T value;
     private TriConsumer<InstructionAdapter, Environment, LocalScope> applicator;
 
@@ -32,12 +32,9 @@ public class AlternativeProcessNode<T extends CodeNode> extends AbstractProperty
     }
 
     @Override
-    public Verification<T> preprocess() {
-        Verification<T> verification = this.value.preprocess();
-        if (verification.success() && verification.value().isPresent()) {
-            this.value = verification.value().get();
-        }
-        return verification;
+    public AlternativeProcessNode preprocess() {
+        this.value = (T) this.value.preprocess();
+        return this;
     }
 
 }
