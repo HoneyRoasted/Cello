@@ -71,7 +71,7 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">honeyroasted.cello.node.ast</a></div>
-<h1 title="Interface CodeNode" class="title">Interface CodeNode&lt;T extends CodeNode&gt;</h1>
+<h1 title="Interface CodeNode" class="title">Interface CodeNode&lt;T extends CodeNode,&#8203;K extends CodeNode&gt;</h1>
 </div>
 <section class="description">
 <dl class="notes">
@@ -80,14 +80,14 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
-<dd><code><a href="TypedNode.html" title="interface in honeyroasted.cello.node.ast">TypedNode</a>&lt;T&gt;</code></dd>
+<dd><code><a href="TypedNode.html" title="interface in honeyroasted.cello.node.ast">TypedNode</a>&lt;T,&#8203;K&gt;</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util">AlternativeProcessNode</a></code>, <code><a href="instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalGet</a></code>, <code><a href="instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalSet</a></code>, <code><a href="util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util">TypeCaseNode</a></code>, <code><a href="util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util">UntypedNode</a></code></dd>
+<dd><code><a href="util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util">AlternativeProcessNode</a></code>, <code><a href="instruction/LocalDefine.html" title="class in honeyroasted.cello.node.ast.instruction">LocalDefine</a></code>, <code><a href="instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalGet</a></code>, <code><a href="instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalSet</a></code>, <code><a href="util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util">TypeCaseNode</a></code>, <code><a href="util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util">UntypedNode</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CodeNode&lt;T extends CodeNode&gt;</span><span class="extends-implements">
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CodeNode&lt;T extends CodeNode,&#8203;K extends CodeNode&gt;</span><span class="extends-implements">
 extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node</a></span></div>
 </section>
 <section class="summary">
@@ -108,16 +108,19 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
  <a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
  <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="../verify/Verification.html" title="class in honeyroasted.cello.node.verify">Verification</a>&lt;<a href="CodeNode.html" title="type parameter in CodeNode">T</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="CodeNode.html" title="type parameter in CodeNode">K</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#preprocess()">preprocess</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="CodeNode.html" title="interface in honeyroasted.cello.node.ast">CodeNode</a>&lt;?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#untyped()">untyped</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="CodeNode.html" title="type parameter in CodeNode">K</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#preprocessFully()">preprocessFully</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="../verify/Verification.html" title="class in honeyroasted.cello.node.verify">Verification</a>&lt;<a href="CodeNode.html" title="type parameter in CodeNode">T</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">verify</a></span>&#8203;(<a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="CodeNode.html" title="interface in honeyroasted.cello.node.ast">CodeNode</a>&lt;?,&#8203;?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#untyped()">untyped</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="../verify/Verification.html" title="class in honeyroasted.cello.node.verify">Verification</a>&lt;<a href="CodeNode.html" title="type parameter in CodeNode">T</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">verify</a></span>&#8203;(<a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -153,13 +156,19 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
 <li>
 <section class="detail" id="preprocess()">
 <h3>preprocess</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../verify/Verification.html" title="class in honeyroasted.cello.node.verify">Verification</a>&lt;<a href="CodeNode.html" title="type parameter in CodeNode">T</a>&gt;</span>&nbsp;<span class="element-name">preprocess</span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CodeNode.html" title="type parameter in CodeNode">K</a></span>&nbsp;<span class="element-name">preprocess</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="preprocessFully()">
+<h3>preprocessFully</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CodeNode.html" title="type parameter in CodeNode">K</a></span>&nbsp;<span class="element-name">preprocessFully</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="untyped()">
 <h3>untyped</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CodeNode.html" title="interface in honeyroasted.cello.node.ast">CodeNode</a>&lt;?&gt;</span>&nbsp;<span class="element-name">untyped</span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CodeNode.html" title="interface in honeyroasted.cello.node.ast">CodeNode</a>&lt;?,&#8203;?&gt;</span>&nbsp;<span class="element-name">untyped</span>()</div>
 </section>
 </li>
 </ul>
