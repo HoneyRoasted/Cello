@@ -4,6 +4,7 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.environment.Var;
+import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.ast.CodeNode;
 import honeyroasted.cello.node.ast.TypedNode;
 import honeyroasted.cello.node.verify.Verification;
@@ -25,7 +26,7 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
 
     @Override
     public LocalDefine preprocess() {
-        this.value = this.value.preprocessFully();
+        this.value = Nodes.convert(this.value.preprocessFully(), this.type);
         return this;
     }
 
@@ -48,7 +49,6 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
 
             Verification<TypedNode> verification = this.value.verify(environment, localScope);
             if (verification.success()) {
-                this.value = verification.value().get();
                 if (this.type == null) {
                     this.type = this.value.type();
                     return Verification.builder(this)

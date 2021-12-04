@@ -4,11 +4,13 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.environment.Var;
+import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.ast.CodeNode;
 import honeyroasted.cello.node.ast.TypedNode;
 import honeyroasted.cello.node.ast.util.AlternativeProcessNode;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
+import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.InstructionAdapter;
@@ -29,7 +31,8 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
 
     @Override
     public LocalSet preprocess() {
-        this.value = this.value.preprocessFully();
+        this.value = Nodes.convert(this.value.preprocessFully(),
+                (env, scope) -> scope.fetch(this.name).map(Var::type).orElse(Types.OBJECT));
         return this;
     }
 

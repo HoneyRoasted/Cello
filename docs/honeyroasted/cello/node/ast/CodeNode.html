@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util">AlternativeProcessNode</a></code>, <code><a href="instruction/LocalDefine.html" title="class in honeyroasted.cello.node.ast.instruction">LocalDefine</a></code>, <code><a href="instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalGet</a></code>, <code><a href="instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalSet</a></code>, <code><a href="util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util">TypeCaseNode</a></code>, <code><a href="util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util">UntypedNode</a></code></dd>
+<dd><code><a href="util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util">AlternativeProcessNode</a></code>, <code><a href="instruction/value/Coerce.html" title="class in honeyroasted.cello.node.ast.instruction.value">Coerce</a></code>, <code><a href="instruction/value/Constant.html" title="class in honeyroasted.cello.node.ast.instruction.value">Constant</a></code>, <code><a href="instruction/value/Convert.html" title="class in honeyroasted.cello.node.ast.instruction.value">Convert</a></code>, <code><a href="instruction/flow/DoWhileBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">DoWhileBlock</a></code>, <code><a href="instruction/flow/ForBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">ForBlock</a></code>, <code><a href="instruction/LocalDefine.html" title="class in honeyroasted.cello.node.ast.instruction">LocalDefine</a></code>, <code><a href="instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalGet</a></code>, <code><a href="instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalSet</a></code>, <code><a href="instruction/flow/ScopeBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">ScopeBlock</a></code>, <code><a href="instruction/flow/SequenceBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">SequenceBlock</a></code>, <code><a href="util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util">TypeCaseNode</a></code>, <code><a href="instruction/value/TypeConstant.html" title="class in honeyroasted.cello.node.ast.instruction.value">TypeConstant</a></code>, <code><a href="util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util">UntypedNode</a></code>, <code><a href="instruction/flow/WhileBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">WhileBlock</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CodeNode&lt;T extends CodeNode,&#8203;K extends CodeNode&gt;</span><span class="extends-implements">
@@ -139,11 +139,9 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">
-<h3>apply</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span>&#8203;<span class="parameters">(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
- <a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</span></div>
+<section class="detail" id="preprocess()">
+<h3>preprocess</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CodeNode.html" title="type parameter in CodeNode">K</a></span>&nbsp;<span class="element-name">preprocess</span>()</div>
 </section>
 </li>
 <li>
@@ -154,9 +152,11 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
 </section>
 </li>
 <li>
-<section class="detail" id="preprocess()">
-<h3>preprocess</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="CodeNode.html" title="type parameter in CodeNode">K</a></span>&nbsp;<span class="element-name">preprocess</span>()</div>
+<section class="detail" id="apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">
+<h3>apply</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span>&#8203;<span class="parameters">(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
+ <a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</span></div>
 </section>
 </li>
 <li>

@@ -32,6 +32,12 @@ public class TypeCaseNode extends AbstractPropertyHolder implements TypedNode {
     private TypedNode chosen;
 
     @Override
+    public TypedNode preprocess() {
+        this.cases.replaceAll((k, n) -> n.preprocessFully());
+        return this;
+    }
+
+    @Override
     public Verification<CodeNode> verify(Environment environment, LocalScope localScope) {
         Verification.Builder<CodeNode> builder = Verification.builder();
 

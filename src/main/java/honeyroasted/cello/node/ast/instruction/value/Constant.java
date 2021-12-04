@@ -18,14 +18,6 @@ public class Constant extends AbstractPropertyHolder implements TypedNode<Consta
         this.object = object;
     }
 
-    public static TypedNode<?, ?> of(Object object) {
-        if (object instanceof TypeInformal type) {
-            return new TypeConstant(type);
-        } else {
-            return new Constant(object);
-        }
-    }
-
     @Override
     public void provideExpected(TypeInformal type) {
         if (this.object == null && !TypeUtil.isPrimitive(type)) {

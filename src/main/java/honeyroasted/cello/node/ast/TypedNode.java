@@ -2,7 +2,7 @@ package honeyroasted.cello.node.ast;
 
 import honeyroasted.javatype.informal.TypeInformal;
 
-public interface TypedNode<T extends TypedNode<?, ?>, K extends TypedNode<?, ?>> extends CodeNode<T, K> {
+public interface TypedNode<T extends TypedNode, K extends TypedNode> extends CodeNode<T, K> {
 
     TypeInformal type();
 

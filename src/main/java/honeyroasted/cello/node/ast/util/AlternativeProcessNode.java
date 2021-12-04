@@ -24,16 +24,12 @@ public class AlternativeProcessNode<T extends CodeNode, K extends CodeNode> exte
 
     @Override
     public Verification<T> verify(Environment environment, LocalScope localScope) {
-        Verification<T> verification = this.value.verify(environment, localScope);
-        if (verification.success() && verification.value().isPresent()) {
-            this.value = verification.value().get();
-        }
-        return verification;
+        return this.value.verify(environment, localScope);
     }
 
     @Override
     public AlternativeProcessNode preprocess() {
-        this.value = (T) this.value.preprocess();
+        this.value = (T) this.value.preprocessFully();
         return this;
     }
 

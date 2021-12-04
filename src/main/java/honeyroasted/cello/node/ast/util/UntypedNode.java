@@ -20,23 +20,16 @@ public class UntypedNode extends AbstractPropertyHolder implements CodeNode<Unty
 
     @Override
     public UntypedNode preprocess() {
-        this.node = this.node.preprocess();
+        this.node = this.node.preprocessFully();
         return this;
     }
 
     @Override
     public Verification<UntypedNode> verify(Environment environment, LocalScope localScope) {
-        Verification.Builder<UntypedNode> builder = Verification.builder(this);
-
-        Verification<CodeNode> value = this.node.verify(environment, localScope);
-        builder.child(value);
-
-        if (value.success() && value.value().isPresent()) {
-            this.node = value.value().get();
-            return builder.success(true).build();
-        } else {
-            return builder.noChildError().build();
-        }
+        return Verification.builder(this)
+                .child(this.node.verify(environment, localScope))
+                .andChildren()
+                .build();
     }
 
     @Override
@@ -54,5 +47,10 @@ public class UntypedNode extends AbstractPropertyHolder implements CodeNode<Unty
                 adapter.pop2();
             }
         }
+    }
+
+    @Override
+    public CodeNode<?, ?> untyped() {
+        return this;
     }
 }

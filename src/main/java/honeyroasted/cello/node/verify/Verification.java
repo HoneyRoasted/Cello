@@ -43,8 +43,8 @@ public class Verification<T> {
         return message;
     }
 
-    public Optional<T> value() {
-        return Optional.ofNullable(value);
+    public T value() {
+        return this.value;
     }
 
     public Optional<Throwable> error() {

@@ -3,6 +3,9 @@ honeyroasted.cello.environment
 honeyroasted.cello.node
 honeyroasted.cello.node.ast
 honeyroasted.cello.node.ast.instruction
+honeyroasted.cello.node.ast.instruction.flow
+honeyroasted.cello.node.ast.instruction.operator
+honeyroasted.cello.node.ast.instruction.value
 honeyroasted.cello.node.ast.util
 honeyroasted.cello.node.verify
 honeyroasted.cello.properties
