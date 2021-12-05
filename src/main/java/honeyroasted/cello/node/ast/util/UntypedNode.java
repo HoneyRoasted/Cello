@@ -1,11 +1,11 @@
 package honeyroasted.cello.node.ast.util;
 
+import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.node.ast.CodeNode;
 import honeyroasted.cello.node.ast.TypedNode;
-import honeyroasted.cello.node.ast.instruction.LocalSet;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.informal.TypeInformal;
@@ -25,16 +25,16 @@ public class UntypedNode extends AbstractPropertyHolder implements CodeNode<Unty
     }
 
     @Override
-    public Verification<UntypedNode> verify(Environment environment, LocalScope localScope) {
+    public Verification<UntypedNode> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
         return Verification.builder(this)
-                .child(this.node.verify(environment, localScope))
+                .child(this.node.verify(environment, localScope, controlScope))
                 .andChildren()
                 .build();
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.node.apply(adapter, environment, localScope);
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+        this.node.apply(adapter, environment, localScope, controlScope);
         if (this.node instanceof TypedNode) {
             TypeInformal type = ((TypedNode<?, ?>) this.node).type();
             int size = TypeUtil.size(type);

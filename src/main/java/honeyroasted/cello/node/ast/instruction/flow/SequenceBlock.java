@@ -1,5 +1,6 @@
 package honeyroasted.cello.node.ast.instruction.flow;
 
+import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.ast.CodeNode;
@@ -24,15 +25,15 @@ public class SequenceBlock extends AbstractPropertyHolder implements CodeNode<Se
     }
 
     @Override
-    public Verification<SequenceBlock> verify(Environment environment, LocalScope localScope) {
+    public Verification<SequenceBlock> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
         return Verification.builder(this)
-                .children(this.nodes.stream().map(c -> (Verification<?>) c.verify(environment, localScope)).collect(Collectors.toList()))
+                .children(this.nodes.stream().map(c -> (Verification<?>) c.verify(environment, localScope, controlScope)).collect(Collectors.toList()))
                 .andChildren()
                 .build();
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.nodes.forEach(c -> c.apply(adapter, environment, localScope));
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+        this.nodes.forEach(c -> c.apply(adapter, environment, localScope, controlScope));
     }
 }

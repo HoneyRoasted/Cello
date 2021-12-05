@@ -1,8 +1,8 @@
 package honeyroasted.cello.node.ast.instruction.value;
 
+import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
-import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.node.ast.TypedNode;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
@@ -20,13 +20,13 @@ public class Constant extends AbstractPropertyHolder implements TypedNode<Consta
 
     @Override
     public void provideExpected(TypeInformal type) {
-        if (this.object == null && !TypeUtil.isPrimitive(type)) {
+        if (this.object == null && !type.isPrimitive()) {
             this.type = type;
         }
     }
 
     @Override
-    public Verification<Constant> verify(Environment environment, LocalScope localScope) {
+    public Verification<Constant> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
         if (this.object == null) {
             if (this.type == null) {
                 this.type = Types.OBJECT;
@@ -68,7 +68,7 @@ public class Constant extends AbstractPropertyHolder implements TypedNode<Consta
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
         if (this.object == null) {
             adapter.aconst(null);
         } else if (this.object instanceof String str) {

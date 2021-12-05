@@ -6,14 +6,11 @@ import honeyroasted.cello.node.ast.CodeNode;
 import honeyroasted.cello.node.ast.TypedNode;
 import honeyroasted.cello.node.ast.instruction.flow.ScopeBlock;
 import honeyroasted.cello.node.ast.instruction.flow.SequenceBlock;
-import honeyroasted.cello.node.ast.instruction.flow.WhileBlock;
-import honeyroasted.cello.node.ast.instruction.value.Coerce;
 import honeyroasted.cello.node.ast.instruction.value.Constant;
 import honeyroasted.cello.node.ast.instruction.value.Convert;
 import honeyroasted.cello.node.ast.instruction.value.TypeConstant;
 import honeyroasted.javatype.informal.TypeInformal;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 

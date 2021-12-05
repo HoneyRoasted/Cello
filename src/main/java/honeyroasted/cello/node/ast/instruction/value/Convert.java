@@ -1,5 +1,6 @@
 package honeyroasted.cello.node.ast.instruction.value;
 
+import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.environment.TypeUtil;
@@ -36,11 +37,11 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
     }
 
     @Override
-    public Verification<Convert> verify(Environment environment, LocalScope localScope) {
+    public Verification<Convert> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
         TypeInformal target = this.target.apply(environment, localScope);
         this.targetType = target;
 
-        Verification<TypedNode> verification = this.value.verify(environment, localScope);
+        Verification<TypedNode> verification = this.value.verify(environment, localScope, controlScope);
         if (verification.success()) {
             if (!this.value.type().isAssignableTo(target)) {
                 return Verification.builder(this)
@@ -61,8 +62,8 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.value.apply(adapter, environment, localScope);
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+        this.value.apply(adapter, environment, localScope, controlScope);
 
         TypeInformal origin = this.value.type();
         TypeInformal target = this.targetType;

@@ -1,6 +1,7 @@
 package honeyroasted.cello.node.ast.util;
 
 import honeyroasted.cello.TriConsumer;
+import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.ast.CodeNode;
@@ -18,13 +19,13 @@ public class AlternativeProcessNode<T extends CodeNode, K extends CodeNode> exte
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
         this.applicator.accept(adapter, environment, localScope);
     }
 
     @Override
-    public Verification<T> verify(Environment environment, LocalScope localScope) {
-        return this.value.verify(environment, localScope);
+    public Verification<T> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
+        return this.value.verify(environment, localScope, controlScope);
     }
 
     @Override

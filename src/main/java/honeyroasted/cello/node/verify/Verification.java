@@ -123,6 +123,11 @@ public class Verification<T> {
                     .message("Invalid constant type " + aClass.getName());
         }
 
+        public Builder<T> controlError(String name, String kind) {
+            return this.errorCode(ErrorCode.CONTROL_FLOW_ERROR)
+                    .message(kind + " statement not allowed here" + (name == null ? "" : " no block called '" + name + "' found"));
+        }
+
         public Builder<T> message(String message) {
             this.message = message;
             return this;
@@ -193,7 +198,8 @@ public class Verification<T> {
         VAR_ALREADY_DEFINED_ERROR,
         CHILD_FAILED_ERROR,
         INVALID_TYPE_ERROR,
-        INVALID_CONSTANT_ERROR;
+        INVALID_CONSTANT_ERROR,
+        CONTROL_FLOW_ERROR
     }
 
 }
