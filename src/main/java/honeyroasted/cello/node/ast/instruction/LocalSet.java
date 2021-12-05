@@ -92,8 +92,8 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
     @Override
     public CodeNode<?, ?> untyped() {
         return new AlternativeProcessNode<>(this,
-                (adapter, environment, localScope) -> {
-                   this.value.apply(adapter, environment, localScope, );
+                (adapter, environment, localScope, controlScope) -> {
+                   this.value.apply(adapter, environment, localScope, controlScope);
                    adapter.store(localScope.fetch(this.name).get().index(),
                            TypeUtil.asmType(this.type));
                 });
