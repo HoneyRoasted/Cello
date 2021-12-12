@@ -23,7 +23,7 @@ public class Continue extends AbstractPropertyHolder implements CodeNode<Continu
     public Verification<Continue> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
         if (!controlScope.has(ControlScope.Kind.CONDITION, this.name)) {
             return Verification.builder(this)
-                    .controlError(this.name, "break")
+                    .controlError(this.name, "continue")
                     .build();
         }
         return Verification.success(this);
