@@ -1,6 +1,5 @@
 package honeyroasted.cello.node.ast.instruction;
 
-import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.environment.TypeUtil;
@@ -32,7 +31,7 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
     }
 
     @Override
-    public Verification<LocalDefine> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
+    public Verification<LocalDefine> verify(Environment environment, LocalScope localScope) {
         if (localScope.has(this.name)) {
             return Verification.builder(this)
                     .varAlreadyDefinedError(this.name)
@@ -48,7 +47,7 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
                 this.value.provideExpected(this.type);
             }
 
-            Verification<TypedNode> verification = this.value.verify(environment, localScope, controlScope);
+            Verification<TypedNode> verification = this.value.verify(environment, localScope);
             if (verification.success()) {
                 if (this.type == null) {
                     this.type = this.value.type();
@@ -83,11 +82,11 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         Var var = localScope.define(this.name, this.type).get();
         if (this.value != null) {
             localScope.fetch(this.name).get().setInitialized(true);
-            this.value.apply(adapter, environment, localScope, controlScope);
+            this.value.apply(adapter, environment, localScope);
             adapter.store(var.index(), TypeUtil.asmType(var.type()));
         }
     }

@@ -1,6 +1,5 @@
 package honeyroasted.cello.node.ast.instruction.flow;
 
-import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.ast.CodeNode;
@@ -22,16 +21,16 @@ public class ScopeBlock extends AbstractPropertyHolder implements CodeNode<Scope
     }
 
     @Override
-    public Verification<ScopeBlock> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
+    public Verification<ScopeBlock> verify(Environment environment, LocalScope localScope) {
         return Verification.builder(this)
-                .child(this.node.verify(environment, localScope.child(), controlScope))
+                .child(this.node.verify(environment, localScope.child()))
                 .andChildren()
                 .build();
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
-        this.node.apply(adapter, environment, localScope.child(), controlScope);
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+        this.node.apply(adapter, environment, localScope.child());
     }
 
 }

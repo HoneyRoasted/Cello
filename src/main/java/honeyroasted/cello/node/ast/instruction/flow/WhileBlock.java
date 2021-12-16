@@ -1,8 +1,6 @@
 package honeyroasted.cello.node.ast.instruction.flow;
 
-import honeyroasted.cello.environment.control.Control;
-import honeyroasted.cello.environment.control.SimpleControl;
-import honeyroasted.cello.environment.control.ControlScope;
+import honeyroasted.cello.environment.Control;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.Nodes;
@@ -12,15 +10,18 @@ import honeyroasted.cello.node.ast.instruction.operator.bool.BooleanOperator;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Types;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public class WhileBlock extends AbstractPropertyHolder implements CodeNode<WhileBlock, WhileBlock> {
+    private String name;
     private TypedNode condition;
     private CodeNode sequence;
 
-    public WhileBlock(TypedNode condition, CodeNode sequence) {
+    public WhileBlock(String name, TypedNode condition, CodeNode sequence) {
         this.condition = condition;
         this.sequence = sequence;
+        this.name = name;
     }
 
     @Override
@@ -30,38 +31,37 @@ public class WhileBlock extends AbstractPropertyHolder implements CodeNode<While
         } else {
             this.condition = this.condition.preprocessFully();
         }
-        this.sequence = Nodes.scope(this.sequence).preprocessFully();
         return this;
     }
 
     @Override
-    public Verification<WhileBlock> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
+    public Verification<WhileBlock> verify(Environment environment, LocalScope localScope) {
+        LocalScope child = localScope.child();
+        child.createControl(Control.Kind.CONTINUE, this.name);
+        child.createControl(Control.Kind.BREAK, this.name);
+
         return Verification.builder(this)
-                .child(this.condition.verify(environment, localScope, controlScope.child().guaranteeAll()))
-                .child(this.sequence.verify(environment, localScope, controlScope.child().guaranteeAll()))
+                .child(this.condition.verify(environment, localScope))
+                .child(this.sequence.verify(environment, child))
                 .andChildren()
                 .build();
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
-        ControlScope self = controlScope.child();
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+        LocalScope child = localScope.child();
+        Control cont = child.createControl(Control.Kind.CONTINUE, this.name);
+        Control brk = child.createControl(Control.Kind.BREAK, this.name);
 
-        Control start = self.require(ControlScope.Kind.START);
-        Control end = self.require(ControlScope.Kind.END);
-        self.requireRef(ControlScope.Kind.CONDITION, ControlScope.Kind.START);
-
-        adapter.mark(start.label());
-
+        adapter.mark(cont.label());
         if (this.condition instanceof BooleanOperator bop) {
-            bop.jumpIfFalse(end.label());
+            bop.jumpIfFalse(brk.label());
         } else {
-            this.condition.apply(adapter, environment, localScope, controlScope);
-            adapter.ifeq(end.label());
+            this.condition.apply(adapter, environment, localScope);
+            adapter.ifeq(brk.label());
         }
 
-
-        this.sequence.apply(adapter, environment, localScope, controlScope);
-        adapter.goTo(start.label());
+        this.sequence.apply(adapter, environment, child);
+        adapter.mark(brk.label());
     }
 }

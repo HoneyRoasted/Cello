@@ -1,6 +1,5 @@
 honeyroasted.cello
 honeyroasted.cello.environment
-honeyroasted.cello.environment.control
 honeyroasted.cello.node
 honeyroasted.cello.node.ast
 honeyroasted.cello.node.ast.instruction

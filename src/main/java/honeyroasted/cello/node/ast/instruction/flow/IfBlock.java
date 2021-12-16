@@ -1,6 +1,5 @@
 package honeyroasted.cello.node.ast.instruction.flow;
 
-import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.Nodes;
@@ -32,12 +31,12 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
     }
 
     @Override
-    public Verification<IfBlock> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
+    public Verification<IfBlock> verify(Environment environment, LocalScope localScope) {
         return Verification.builder(this)
                 .children(this.ifs.stream().map(i ->
                         Verification.builder(i)
-                                .child(i.condition().verify(environment, localScope, controlScope))
-                                .child(i.body().verify(environment, localScope, controlScope))
+                                .child(i.condition().verify(environment, localScope))
+                                .child(i.body().verify(environment, localScope))
                                 .andChildren()
                                 .build()
                 ).collect(Collectors.toList()))
@@ -46,7 +45,7 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         Label end = new Label();
         for (int i = 0; i < this.ifs.size(); i++) {
             If ifBlk = this.ifs.get(i);
@@ -60,11 +59,11 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
             if (ifBlk.condition() instanceof BooleanOperator bop) {
                 bop.jumpIfFalse(endBlk);
             } else {
-                ifBlk.condition().apply(adapter, environment, localScope, controlScope);
+                ifBlk.condition().apply(adapter, environment, localScope);
                 adapter.ifeq(endBlk);
             }
 
-            ifBlk.body().apply(adapter, environment, localScope, controlScope);
+            ifBlk.body().apply(adapter, environment, localScope);
             adapter.goTo(end);
 
             if (i != this.ifs.size() - 1) {

@@ -104,10 +104,9 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default void</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope,honeyroasted.cello.environment.control.ControlScope)">apply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">apply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
  <a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope,
- <a href="../../environment/control/ControlScope.html" title="class in honeyroasted.cello.environment.control">ControlScope</a>&nbsp;controlScope)</code></div>
+ <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="CodeNode.html" title="type parameter in CodeNode">K</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#preprocess()">preprocess</a></span>()</code></div>
@@ -119,13 +118,9 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#untyped()">untyped</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default <a href="../verify/Verification.html" title="class in honeyroasted.cello.node.verify">Verification</a>&lt;<a href="CodeNode.html" title="type parameter in CodeNode">T</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope,honeyroasted.cello.environment.control.ControlScope)">verify</a></span>&#8203;(<a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope,
- <a href="../../environment/control/ControlScope.html" title="class in honeyroasted.cello.environment.control">ControlScope</a>&nbsp;controlScope)</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">verify</a></span>&#8203;(<a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code>default void</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table"><code><span class="member-name-link"><a href="#walkControls(honeyroasted.cello.environment.control.ControlScope)">walkControls</a></span>&#8203;(<a href="../../environment/control/ControlScope.html" title="class in honeyroasted.cello.environment.control">ControlScope</a>&nbsp;controlScope)</code></div>
-<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab5 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -150,26 +145,18 @@ extends <a href="../Node.html" title="interface in honeyroasted.cello.node">Node
 </section>
 </li>
 <li>
-<section class="detail" id="verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope,honeyroasted.cello.environment.control.ControlScope)">
+<section class="detail" id="verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">
 <h3>verify</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../verify/Verification.html" title="class in honeyroasted.cello.node.verify">Verification</a>&lt;<a href="CodeNode.html" title="type parameter in CodeNode">T</a>&gt;</span>&nbsp;<span class="element-name">verify</span>&#8203;<span class="parameters">(<a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope,
- <a href="../../environment/control/ControlScope.html" title="class in honeyroasted.cello.environment.control">ControlScope</a>&nbsp;controlScope)</span></div>
+ <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="walkControls(honeyroasted.cello.environment.control.ControlScope)">
-<h3>walkControls</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">walkControls</span>&#8203;<span class="parameters">(<a href="../../environment/control/ControlScope.html" title="class in honeyroasted.cello.environment.control">ControlScope</a>&nbsp;controlScope)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope,honeyroasted.cello.environment.control.ControlScope)">
+<section class="detail" id="apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">
 <h3>apply</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span>&#8203;<span class="parameters">(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
  <a href="../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope,
- <a href="../../environment/control/ControlScope.html" title="class in honeyroasted.cello.environment.control">ControlScope</a>&nbsp;controlScope)</span></div>
+ <a href="../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</span></div>
 </section>
 </li>
 <li>

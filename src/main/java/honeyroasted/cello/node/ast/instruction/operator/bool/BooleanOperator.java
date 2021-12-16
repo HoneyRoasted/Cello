@@ -1,6 +1,5 @@
 package honeyroasted.cello.node.ast.instruction.operator.bool;
 
-import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.Nodes;
@@ -24,16 +23,16 @@ public interface BooleanOperator<T extends  BooleanOperator, K extends BooleanOp
     }
 
     @Override
-    default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+    default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         Label ifFalse = new Label();
         Label end = new Label();
 
         jumpIfFalse(ifFalse);
 
-        Nodes.constant(true).apply(adapter, environment, localScope, controlScope);
+        Nodes.constant(true).apply(adapter, environment, localScope);
         adapter.goTo(end);
         adapter.mark(ifFalse);
-        Nodes.constant(false).apply(adapter, environment, localScope, controlScope);
+        Nodes.constant(false).apply(adapter, environment, localScope);
         adapter.mark(end);
 
     }

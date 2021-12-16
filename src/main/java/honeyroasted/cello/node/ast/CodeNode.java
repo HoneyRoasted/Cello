@@ -1,6 +1,5 @@
 package honeyroasted.cello.node.ast;
 
-import honeyroasted.cello.environment.control.ControlScope;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.Node;
@@ -14,15 +13,11 @@ public interface CodeNode<T extends CodeNode, K extends CodeNode> extends Node {
         return (K) this;
     }
 
-    default Verification<T> verify(Environment environment, LocalScope localScope, ControlScope controlScope) {
+    default Verification<T> verify(Environment environment, LocalScope localScope) {
         return Verification.success((T) this);
     }
 
-    default void walkControls(ControlScope controlScope) {
-
-    }
-
-    default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope, ControlScope controlScope) {
+    default void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         throw new UnsupportedOperationException("Unprocessed node");
     }
 
