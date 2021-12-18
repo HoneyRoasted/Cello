@@ -11,11 +11,11 @@ import org.objectweb.asm.commons.InstructionAdapter;
 
 public interface BooleanOperator<T extends  BooleanOperator, K extends BooleanOperator> extends TypedNode<T, K> {
 
-    void jumpIfTrue(Label ifTrue);
+    void jumpIfTrue(Label ifTrue, InstructionAdapter adapter, Environment environment, LocalScope localScope);
 
-    void jumpIfFalse(Label ifFalse);
+    void jumpIfFalse(Label ifFalse, InstructionAdapter adapter, Environment environment, LocalScope localScope);
 
-    void jump(Label ifTrue, Label ifFalse);
+    void jump(Label ifTrue, Label ifFalse, InstructionAdapter adapter, Environment environment, LocalScope localScope);
 
     @Override
     default TypeInformal type() {
@@ -27,7 +27,7 @@ public interface BooleanOperator<T extends  BooleanOperator, K extends BooleanOp
         Label ifFalse = new Label();
         Label end = new Label();
 
-        jumpIfFalse(ifFalse);
+        jumpIfFalse(ifFalse, adapter, environment, localScope);
 
         Nodes.constant(true).apply(adapter, environment, localScope);
         adapter.goTo(end);

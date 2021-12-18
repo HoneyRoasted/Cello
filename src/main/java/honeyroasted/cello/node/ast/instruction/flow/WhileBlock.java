@@ -10,7 +10,6 @@ import honeyroasted.cello.node.ast.instruction.operator.bool.BooleanOperator;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Types;
-import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public class WhileBlock extends AbstractPropertyHolder implements CodeNode<WhileBlock, WhileBlock> {
@@ -55,7 +54,7 @@ public class WhileBlock extends AbstractPropertyHolder implements CodeNode<While
 
         adapter.mark(cont.label());
         if (this.condition instanceof BooleanOperator bop) {
-            bop.jumpIfFalse(brk.label());
+            bop.jumpIfFalse(brk.label(), adapter, environment, localScope);
         } else {
             this.condition.apply(adapter, environment, localScope);
             adapter.ifeq(brk.label());

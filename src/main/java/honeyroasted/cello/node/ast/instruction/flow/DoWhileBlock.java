@@ -61,7 +61,7 @@ public class DoWhileBlock extends AbstractPropertyHolder implements CodeNode<DoW
         adapter.mark(cont.label());
 
         if (this.condition instanceof BooleanOperator bop) {
-            bop.jumpIfTrue(start);
+            bop.jumpIfTrue(start, adapter, environment, localScope);
         } else {
             this.condition.apply(adapter, environment, localScope);
             adapter.ifne(start);

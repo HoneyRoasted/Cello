@@ -24,6 +24,6 @@ public class ForBlock extends AbstractPropertyHolder implements CodeNode<ForBloc
     @Override
     public ScopeBlock preprocess() {
         return Nodes.scope(Nodes.sequence(init, new WhileBlock(name, condition,
-                Nodes.sequence(body, step))));
+                Nodes.sequence(body, step)))).withProperties(this.properties());
     }
 }

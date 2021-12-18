@@ -57,7 +57,7 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
             }
 
             if (ifBlk.condition() instanceof BooleanOperator bop) {
-                bop.jumpIfFalse(endBlk);
+                bop.jumpIfFalse(endBlk, adapter, environment, localScope);
             } else {
                 ifBlk.condition().apply(adapter, environment, localScope);
                 adapter.ifeq(endBlk);
