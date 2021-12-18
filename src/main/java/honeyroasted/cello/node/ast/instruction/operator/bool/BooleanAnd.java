@@ -30,7 +30,7 @@ public class BooleanAnd extends AbstractPropertyHolder implements BooleanOperato
     @Override
     public Verification<BooleanAnd> verify(Environment environment, LocalScope localScope) {
         return Verification.builder(this)
-                .children(this.arguments.stream().map(t -> t.verify(environment, localScope)).collect(Collectors.toList()))
+                .children(this.arguments.stream().map(t -> (Verification<?>) t.verify(environment, localScope)).collect(Collectors.toList()))
                 .andChildren()
                 .build();
     }

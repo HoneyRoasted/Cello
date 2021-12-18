@@ -83,7 +83,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../node/ast/util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util">AlternativeProcessNode</a></code>, <code><a href="../node/ast/instruction/flow/Break.html" title="class in honeyroasted.cello.node.ast.instruction.flow">Break</a></code>, <code><a href="../node/ast/instruction/value/Constant.html" title="class in honeyroasted.cello.node.ast.instruction.value">Constant</a></code>, <code><a href="../node/ast/instruction/flow/Continue.html" title="class in honeyroasted.cello.node.ast.instruction.flow">Continue</a></code>, <code><a href="../node/ast/instruction/value/Convert.html" title="class in honeyroasted.cello.node.ast.instruction.value">Convert</a></code>, <code><a href="../node/ast/instruction/flow/DoWhileBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">DoWhileBlock</a></code>, <code><a href="../node/ast/instruction/flow/ForBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">ForBlock</a></code>, <code><a href="../node/ast/instruction/flow/IfBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">IfBlock</a></code>, <code><a href="../node/ast/instruction/LocalDefine.html" title="class in honeyroasted.cello.node.ast.instruction">LocalDefine</a></code>, <code><a href="../node/ast/instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalGet</a></code>, <code><a href="../node/ast/instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalSet</a></code>, <code><a href="../node/ast/instruction/flow/ScopeBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">ScopeBlock</a></code>, <code><a href="../node/ast/instruction/flow/SequenceBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">SequenceBlock</a></code>, <code><a href="../node/ast/util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util">TypeCaseNode</a></code>, <code><a href="../node/ast/instruction/value/TypeConstant.html" title="class in honeyroasted.cello.node.ast.instruction.value">TypeConstant</a></code>, <code><a href="../node/ast/util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util">UntypedNode</a></code>, <code><a href="../node/ast/instruction/flow/WhileBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">WhileBlock</a></code></dd>
+<dd><code><a href="../node/ast/util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.ast.util">AlternativeProcessNode</a></code>, <code><a href="../node/ast/instruction/operator/bool/BooleanAnd.html" title="class in honeyroasted.cello.node.ast.instruction.operator.bool">BooleanAnd</a></code>, <code><a href="../node/ast/instruction/operator/bool/BooleanNot.html" title="class in honeyroasted.cello.node.ast.instruction.operator.bool">BooleanNot</a></code>, <code><a href="../node/ast/instruction/operator/bool/BooleanOr.html" title="class in honeyroasted.cello.node.ast.instruction.operator.bool">BooleanOr</a></code>, <code><a href="../node/ast/instruction/flow/Break.html" title="class in honeyroasted.cello.node.ast.instruction.flow">Break</a></code>, <code><a href="../node/ast/instruction/value/Constant.html" title="class in honeyroasted.cello.node.ast.instruction.value">Constant</a></code>, <code><a href="../node/ast/instruction/flow/Continue.html" title="class in honeyroasted.cello.node.ast.instruction.flow">Continue</a></code>, <code><a href="../node/ast/instruction/value/Convert.html" title="class in honeyroasted.cello.node.ast.instruction.value">Convert</a></code>, <code><a href="../node/ast/instruction/flow/DoWhileBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">DoWhileBlock</a></code>, <code><a href="../node/ast/instruction/flow/ForBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">ForBlock</a></code>, <code><a href="../node/ast/instruction/flow/IfBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">IfBlock</a></code>, <code><a href="../node/ast/instruction/LocalDefine.html" title="class in honeyroasted.cello.node.ast.instruction">LocalDefine</a></code>, <code><a href="../node/ast/instruction/LocalGet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalGet</a></code>, <code><a href="../node/ast/instruction/LocalSet.html" title="class in honeyroasted.cello.node.ast.instruction">LocalSet</a></code>, <code><a href="../node/ast/instruction/flow/ScopeBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">ScopeBlock</a></code>, <code><a href="../node/ast/instruction/flow/SequenceBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">SequenceBlock</a></code>, <code><a href="../node/ast/util/TypeCaseNode.html" title="class in honeyroasted.cello.node.ast.util">TypeCaseNode</a></code>, <code><a href="../node/ast/instruction/value/TypeConstant.html" title="class in honeyroasted.cello.node.ast.instruction.value">TypeConstant</a></code>, <code><a href="../node/ast/util/UntypedNode.html" title="class in honeyroasted.cello.node.ast.util">UntypedNode</a></code>, <code><a href="../node/ast/instruction/flow/WhileBlock.html" title="class in honeyroasted.cello.node.ast.instruction.flow">WhileBlock</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractPropertyHolder</span>
@@ -102,6 +102,8 @@ implements <a href="PropertyHolder.html" title="interface in honeyroasted.cello.
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E()">AbstractPropertyHolder</a></span>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(honeyroasted.cello.properties.Properties)">AbstractPropertyHolder</a></span>&#8203;(<a href="Properties.html" title="class in honeyroasted.cello.properties">Properties</a>&nbsp;properties)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -119,6 +121,9 @@ implements <a href="PropertyHolder.html" title="interface in honeyroasted.cello.
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Properties.html" title="class in honeyroasted.cello.properties">Properties</a></code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#properties()">properties</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>&lt;T&gt;&nbsp;T</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#withProperties(honeyroasted.cello.properties.Properties)">withProperties</a></span>&#8203;(<a href="Properties.html" title="class in honeyroasted.cello.properties">Properties</a>&nbsp;properties)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -136,6 +141,12 @@ implements <a href="PropertyHolder.html" title="interface in honeyroasted.cello.
 <section class="constructor-details" id="constructor.detail">
 <h2>Constructor Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;(honeyroasted.cello.properties.Properties)">
+<h3>AbstractPropertyHolder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractPropertyHolder</span>&#8203;<span class="parameters">(<a href="Properties.html" title="class in honeyroasted.cello.properties">Properties</a>&nbsp;properties)</span></div>
+</section>
+</li>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>AbstractPropertyHolder</h3>
@@ -157,6 +168,16 @@ implements <a href="PropertyHolder.html" title="interface in honeyroasted.cello.
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="PropertyHolder.html#properties()">properties</a></code>&nbsp;in interface&nbsp;<code><a href="PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="withProperties(honeyroasted.cello.properties.Properties)">
+<h3>withProperties</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">withProperties</span>&#8203;<span class="parameters">(<a href="Properties.html" title="class in honeyroasted.cello.properties">Properties</a>&nbsp;properties)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="PropertyHolder.html#withProperties(honeyroasted.cello.properties.Properties)">withProperties</a></code>&nbsp;in interface&nbsp;<code><a href="PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></code></dd>
 </dl>
 </section>
 </li>
