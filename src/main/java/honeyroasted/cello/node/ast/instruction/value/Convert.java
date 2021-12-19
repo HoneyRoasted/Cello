@@ -31,14 +31,10 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
     }
 
     @Override
-    public void provideExpected(TypeInformal type) {
-        this.value.provideExpected(type);
-    }
-
-    @Override
     public Verification<Convert> verify(Environment environment, LocalScope localScope) {
         TypeInformal target = this.target.apply(environment, localScope);
         this.targetType = target;
+        this.value.provideExpected(target);
 
         Verification<TypedNode> verification = this.value.verify(environment, localScope);
         if (verification.success()) {
@@ -67,26 +63,58 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
         TypeInformal origin = this.value.type();
         TypeInformal target = this.targetType;
 
+        convert(adapter, origin, target);
+    }
+
+    public static void convert(InstructionAdapter adapter, TypeInformal origin, TypeInformal target) {
         if (origin.isPrimitive() || target.isPrimitive()) {
             if (origin.isPrimitive() && target.isPrimitive()) {
                 //Primitive conversion
                 adapter.cast(TypeUtil.asmType(origin), TypeUtil.asmType(target));
-            } else if (origin.isPrimitive() && origin instanceof TypeFilled fld) {
+            } else if (origin.isPrimitive() && origin instanceof TypeFilled fld &&
+                        target instanceof TypeFilled tFld) {
                 //Primitive boxing
-                TypeInformal box = Types.box(fld);
+                TypeInformal unbox = Types.unbox(tFld);
 
-                adapter.invokespecial(box.internalName(), "<init>",
-                        Types.method()
-                                .returnType(Types.VOID)
-                                .addParameter(origin)
-                                .build().descriptor(), false);
-            } else if (target.isPrimitive() && target instanceof TypeFilled fld) {
+                if (unbox.isPrimitive()) {
+                    //Converting to a specific box type
+                    adapter.cast(TypeUtil.asmType(fld), TypeUtil.asmType(unbox));
+                    primitiveBoxing(adapter, unbox);
+                } else {
+                    //Converting to our own box type
+                    primitiveBoxing(adapter, fld);
+                }
+            } else if (target.isPrimitive() && target instanceof TypeFilled fld &&
+                        origin instanceof TypeFilled oFld) {
                 //Primitive unboxing
-                adapter.invokevirtual(origin.descriptor(), fld.type().namespace().className() + "Value",
-                        Types.method()
-                                .returnType(fld)
-                                .build().descriptor(), false);
+                primitiveUnboxing(adapter, origin);
+                adapter.cast(TypeUtil.asmType(Types.unbox(oFld)), TypeUtil.asmType(fld));
             }
+        }
+    }
+
+    public static void primitiveBoxing(InstructionAdapter adapter, TypeInformal type) {
+        if (type instanceof TypeFilled fld) {
+            TypeInformal box = Types.box(fld);
+            TypeInformal unbox = Types.unbox(fld);
+
+            adapter.invokestatic(box.internalName(), "valueOf",
+                    Types.method()
+                            .returnType(box)
+                            .addParameter(unbox)
+                            .build().descriptor(), false);
+        }
+    }
+
+    public static void primitiveUnboxing(InstructionAdapter adapter, TypeInformal type) {
+        if (type instanceof TypeFilled fld) {
+            TypeInformal box = Types.box(fld);
+            TypeFilled unbox = Types.unbox(fld);
+
+            adapter.invokevirtual(box.descriptor(), unbox.type().namespace().className() + "Value",
+                    Types.method()
+                            .returnType(unbox)
+                            .build().descriptor(), false);
         }
     }
 
