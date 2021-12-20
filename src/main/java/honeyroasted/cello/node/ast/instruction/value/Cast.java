@@ -8,6 +8,7 @@ import honeyroasted.cello.node.ast.TypedNode;
 import honeyroasted.cello.node.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Types;
+import honeyroasted.javatype.informal.TypeClass;
 import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;
@@ -40,15 +41,13 @@ public class Cast extends AbstractPropertyHolder implements TypedNode<Cast, Cast
         Verification<TypedNode> verification = this.value.verify(environment, localScope);
 
         if (verification.success()) {
-            TypeInformal source = this.value.type();
-            if (!target.isAssignableTo(source)) {
+            if (target.isAssignableTo(this.value.type()) || this.value.type().isAssignableTo(target)) {
                 return Verification.builder(this)
                         .child(verification)
-                        .typeError(target, source)
                         .build();
             } else {
                 return Verification.builder(this)
-                        .child(verification)
+                        .illegalCastError(this.value.type(), target)
                         .build();
             }
         } else {
@@ -69,28 +68,39 @@ public class Cast extends AbstractPropertyHolder implements TypedNode<Cast, Cast
         if (origin.isAssignableTo(target)) {
             //Simple conversion
             Convert.convert(adapter, origin, target);
-        } else {
-            if (origin instanceof TypeFilled originFld &&
-                    target instanceof TypeFilled targetFld) {
-                if (originFld.isPrimitive() && targetFld.isPrimitive()) {
-                    //Primitive conversion
-                    adapter.cast(TypeUtil.asmType(origin), TypeUtil.asmType(target));
-                } else if (Types.unbox(originFld).isPrimitive() || Types.unbox(targetFld).isPrimitive()) {
-
-                    if (origin.isPrimitive() && !target.isPrimitive()) {
-                        //Primitive -> Box conversion
-                        TypeFilled primTarget = Types.unbox(targetFld);
-                        if (primTarget.isPrimitive()) {
-
-                        } else {
-                            Convert.primitiveBoxing(adapter, origin);
-                            adapter.cast(TypeUtil.asmType(Types.box(originFld)), TypeUtil.asmType(target));
-                        }
-
+        } else if (origin instanceof TypeClass && target instanceof TypeClass){
+            if (Types.unbox(origin).isPrimitive() || Types.unbox(target).isPrimitive()) {
+                if (origin.isPrimitive() && target.isPrimitive()) {
+                    //Primitive -> Primitive conversion
+                    Convert.checkcast(adapter, origin, target);
+                } else if (origin.isPrimitive() && !target.isPrimitive()) {
+                    //Primitive -> Box conversion
+                    TypeInformal primTarget = Types.unbox(target);
+                    if (primTarget.isPrimitive()) {
+                        Convert.checkcast(adapter, origin, primTarget);
+                        Convert.primitiveBoxing(adapter, origin);
+                    } else {
+                        Convert.primitiveBoxing(adapter, origin);
+                        Convert.checkcast(adapter, Types.box(origin), target);
                     }
-
+                } else if (!origin.isPrimitive() && target.isPrimitive()) {
+                    //Box -> Primitive conversion
+                    TypeInformal primOrig = Types.unbox(origin);
+                    if (primOrig.isPrimitive()) {
+                        Convert.primitiveUnboxing(adapter, primOrig);
+                        Convert.checkcast(adapter, primOrig, target);
+                    } else {
+                        Convert.checkcast(adapter, origin, Types.box(target));
+                        Convert.primitiveUnboxing(adapter, target);
+                    }
+                } else {
+                    //Box -> Box conversion
+                    Convert.primitiveUnboxing(adapter, origin);
+                    Convert.checkcast(adapter, Types.unbox(origin), Types.unbox(target));
+                    Convert.primitiveBoxing(adapter, target);
                 }
-
+            } else {
+                Convert.checkcast(adapter, origin, target);
             }
         }
     }

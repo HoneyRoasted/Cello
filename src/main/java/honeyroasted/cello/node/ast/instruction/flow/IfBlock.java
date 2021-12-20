@@ -73,7 +73,7 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
         adapter.mark(end);
     }
 
-    public static class If {
+    public static class If extends AbstractPropertyHolder {
         private TypedNode condition;
         private CodeNode body;
 

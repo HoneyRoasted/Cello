@@ -188,6 +188,11 @@ public class Verification<T> {
             }
             return this;
         }
+
+        public Builder<T> illegalCastError(TypeInformal type, TypeInformal target) {
+            return this.errorCode(ErrorCode.ILLEGAL_CAST_ERROR)
+                    .message("Inconvertible types, cannot cast " + type.externalName() + " to " + target.externalName());
+        }
     }
 
     public enum ErrorCode {
@@ -199,7 +204,8 @@ public class Verification<T> {
         CHILD_FAILED_ERROR,
         INVALID_TYPE_ERROR,
         INVALID_CONSTANT_ERROR,
-        CONTROL_FLOW_ERROR
+        CONTROL_FLOW_ERROR,
+        ILLEGAL_CAST_ERROR
     }
 
 }

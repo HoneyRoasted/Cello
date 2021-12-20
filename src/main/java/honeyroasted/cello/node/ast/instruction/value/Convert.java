@@ -70,7 +70,7 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
         if (origin.isPrimitive() || target.isPrimitive()) {
             if (origin.isPrimitive() && target.isPrimitive()) {
                 //Primitive conversion
-                adapter.cast(TypeUtil.asmType(origin), TypeUtil.asmType(target));
+                checkcast(adapter, origin, target);
             } else if (origin.isPrimitive() && origin instanceof TypeFilled fld &&
                         target instanceof TypeFilled tFld) {
                 //Primitive boxing
@@ -78,7 +78,7 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
 
                 if (unbox.isPrimitive()) {
                     //Converting to a specific box type
-                    adapter.cast(TypeUtil.asmType(fld), TypeUtil.asmType(unbox));
+                    checkcast(adapter, fld, unbox);
                     primitiveBoxing(adapter, unbox);
                 } else {
                     //Converting to our own box type
@@ -88,7 +88,7 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
                         origin instanceof TypeFilled oFld) {
                 //Primitive unboxing
                 primitiveUnboxing(adapter, origin);
-                adapter.cast(TypeUtil.asmType(Types.unbox(oFld)), TypeUtil.asmType(fld));
+                checkcast(adapter, oFld, fld);
             }
         }
     }
@@ -115,6 +115,14 @@ public class Convert extends AbstractPropertyHolder implements TypedNode<Convert
                     Types.method()
                             .returnType(unbox)
                             .build().descriptor(), false);
+        }
+    }
+
+    public static void checkcast(InstructionAdapter adapter, TypeInformal origin, TypeInformal target) {
+        if (origin.isPrimitive() && target.isPrimitive()) {
+            adapter.cast(TypeUtil.asmType(origin), TypeUtil.asmType(target));
+        } else {
+            adapter.checkcast(TypeUtil.asmType(target));
         }
     }
 
