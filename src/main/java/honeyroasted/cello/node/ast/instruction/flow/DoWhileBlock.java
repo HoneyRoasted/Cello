@@ -42,7 +42,7 @@ public class DoWhileBlock extends AbstractPropertyHolder implements CodeNode<DoW
         child.createControl(Control.Kind.BREAK, this.name);
 
         return Verification.builder(this)
-                .child(this.condition.verify(environment, localScope))
+                .child(this.condition.verify(environment, child))
                 .child(this.sequence.verify(environment, child))
                 .andChildren()
                 .build();
@@ -61,9 +61,9 @@ public class DoWhileBlock extends AbstractPropertyHolder implements CodeNode<DoW
         adapter.mark(cont.label());
 
         if (this.condition instanceof BooleanOperator bop) {
-            bop.jumpIfTrue(start, adapter, environment, localScope);
+            bop.jumpIfTrue(start, adapter, environment, child);
         } else {
-            this.condition.apply(adapter, environment, localScope);
+            this.condition.apply(adapter, environment, child);
             adapter.ifne(start);
         }
 

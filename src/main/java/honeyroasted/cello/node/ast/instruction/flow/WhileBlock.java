@@ -40,7 +40,7 @@ public class WhileBlock extends AbstractPropertyHolder implements CodeNode<While
         child.createControl(Control.Kind.BREAK, this.name);
 
         return Verification.builder(this)
-                .child(this.condition.verify(environment, localScope))
+                .child(this.condition.verify(environment, child))
                 .child(this.sequence.verify(environment, child))
                 .andChildren()
                 .build();
@@ -54,9 +54,9 @@ public class WhileBlock extends AbstractPropertyHolder implements CodeNode<While
 
         adapter.mark(cont.label());
         if (this.condition instanceof BooleanOperator bop) {
-            bop.jumpIfFalse(brk.label(), adapter, environment, localScope);
+            bop.jumpIfFalse(brk.label(), adapter, environment, child);
         } else {
-            this.condition.apply(adapter, environment, localScope);
+            this.condition.apply(adapter, environment, child);
             adapter.ifeq(brk.label());
         }
 

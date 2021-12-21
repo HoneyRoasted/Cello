@@ -26,19 +26,21 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
     public IfBlock preprocess() {
         this.ifs = this.ifs.stream().map(i -> new If(i.condition() instanceof BooleanOperator ?
                 i.condition().preprocessFully() : Nodes.convert(i.condition(), Types.BOOLEAN).preprocessFully(),
-                Nodes.scope(i.body()).preprocessFully())).collect(Collectors.toList());
+                i.body().preprocessFully())).collect(Collectors.toList());
         return this;
     }
 
     @Override
     public Verification<IfBlock> verify(Environment environment, LocalScope localScope) {
         return Verification.builder(this)
-                .children(this.ifs.stream().map(i ->
-                        Verification.builder(i)
-                                .child(i.condition().verify(environment, localScope))
-                                .child(i.body().verify(environment, localScope))
-                                .andChildren()
-                                .build()
+                .children(this.ifs.stream().map(i -> {
+                            LocalScope child = localScope.child();
+                            return Verification.builder(i)
+                                    .child(i.condition().verify(environment, child))
+                                    .child(i.body().verify(environment, child))
+                                    .andChildren()
+                                    .build();
+                        }
                 ).collect(Collectors.toList()))
                 .andChildren()
                 .build();
@@ -48,6 +50,8 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
     public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
         Label end = new Label();
         for (int i = 0; i < this.ifs.size(); i++) {
+            LocalScope child = localScope.child();
+
             If ifBlk = this.ifs.get(i);
             Label endBlk;
             if (i != this.ifs.size() - 1) {
@@ -57,13 +61,13 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
             }
 
             if (ifBlk.condition() instanceof BooleanOperator bop) {
-                bop.jumpIfFalse(endBlk, adapter, environment, localScope);
+                bop.jumpIfFalse(endBlk, adapter, environment, child);
             } else {
-                ifBlk.condition().apply(adapter, environment, localScope);
+                ifBlk.condition().apply(adapter, environment, child);
                 adapter.ifeq(endBlk);
             }
 
-            ifBlk.body().apply(adapter, environment, localScope);
+            ifBlk.body().apply(adapter, environment, child);
             adapter.goTo(end);
 
             if (i != this.ifs.size() - 1) {
