@@ -2,13 +2,13 @@ package honeyroasted.cello.node;
 
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
-import honeyroasted.cello.node.ast.CodeNode;
-import honeyroasted.cello.node.ast.TypedNode;
-import honeyroasted.cello.node.ast.instruction.flow.ScopeBlock;
-import honeyroasted.cello.node.ast.instruction.flow.SequenceBlock;
-import honeyroasted.cello.node.ast.instruction.value.Constant;
-import honeyroasted.cello.node.ast.instruction.value.Convert;
-import honeyroasted.cello.node.ast.instruction.value.TypeConstant;
+import honeyroasted.cello.node.instruction.CodeNode;
+import honeyroasted.cello.node.instruction.TypedNode;
+import honeyroasted.cello.node.instruction.flow.ScopeBlock;
+import honeyroasted.cello.node.instruction.flow.SequenceBlock;
+import honeyroasted.cello.node.instruction.value.Constant;
+import honeyroasted.cello.node.instruction.value.Convert;
+import honeyroasted.cello.node.instruction.value.TypeConstant;
 import honeyroasted.javatype.informal.TypeInformal;
 
 import java.util.Arrays;
