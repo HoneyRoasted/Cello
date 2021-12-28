@@ -1,7 +1,6 @@
 package honeyroasted.cello.node.structure;
 
 import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
-import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 
 public class ParameterNode extends AbstractAnnotated {

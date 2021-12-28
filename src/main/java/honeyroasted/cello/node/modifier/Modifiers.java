@@ -35,4 +35,24 @@ public class Modifiers {
         return mods;
     }
 
+    public static Modifiers fromBits(int mods) {
+        Modifiers modifiers = new Modifiers();
+        for (Modifier mod : Modifier.values()) {
+            if ((mod.code() & mods) != 0) {
+                modifiers.add(mod);
+            }
+        }
+        return modifiers;
+    }
+
+    public static Modifiers fromBits(int mods, ModifierTarget target) {
+        Modifiers modifiers = new Modifiers();
+        for (Modifier mod : Modifier.values()) {
+            if (mod.targets(target) && (mod.code() & mods) != 0) {
+                modifiers.add(mod);
+            }
+        }
+        return modifiers;
+    }
+
 }

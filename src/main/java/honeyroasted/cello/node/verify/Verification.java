@@ -193,6 +193,11 @@ public class Verification<T> {
             return this.errorCode(ErrorCode.ILLEGAL_CAST_ERROR)
                     .message("Inconvertible types, cannot cast " + type.externalName() + " to " + target.externalName());
         }
+
+        public Builder<T> invalidAnnotationError(String message) {
+            return this.errorCode(ErrorCode.INVALID_ANNOTATION_ERROR)
+                    .message(message);
+        }
     }
 
     public enum ErrorCode {
@@ -205,7 +210,8 @@ public class Verification<T> {
         INVALID_TYPE_ERROR,
         INVALID_CONSTANT_ERROR,
         CONTROL_FLOW_ERROR,
-        ILLEGAL_CAST_ERROR
+        ILLEGAL_CAST_ERROR,
+        INVALID_ANNOTATION_ERROR
     }
 
 }
