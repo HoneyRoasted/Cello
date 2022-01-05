@@ -4,7 +4,7 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;
-import honeyroasted.cello.node.verify.Verification;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeArray;

@@ -3,7 +3,7 @@ package honeyroasted.cello.node.instruction.flow;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.instruction.CodeNode;
-import honeyroasted.cello.node.verify.Verification;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import org.objectweb.asm.commons.InstructionAdapter;
 

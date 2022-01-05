@@ -1,16 +1,13 @@
 package honeyroasted.cello.node.structure.annotation;
 
-import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.node.Node;
-import honeyroasted.cello.node.structure.ClassNode;
-import honeyroasted.cello.node.verify.Verification;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public interface AnnotationValue extends Node {
 

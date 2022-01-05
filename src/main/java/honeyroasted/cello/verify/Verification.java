@@ -1,7 +1,7 @@
-package honeyroasted.cello.node.verify;
+package honeyroasted.cello.verify;
 
+import honeyroasted.javatype.Type;
 import honeyroasted.javatype.informal.TypeInformal;
-import honeyroasted.javatype.reflection.ReflectionTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,41 +93,6 @@ public class Verification<T> {
             return this.message;
         }
 
-        public Builder<T> varAlreadyDefinedError(String name) {
-            return this.errorCode(ErrorCode.VAR_ALREADY_DEFINED_ERROR)
-                    .message("Variable '" + name + "' has already been defined");
-        }
-
-        public Builder<T> invalidTypeError(TypeInformal type) {
-            return this.errorCode(ErrorCode.INVALID_TYPE_ERROR)
-                    .message("Invalid type '" + (type == null ? "null" : type.externalName()) + "'");
-        }
-
-        public Builder<T> typeError(TypeInformal left, TypeInformal right) {
-            return this.errorCode(ErrorCode.TYPE_ERROR)
-                    .message(left.externalName() + " is not assignable to " + right.externalName());
-        }
-
-        public Builder<T> varNotFoundError(String name) {
-            return this.errorCode(ErrorCode.VAR_NOT_FOUND_ERROR)
-                    .message("No variable named '" + name + "' exists in local scope");
-        }
-
-        public Builder<T> noChildError() {
-            return this.errorCode(ErrorCode.CHILD_FAILED_ERROR)
-                    .message("Child node either failed or had no value");
-        }
-
-        public Builder<T> invalidConstant(Class<?> aClass) {
-            return this.errorCode(ErrorCode.INVALID_CONSTANT_ERROR)
-                    .message("Invalid constant type " + aClass.getName());
-        }
-
-        public Builder<T> controlError(String name, String kind) {
-            return this.errorCode(ErrorCode.CONTROL_FLOW_ERROR)
-                    .message(kind + " statement not allowed here" + (name == null ? "" : " no block called '" + name + "' found"));
-        }
-
         public Builder<T> message(String message) {
             this.message = message;
             return this;
@@ -189,6 +154,41 @@ public class Verification<T> {
             return this;
         }
 
+        public Builder<T> varAlreadyDefinedError(String name) {
+            return this.errorCode(ErrorCode.VAR_ALREADY_DEFINED_ERROR)
+                    .message("Variable '" + name + "' has already been defined");
+        }
+
+        public Builder<T> invalidTypeError(TypeInformal type) {
+            return this.errorCode(ErrorCode.INVALID_TYPE_ERROR)
+                    .message("Invalid type '" + (type == null ? "null" : type.externalName()) + "'");
+        }
+
+        public Builder<T> typeError(TypeInformal left, TypeInformal right) {
+            return this.errorCode(ErrorCode.TYPE_ERROR)
+                    .message(left.externalName() + " is not assignable to " + right.externalName());
+        }
+
+        public Builder<T> varNotFoundError(String name) {
+            return this.errorCode(ErrorCode.VAR_NOT_FOUND_ERROR)
+                    .message("No variable named '" + name + "' exists in local scope");
+        }
+
+        public Builder<T> noChildError() {
+            return this.errorCode(ErrorCode.CHILD_FAILED_ERROR)
+                    .message("Child node either failed or had no value");
+        }
+
+        public Builder<T> invalidConstant(Class<?> aClass) {
+            return this.errorCode(ErrorCode.INVALID_CONSTANT_ERROR)
+                    .message("Invalid constant type " + aClass.getName());
+        }
+
+        public Builder<T> controlError(String name, String kind) {
+            return this.errorCode(ErrorCode.CONTROL_FLOW_ERROR)
+                    .message(kind + " statement not allowed here" + (name == null ? "" : " no block called '" + name + "' found"));
+        }
+
         public Builder<T> illegalCastError(TypeInformal type, TypeInformal target) {
             return this.errorCode(ErrorCode.ILLEGAL_CAST_ERROR)
                     .message("Inconvertible types, cannot cast " + type.externalName() + " to " + target.externalName());
@@ -197,6 +197,16 @@ public class Verification<T> {
         public Builder<T> invalidAnnotationError(String message) {
             return this.errorCode(ErrorCode.INVALID_ANNOTATION_ERROR)
                     .message(message);
+        }
+
+        public Builder<T> typeNotFoundError(Type type) {
+            return this.errorCode(ErrorCode.TYPE_NOT_FOUND_ERROR)
+                    .message("Could not resolve " + type.externalName());
+        }
+
+        public Builder<T> typeVarNotFoundError(T name) {
+            return this.errorCode(ErrorCode.DUPLICATE_TYPE_VAR)
+                    .message("Type variable '" + name + "' already defined");
         }
     }
 
@@ -211,7 +221,9 @@ public class Verification<T> {
         INVALID_CONSTANT_ERROR,
         CONTROL_FLOW_ERROR,
         ILLEGAL_CAST_ERROR,
-        INVALID_ANNOTATION_ERROR
+        INVALID_ANNOTATION_ERROR,
+        TYPE_NOT_FOUND_ERROR,
+        DUPLICATE_TYPE_VAR
     }
 
 }

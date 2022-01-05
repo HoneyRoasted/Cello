@@ -5,7 +5,7 @@ import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
-import honeyroasted.cello.node.verify.Verification;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;

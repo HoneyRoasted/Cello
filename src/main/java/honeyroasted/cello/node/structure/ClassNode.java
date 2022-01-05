@@ -16,6 +16,10 @@ public class ClassNode extends AbstractAnnotated {
         this.type = type;
     }
 
+    public TypeParameterized type() {
+        return this.type;
+    }
+
     public List<FieldNode> fields() {
         return fields;
     }

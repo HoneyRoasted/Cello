@@ -4,7 +4,7 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.Node;
 import honeyroasted.cello.node.instruction.util.UntypedNode;
-import honeyroasted.cello.node.verify.Verification;
+import honeyroasted.cello.verify.Verification;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public interface CodeNode<T extends CodeNode, K extends CodeNode> extends Node {

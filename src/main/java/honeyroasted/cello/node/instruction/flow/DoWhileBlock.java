@@ -7,7 +7,7 @@ import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.node.instruction.operator.bool.BooleanOperator;
-import honeyroasted.cello.node.verify.Verification;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Types;
 import org.objectweb.asm.Label;
