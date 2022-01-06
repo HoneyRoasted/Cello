@@ -1,5 +1,8 @@
 package honeyroasted.cello.environment;
 
+import honeyroasted.cello.node.modifier.Modifier;
+import honeyroasted.cello.node.structure.ClassNode;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeArray;
@@ -10,6 +13,8 @@ import honeyroasted.javatype.method.TypeMethodFilled;
 import honeyroasted.javatype.method.TypeMethodParameterized;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface TypeUtil {
@@ -43,6 +48,24 @@ public interface TypeUtil {
             type.pseudoParents().forEach(t -> set.addAll(flatten(t)));
         }
         return set;
+    }
+
+    static Verification<TypeInformal> commonParent(Environment environment, List<TypeInformal> types) {
+        Verification.Builder<TypeInformal> builder = Verification.builder();
+
+        Set<TypeInformal> parents = Types.commonParents(types);
+        for (TypeInformal type : parents) {
+            if (type instanceof TypeFilled fld) {
+                Verification<ClassNode> node = environment.lookup(fld);
+                builder.child(node);
+                if (node.isPresent() && !node.value().modifiers().has(Modifier.INTERFACE)) {
+                    builder.value(fld);
+                    return builder.build();
+                }
+            }
+        }
+
+        return builder.value(Types.OBJECT).andChildren().build();
     }
 
 }

@@ -38,6 +38,14 @@ public class Verification<T> {
         return b;
     }
 
+    public ErrorCode errorCode() {
+        return this.errorCode;
+    }
+
+    public List<Verification<?>> children() {
+        return this.children;
+    }
+
     public boolean success() {
         return success;
     }
@@ -87,13 +95,17 @@ public class Verification<T> {
         return this.success() && this.value != null;
     }
 
+    public String format() {
+        return VerificationFormatter.format(this);
+    }
+
     public static class Builder<T> {
         private boolean success = true;
         private String message = "Success";
         private T value = null;
         private Throwable error = null;
         private List<Verification<?>> children = new ArrayList<>();
-        private ErrorCode errorCode = ErrorCode.UNKNOWN;
+        private ErrorCode errorCode = ErrorCode.UNKNOWN_ERROR;
 
         public Builder<T> from(Verification<T> verification) {
             this.success = verification.success;
@@ -107,7 +119,7 @@ public class Verification<T> {
 
         public Verification<T> build() {
             return new Verification<>(this.success, this.message, this.value, this.error, this.children,
-                    this.success && this.errorCode == ErrorCode.UNKNOWN ? ErrorCode.NONE : this.errorCode);
+                    this.success && this.errorCode == ErrorCode.UNKNOWN_ERROR ? ErrorCode.SUCCESS : this.errorCode);
         }
 
         public ErrorCode errorCode() {
@@ -115,7 +127,7 @@ public class Verification<T> {
         }
 
         public Builder<T> errorCode(ErrorCode errorCode) {
-            if (errorCode != ErrorCode.NONE) {
+            if (errorCode != ErrorCode.SUCCESS) {
                 this.success(false);
             }
             this.errorCode = errorCode;
@@ -180,6 +192,7 @@ public class Verification<T> {
             } else {
                 this.success = false;
                 this.message = "At least one child failed";
+                this.errorCode = ErrorCode.CHILD_FAILED_ERROR;
             }
             return this;
         }
@@ -192,6 +205,7 @@ public class Verification<T> {
             } else {
                 this.success = false;
                 this.message = "All children failed";
+                this.errorCode = ErrorCode.CHILD_FAILED_ERROR;
             }
             return this;
         }
@@ -262,14 +276,14 @@ public class Verification<T> {
         }
 
         public Builder<T> thisNotAvailable() {
-            return this.errorCode(ErrorCode.THIS_NOT_AVAILABLE)
+            return this.errorCode(ErrorCode.THIS_NOT_AVAILABLE_ERROR)
                     .message("'this' not available in static context");
         }
     }
 
     public enum ErrorCode {
-        NONE,
-        UNKNOWN,
+        SUCCESS,
+        UNKNOWN_ERROR,
         TYPE_ERROR,
         VAR_NOT_FOUND_ERROR,
         VAR_ALREADY_DEFINED_ERROR,
@@ -281,7 +295,7 @@ public class Verification<T> {
         INVALID_ANNOTATION_ERROR,
         TYPE_NOT_FOUND_ERROR,
         DUPLICATE_TYPE_VAR,
-        THIS_NOT_AVAILABLE,
+        THIS_NOT_AVAILABLE_ERROR,
 
         FAILED_MAPPING
     }

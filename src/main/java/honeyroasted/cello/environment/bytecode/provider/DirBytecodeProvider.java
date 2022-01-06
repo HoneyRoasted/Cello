@@ -30,8 +30,7 @@ public class DirBytecodeProvider implements BytecodeProvider {
         } else {
             return Verification.<byte[]>builder()
                     .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Could not locate class " + namespace.name() + " in directory " + this.root)
-                    .typeNotFoundError(namespace)
+                    .message("Could not locate class " + namespace.name() + " at path " + path)
                     .build();
         }
     }
