@@ -27,6 +27,13 @@ public class TypeVarScope {
         this(null);
     }
 
+    public void provideParent(TypeVarScope parent) {
+        if (this.parent == null) {
+            this.parent = parent;
+            this.parent.children.add(this);
+        }
+    }
+
     public Optional<TypeVar> fetch(String name) {
         return vars.containsKey(name) ? Optional.of(vars.get(name)) :
                 this.parent != null ? this.parent.fetch(name) : Optional.empty();

@@ -7,6 +7,15 @@ import java.util.Set;
 public class Modifiers {
     private Set<Modifier> modifiers = new HashSet<>();
 
+    public boolean has(Modifier... modifiers) {
+        for (Modifier mod : modifiers) {
+            if (!this.modifiers.contains(mod)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Modifiers add(Modifier... modifiers) {
         Collections.addAll(this.modifiers, modifiers);
         return this;
@@ -55,4 +64,12 @@ public class Modifiers {
         return modifiers;
     }
 
+    public void set(Modifiers modifiers) {
+        this.modifiers.clear();
+        this.modifiers.addAll(modifiers.modifiers);
+    }
+
+    public Set<Modifier> modifiers() {
+        return modifiers;
+    }
 }

@@ -19,4 +19,9 @@ public class ParameterNode extends AbstractAnnotated {
     public String name() {
         return this.name;
     }
+
+    public ParameterNode setName(String name) {
+        this.name = name;
+        return this;
+    }
 }

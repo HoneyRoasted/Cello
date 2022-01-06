@@ -1,5 +1,10 @@
 honeyroasted.cello
 honeyroasted.cello.environment
+honeyroasted.cello.environment.bytecode
+honeyroasted.cello.environment.bytecode.provider
+honeyroasted.cello.environment.bytecode.signature
+honeyroasted.cello.environment.bytecode.visitor
+honeyroasted.cello.environment.bytecode.visitor.annotation
 honeyroasted.cello.node
 honeyroasted.cello.node.instruction
 honeyroasted.cello.node.instruction.flow
@@ -11,5 +16,5 @@ honeyroasted.cello.node.instruction.var
 honeyroasted.cello.node.modifier
 honeyroasted.cello.node.structure
 honeyroasted.cello.node.structure.annotation
-honeyroasted.cello.node.verify
 honeyroasted.cello.properties
+honeyroasted.cello.verify

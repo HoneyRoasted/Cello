@@ -55,6 +55,11 @@ loadScripts(document, 'script');</script>
 <ul class="horizontal">
 <li><a href="honeyroasted/cello/package-tree.html">honeyroasted.cello</a>, </li>
 <li><a href="honeyroasted/cello/environment/package-tree.html">honeyroasted.cello.environment</a>, </li>
+<li><a href="honeyroasted/cello/environment/bytecode/package-tree.html">honeyroasted.cello.environment.bytecode</a>, </li>
+<li><a href="honeyroasted/cello/environment/bytecode/provider/package-tree.html">honeyroasted.cello.environment.bytecode.provider</a>, </li>
+<li><a href="honeyroasted/cello/environment/bytecode/signature/package-tree.html">honeyroasted.cello.environment.bytecode.signature</a>, </li>
+<li><a href="honeyroasted/cello/environment/bytecode/visitor/package-tree.html">honeyroasted.cello.environment.bytecode.visitor</a>, </li>
+<li><a href="honeyroasted/cello/environment/bytecode/visitor/annotation/package-tree.html">honeyroasted.cello.environment.bytecode.visitor.annotation</a>, </li>
 <li><a href="honeyroasted/cello/node/package-tree.html">honeyroasted.cello.node</a>, </li>
 <li><a href="honeyroasted/cello/node/instruction/package-tree.html">honeyroasted.cello.node.instruction</a>, </li>
 <li><a href="honeyroasted/cello/node/instruction/flow/package-tree.html">honeyroasted.cello.node.instruction.flow</a>, </li>
@@ -66,8 +71,8 @@ loadScripts(document, 'script');</script>
 <li><a href="honeyroasted/cello/node/modifier/package-tree.html">honeyroasted.cello.node.modifier</a>, </li>
 <li><a href="honeyroasted/cello/node/structure/package-tree.html">honeyroasted.cello.node.structure</a>, </li>
 <li><a href="honeyroasted/cello/node/structure/annotation/package-tree.html">honeyroasted.cello.node.structure.annotation</a>, </li>
-<li><a href="honeyroasted/cello/node/verify/package-tree.html">honeyroasted.cello.node.verify</a>, </li>
-<li><a href="honeyroasted/cello/properties/package-tree.html">honeyroasted.cello.properties</a></li>
+<li><a href="honeyroasted/cello/properties/package-tree.html">honeyroasted.cello.properties</a>, </li>
+<li><a href="honeyroasted/cello/verify/package-tree.html">honeyroasted.cello.verify</a></li>
 </ul>
 </div>
 <section class="hierarchy">
@@ -75,6 +80,11 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">Object</span></a>
 <ul>
+<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">AbstractCachingEnvironment</span></a> (implements honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/CachingEnvironment.html" title="interface in honeyroasted.cello.environment">CachingEnvironment</a>)
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.<a href="honeyroasted/cello/environment/bytecode/BytecodeEnvironment.html" title="class in honeyroasted.cello.environment.bytecode"><span class="type-name-link">BytecodeEnvironment</span></a></li>
+</ul>
+</li>
 <li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/AbstractPropertyHolder.html" title="class in honeyroasted.cello.properties"><span class="type-name-link">AbstractPropertyHolder</span></a> (implements honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a>)
 <ul>
 <li class="circle">honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/AbstractModifiable.html" title="class in honeyroasted.cello.node.modifier"><span class="type-name-link">AbstractModifiable</span></a> (implements honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/Modifiable.html" title="interface in honeyroasted.cello.node.modifier">Modifiable</a>)
@@ -82,6 +92,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AbstractAnnotated.html" title="class in honeyroasted.cello.node.structure.annotation"><span class="type-name-link">AbstractAnnotated</span></a> (implements honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/Annotated.html" title="interface in honeyroasted.cello.node.structure.annotation">Annotated</a>, honeyroasted.cello.node.<a href="honeyroasted/cello/node/Node.html" title="interface in honeyroasted.cello.node">Node</a>)
 <ul>
 <li class="circle">honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure"><span class="type-name-link">ClassNode</span></a></li>
+<li class="circle">honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/FieldNode.html" title="class in honeyroasted.cello.node.structure"><span class="type-name-link">FieldNode</span></a></li>
 <li class="circle">honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure"><span class="type-name-link">MethodNode</span></a> (implements honeyroasted.cello.node.<a href="honeyroasted/cello/node/Node.html" title="interface in honeyroasted.cello.node">Node</a>)</li>
 <li class="circle">honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ParameterNode.html" title="class in honeyroasted.cello.node.structure"><span class="type-name-link">ParameterNode</span></a></li>
 </ul>
@@ -90,7 +101,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">honeyroasted.cello.node.instruction.util.<a href="honeyroasted/cello/node/instruction/util/AlternativeProcessNode.html" title="class in honeyroasted.cello.node.instruction.util"><span class="type-name-link">AlternativeProcessNode</span></a>&lt;T,&#8203;K&gt; (implements honeyroasted.cello.node.instruction.<a href="honeyroasted/cello/node/instruction/CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;T,&#8203;K&gt;)</li>
 <li class="circle">honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationNode.html" title="class in honeyroasted.cello.node.structure.annotation"><span class="type-name-link">AnnotationNode</span></a> (implements honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.html" title="interface in honeyroasted.cello.node.structure.annotation">AnnotationValue</a>)</li>
-<li class="circle">honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.Array.html" title="class in honeyroasted.cello.node.structure.annotation"><span class="type-name-link">AnnotationValue.Array</span></a>&lt;T&gt; (implements honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.html" title="interface in honeyroasted.cello.node.structure.annotation">AnnotationValue</a>)</li>
+<li class="circle">honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.Array.html" title="class in honeyroasted.cello.node.structure.annotation"><span class="type-name-link">AnnotationValue.Array</span></a> (implements honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.html" title="interface in honeyroasted.cello.node.structure.annotation">AnnotationValue</a>)</li>
 <li class="circle">honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.Enum.html" title="class in honeyroasted.cello.node.structure.annotation"><span class="type-name-link">AnnotationValue.Enum</span></a> (implements honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.html" title="interface in honeyroasted.cello.node.structure.annotation">AnnotationValue</a>)</li>
 <li class="circle">honeyroasted.cello.node.instruction.operator.bool.<a href="honeyroasted/cello/node/instruction/operator/bool/BooleanAnd.html" title="class in honeyroasted.cello.node.instruction.operator.bool"><span class="type-name-link">BooleanAnd</span></a> (implements honeyroasted.cello.node.instruction.operator.bool.<a href="honeyroasted/cello/node/instruction/operator/bool/BooleanOperator.html" title="interface in honeyroasted.cello.node.instruction.operator.bool">BooleanOperator</a>&lt;T,&#8203;K&gt;)</li>
 <li class="circle">honeyroasted.cello.node.instruction.operator.bool.<a href="honeyroasted/cello/node/instruction/operator/bool/BooleanNot.html" title="class in honeyroasted.cello.node.instruction.operator.bool"><span class="type-name-link">BooleanNot</span></a> (implements honeyroasted.cello.node.instruction.operator.bool.<a href="honeyroasted/cello/node/instruction/operator/bool/BooleanOperator.html" title="interface in honeyroasted.cello.node.instruction.operator.bool">BooleanOperator</a>&lt;T,&#8203;K&gt;)</li>
@@ -117,15 +128,62 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">honeyroasted.cello.node.instruction.operator.<a href="honeyroasted/cello/node/instruction/operator/Add.html" title="class in honeyroasted.cello.node.instruction.operator"><span class="type-name-link">Add</span></a></li>
+<li class="circle">org.objectweb.asm.AnnotationVisitor
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.visitor.annotation.<a href="honeyroasted/cello/environment/bytecode/visitor/annotation/AnnotationArrayNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor.annotation"><span class="type-name-link">AnnotationArrayNodeVisitor</span></a></li>
+<li class="circle">honeyroasted.cello.environment.bytecode.visitor.annotation.<a href="honeyroasted/cello/environment/bytecode/visitor/annotation/AnnotationNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor.annotation"><span class="type-name-link">AnnotationNodeVisitor</span></a></li>
+</ul>
+</li>
+<li class="circle">org.objectweb.asm.ClassVisitor
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor"><span class="type-name-link">ClassNodeVisitor</span></a></li>
+</ul>
+</li>
 <li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Control.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">Control</span></a></li>
-<li class="circle">honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/FieldNode.html" title="class in honeyroasted.cello.node.structure"><span class="type-name-link">FieldNode</span></a></li>
+<li class="circle">org.objectweb.asm.FieldVisitor
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/FieldNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor"><span class="type-name-link">FieldNodeVisitor</span></a></li>
+</ul>
+</li>
 <li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/LocalScope.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">LocalScope</span></a></li>
+<li class="circle">org.objectweb.asm.MethodVisitor
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/MethodNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor"><span class="type-name-link">MethodNodeVisitor</span></a></li>
+</ul>
+</li>
 <li class="circle">honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/Modifiers.html" title="class in honeyroasted.cello.node.modifier"><span class="type-name-link">Modifiers</span></a></li>
 <li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/Properties.html" title="class in honeyroasted.cello.properties"><span class="type-name-link">Properties</span></a></li>
+<li class="circle">honeyroasted.cello.environment.bytecode.provider.<a href="honeyroasted/cello/environment/bytecode/provider/RuntimeBytecodeProvider.html" title="class in honeyroasted.cello.environment.bytecode.provider"><span class="type-name-link">RuntimeBytecodeProvider</span></a> (implements honeyroasted.cello.environment.bytecode.provider.<a href="honeyroasted/cello/environment/bytecode/provider/BytecodeProvider.html" title="interface in honeyroasted.cello.environment.bytecode.provider">BytecodeProvider</a>)</li>
+<li class="circle">org.objectweb.asm.signature.SignatureVisitor
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.signature.<a href="honeyroasted/cello/environment/bytecode/signature/CelloSignatureVisitor.html" title="class in honeyroasted.cello.environment.bytecode.signature"><span class="type-name-link">CelloSignatureVisitor</span></a>&lt;T&gt;
+<ul>
+<li class="circle">honeyroasted.cello.environment.bytecode.signature.<a href="honeyroasted/cello/environment/bytecode/signature/ClassSignatureVisitor.html" title="class in honeyroasted.cello.environment.bytecode.signature"><span class="type-name-link">ClassSignatureVisitor</span></a></li>
+<li class="circle">honeyroasted.cello.environment.bytecode.signature.<a href="honeyroasted/cello/environment/bytecode/signature/MethodSignatureVisitor.html" title="class in honeyroasted.cello.environment.bytecode.signature"><span class="type-name-link">MethodSignatureVisitor</span></a></li>
+<li class="circle">honeyroasted.cello.environment.bytecode.signature.<a href="honeyroasted/cello/environment/bytecode/signature/TypeSignatureVisitor.html" title="class in honeyroasted.cello.environment.bytecode.signature"><span class="type-name-link">TypeSignatureVisitor</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">honeyroasted.cello.<a href="honeyroasted/cello/Test.html" title="class in honeyroasted.cello"><span class="type-name-link">Test</span></a></li>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">Throwable</span></a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">Exception</span></a>
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link"><span class="type-name-link">RuntimeException</span></a>
+<ul>
+<li class="circle">honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/VerificationException.html" title="class in honeyroasted.cello.verify"><span class="type-name-link">VerificationException</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">honeyroasted.cello.node.instruction.util.<a href="honeyroasted/cello/node/instruction/util/TypeCaseNode.Builder.html" title="class in honeyroasted.cello.node.instruction.util"><span class="type-name-link">TypeCaseNode.Builder</span></a></li>
+<li class="circle">honeyroasted.cello.environment.bytecode.signature.<a href="honeyroasted/cello/environment/bytecode/signature/TypeVarScope.html" title="class in honeyroasted.cello.environment.bytecode.signature"><span class="type-name-link">TypeVarScope</span></a></li>
 <li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Var.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">Var</span></a></li>
-<li class="circle">honeyroasted.cello.node.verify.<a href="honeyroasted/cello/node/verify/Verification.html" title="class in honeyroasted.cello.node.verify"><span class="type-name-link">Verification</span></a>&lt;T&gt;</li>
-<li class="circle">honeyroasted.cello.node.verify.<a href="honeyroasted/cello/node/verify/Verification.Builder.html" title="class in honeyroasted.cello.node.verify"><span class="type-name-link">Verification.Builder</span></a>&lt;T&gt;</li>
+<li class="circle">honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/Verification.html" title="class in honeyroasted.cello.verify"><span class="type-name-link">Verification</span></a>&lt;T&gt;</li>
+<li class="circle">honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/Verification.Builder.html" title="class in honeyroasted.cello.verify"><span class="type-name-link">Verification.Builder</span></a>&lt;T&gt;</li>
 </ul>
 </li>
 </ul>
@@ -134,7 +192,12 @@ loadScripts(document, 'script');</script>
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
 <li class="circle">honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/Annotated.html" title="interface in honeyroasted.cello.node.structure.annotation"><span class="type-name-link">Annotated</span></a></li>
-<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Environment.html" title="interface in honeyroasted.cello.environment"><span class="type-name-link">Environment</span></a></li>
+<li class="circle">honeyroasted.cello.environment.bytecode.provider.<a href="honeyroasted/cello/environment/bytecode/provider/BytecodeProvider.html" title="interface in honeyroasted.cello.environment.bytecode.provider"><span class="type-name-link">BytecodeProvider</span></a></li>
+<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Environment.html" title="interface in honeyroasted.cello.environment"><span class="type-name-link">Environment</span></a>
+<ul>
+<li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/CachingEnvironment.html" title="interface in honeyroasted.cello.environment"><span class="type-name-link">CachingEnvironment</span></a></li>
+</ul>
+</li>
 <li class="circle">honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/Modifiable.html" title="interface in honeyroasted.cello.node.modifier"><span class="type-name-link">Modifiable</span></a></li>
 <li class="circle">honeyroasted.cello.node.<a href="honeyroasted/cello/node/Nodes.html" title="interface in honeyroasted.cello.node"><span class="type-name-link">Nodes</span></a></li>
 <li class="circle">honeyroasted.cello.properties.<a href="honeyroasted/cello/properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties"><span class="type-name-link">PropertyHolder</span></a>
@@ -169,7 +232,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Control.Kind.html" title="enum class in honeyroasted.cello.environment"><span class="type-name-link">Control.Kind</span></a></li>
 <li class="circle">honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/Modifier.html" title="enum class in honeyroasted.cello.node.modifier"><span class="type-name-link">Modifier</span></a></li>
 <li class="circle">honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/ModifierTarget.html" title="enum class in honeyroasted.cello.node.modifier"><span class="type-name-link">ModifierTarget</span></a></li>
-<li class="circle">honeyroasted.cello.node.verify.<a href="honeyroasted/cello/node/verify/Verification.ErrorCode.html" title="enum class in honeyroasted.cello.node.verify"><span class="type-name-link">Verification.ErrorCode</span></a></li>
+<li class="circle">honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/Verification.ErrorCode.html" title="enum class in honeyroasted.cello.verify"><span class="type-name-link">Verification.ErrorCode</span></a></li>
 </ul>
 </li>
 </ul>

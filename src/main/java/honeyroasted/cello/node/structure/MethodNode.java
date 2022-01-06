@@ -37,6 +37,10 @@ public class MethodNode extends AbstractAnnotated implements Node {
                 .build();
     }
 
+    public List<TypeInformal> exceptions() {
+        return exceptions;
+    }
+
     public MethodNode addException(TypeInformal type) {
         this.exceptions.add(type);
         return this;
@@ -56,7 +60,7 @@ public class MethodNode extends AbstractAnnotated implements Node {
         return this;
     }
 
-    public MethodNode ret(TypeInformal ret) {
+    public MethodNode setReturn(TypeInformal ret) {
         this.ret = ret;
         return this;
     }
@@ -76,4 +80,5 @@ public class MethodNode extends AbstractAnnotated implements Node {
     public String name() {
         return name;
     }
+
 }

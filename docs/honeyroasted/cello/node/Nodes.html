@@ -85,7 +85,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;</code></div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table"><code>static &lt;K extends <a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;
+?&gt; &amp; <a href="structure/annotation/AnnotationValue.html" title="interface in honeyroasted.cello.node.structure.annotation">AnnotationValue</a>&gt;<br>K</code></div>
 <div class="col-second even-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#constant(java.lang.Object)">constant</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;val)</code></div>
 <div class="col-last even-row-color method-summary-table-tab1 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;</code></div>
@@ -96,12 +97,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#convert(honeyroasted.cello.node.instruction.TypedNode,java.util.function.BiFunction)">convert</a></span>&#8203;(<a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;&nbsp;val,
  <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>,&#8203;<a href="../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>,&#8203;honeyroasted.javatype.informal.TypeInformal&gt;&nbsp;target)</code></div>
 <div class="col-last even-row-color method-summary-table-tab1 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/flow/ScopeBlock.html" title="class in honeyroasted.cello.node.instruction.flow">ScopeBlock</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#scope(honeyroasted.cello.node.instruction.CodeNode)">scope</a></span>&#8203;(<a href="instruction/CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;?,&#8203;?&gt;&nbsp;node)</code></div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#defaultValue(honeyroasted.javatype.informal.TypeFilled)">defaultValue</a></span>&#8203;(honeyroasted.javatype.informal.TypeFilled&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab1 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/flow/SequenceBlock.html" title="class in honeyroasted.cello.node.instruction.flow">SequenceBlock</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#sequence(honeyroasted.cello.node.instruction.CodeNode...)">sequence</a></span>&#8203;(<a href="instruction/CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;?,&#8203;?&gt;...&nbsp;nodes)</code></div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/flow/ScopeBlock.html" title="class in honeyroasted.cello.node.instruction.flow">ScopeBlock</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#scope(honeyroasted.cello.node.instruction.CodeNode)">scope</a></span>&#8203;(<a href="instruction/CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;?,&#8203;?&gt;&nbsp;node)</code></div>
 <div class="col-last even-row-color method-summary-table-tab1 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table"><code>static <a href="instruction/flow/SequenceBlock.html" title="class in honeyroasted.cello.node.instruction.flow">SequenceBlock</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table"><code><span class="member-name-link"><a href="#sequence(honeyroasted.cello.node.instruction.CodeNode...)">sequence</a></span>&#8203;(<a href="instruction/CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;?,&#8203;?&gt;...&nbsp;nodes)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab1 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </section>
@@ -116,9 +120,17 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="defaultValue(honeyroasted.javatype.informal.TypeFilled)">
+<h3>defaultValue</h3>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;</span>&nbsp;<span class="element-name">defaultValue</span>&#8203;<span class="parameters">(honeyroasted.javatype.informal.TypeFilled&nbsp;type)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="constant(java.lang.Object)">
 <h3>constant</h3>
-<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;</span>&nbsp;<span class="element-name">constant</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;val)</span></div>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="type-parameters">&lt;K extends <a href="instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;
+?&gt; &amp; <a href="structure/annotation/AnnotationValue.html" title="interface in honeyroasted.cello.node.structure.annotation">AnnotationValue</a>&gt;</span>
+<span class="return-type">K</span>&nbsp;<span class="element-name">constant</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;val)</span></div>
 </section>
 </li>
 <li>

@@ -11,19 +11,10 @@ import java.util.List;
 
 public interface AnnotationValue extends Node {
 
-    class Array<T extends AnnotationValue> extends AbstractPropertyHolder implements AnnotationValue {
-        private Class<T> type;
+    class Array extends AbstractPropertyHolder implements AnnotationValue {
         private List<AnnotationValue> values = new ArrayList<>();
 
-        public Array(Class<T> type) {
-            this.type = type;
-        }
-
-        public Class<T> type() {
-            return this.type;
-        }
-
-        public Array<T> add(AnnotationValue... values) {
+        public Array add(AnnotationValue... values) {
             for (AnnotationValue value : values) {
                 this.values.add(value);
             }
@@ -33,28 +24,6 @@ public interface AnnotationValue extends Node {
         public List<AnnotationValue> values() {
             return this.values;
         }
-
-        public Verification<Array<T>> verify() {
-            if (this.type.equals(Array.class)) {
-                return Verification.builder(this)
-                        .invalidAnnotationError("Multidimensional arrays not allowed in annotations")
-                        .build();
-            }
-
-            Verification.Builder<Array<T>> builder = Verification.builder(this);
-            this.values.forEach(a -> {
-                if (!this.type.isInstance(a)) {
-                    builder.child(
-                            Verification.builder(a)
-                                    .typeError(Types.type(a.getClass()), Types.type(this.type))
-                                    .build());
-                } else {
-                    builder.child(Verification.success(a));
-                }
-            });
-            return builder.andChildren().build();
-        }
-
     }
 
     class Enum extends AbstractPropertyHolder implements AnnotationValue {

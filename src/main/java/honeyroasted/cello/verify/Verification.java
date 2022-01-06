@@ -1,11 +1,17 @@
 package honeyroasted.cello.verify;
 
+import honeyroasted.cello.environment.Var;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.informal.TypeInformal;
+import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Verification<T> {
     private boolean success;
@@ -44,6 +50,9 @@ public class Verification<T> {
     }
 
     public T value() {
+        if (this.value == null) {
+            throw new NoSuchElementException();
+        }
         return this.value;
     }
 
@@ -55,6 +64,32 @@ public class Verification<T> {
         return Verification.<T>builder().value(val).build();
     }
 
+    public <K> Verification<K> map(Function<T, K> function) {
+        if (this.success()) {
+            K value = function.apply(this.value);
+            if (value == null) {
+                return Verification.<K>builder()
+                        .child(this)
+                        .failedMappingError()
+                        .build();
+            } else {
+                return Verification.<K>builder().from((Verification<K>) this)
+                        .value(value)
+                        .build();
+            }
+        } else {
+            return (Verification<K>) this;
+        }
+    }
+
+    public T orElse(T value) {
+        return this.isPresent() ? this.value() : value;
+    }
+
+    public boolean isPresent() {
+        return this.success() && this.value != null;
+    }
+
     public static class Builder<T> {
         private boolean success = true;
         private String message = "Success";
@@ -62,6 +97,16 @@ public class Verification<T> {
         private Throwable error = null;
         private List<Verification<?>> children = new ArrayList<>();
         private ErrorCode errorCode = ErrorCode.UNKNOWN;
+
+        public Builder<T> from(Verification<T> verification) {
+            this.success = verification.success;
+            this.message = verification.message;
+            this.value = verification.value;
+            this.error = verification.error;
+            this.children = new ArrayList<>(verification.children);
+            this.errorCode = verification.errorCode;
+            return this;
+        }
 
         public Verification<T> build() {
             return new Verification<>(this.success, this.message, this.value, this.error, this.children,
@@ -204,9 +249,19 @@ public class Verification<T> {
                     .message("Could not resolve " + type.externalName());
         }
 
+        public Builder<T> typeNotFoundError(Namespace namespace) {
+            return this.errorCode(ErrorCode.TYPE_NOT_FOUND_ERROR)
+                    .message("Could not resolve " + namespace.name());
+        }
+
         public Builder<T> typeVarNotFoundError(T name) {
             return this.errorCode(ErrorCode.DUPLICATE_TYPE_VAR)
                     .message("Type variable '" + name + "' already defined");
+        }
+
+        public Builder<T> failedMappingError() {
+            return this.errorCode(ErrorCode.FAILED_MAPPING)
+                    .message("Failed to map to new value internally");
         }
     }
 
@@ -223,7 +278,9 @@ public class Verification<T> {
         ILLEGAL_CAST_ERROR,
         INVALID_ANNOTATION_ERROR,
         TYPE_NOT_FOUND_ERROR,
-        DUPLICATE_TYPE_VAR
+        DUPLICATE_TYPE_VAR,
+
+        FAILED_MAPPING
     }
 
 }

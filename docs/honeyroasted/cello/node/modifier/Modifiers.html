@@ -117,15 +117,24 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#fromBits(int,honeyroasted.cello.node.modifier.ModifierTarget)">fromBits</a></span>&#8203;(int&nbsp;mods,
  <a href="ModifierTarget.html" title="enum class in honeyroasted.cello.node.modifier">ModifierTarget</a>&nbsp;target)</code></div>
 <div class="col-last even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#has(honeyroasted.cello.node.modifier.Modifier...)">has</a></span>&#8203;(<a href="Modifier.html" title="enum class in honeyroasted.cello.node.modifier">Modifier</a>...&nbsp;modifiers)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Modifier.html" title="enum class in honeyroasted.cello.node.modifier">Modifier</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#modifiers()">modifiers</a></span>()</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Modifiers.html" title="class in honeyroasted.cello.node.modifier">Modifiers</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#remove(honeyroasted.cello.node.modifier.Modifier...)">remove</a></span>&#8203;(<a href="Modifier.html" title="enum class in honeyroasted.cello.node.modifier">Modifier</a>...&nbsp;modifiers)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#toBits()">toBits</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#set(honeyroasted.cello.node.modifier.Modifiers)">set</a></span>&#8203;(<a href="Modifiers.html" title="class in honeyroasted.cello.node.modifier">Modifiers</a>&nbsp;modifiers)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#toBits(honeyroasted.cello.node.modifier.ModifierTarget)">toBits</a></span>&#8203;(<a href="ModifierTarget.html" title="enum class in honeyroasted.cello.node.modifier">ModifierTarget</a>&nbsp;target)</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#toBits()">toBits</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#toBits(honeyroasted.cello.node.modifier.ModifierTarget)">toBits</a></span>&#8203;(<a href="ModifierTarget.html" title="enum class in honeyroasted.cello.node.modifier">ModifierTarget</a>&nbsp;target)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -157,6 +166,12 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method.detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="has(honeyroasted.cello.node.modifier.Modifier...)">
+<h3>has</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">has</span>&#8203;<span class="parameters">(<a href="Modifier.html" title="enum class in honeyroasted.cello.node.modifier">Modifier</a>...&nbsp;modifiers)</span></div>
+</section>
+</li>
 <li>
 <section class="detail" id="add(honeyroasted.cello.node.modifier.Modifier...)">
 <h3>add</h3>
@@ -192,6 +207,18 @@ loadScripts(document, 'script');</script>
 <h3>fromBits</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Modifiers.html" title="class in honeyroasted.cello.node.modifier">Modifiers</a></span>&nbsp;<span class="element-name">fromBits</span>&#8203;<span class="parameters">(int&nbsp;mods,
  <a href="ModifierTarget.html" title="enum class in honeyroasted.cello.node.modifier">ModifierTarget</a>&nbsp;target)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="set(honeyroasted.cello.node.modifier.Modifiers)">
+<h3>set</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set</span>&#8203;<span class="parameters">(<a href="Modifiers.html" title="class in honeyroasted.cello.node.modifier">Modifiers</a>&nbsp;modifiers)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="modifiers()">
+<h3>modifiers</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Modifier.html" title="enum class in honeyroasted.cello.node.modifier">Modifier</a>&gt;</span>&nbsp;<span class="element-name">modifiers</span>()</div>
 </section>
 </li>
 </ul>
