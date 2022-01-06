@@ -1,5 +1,6 @@
 package honeyroasted.cello.environment.bytecode.provider;
 
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Namespace;
 
 import java.io.IOException;
@@ -9,18 +10,31 @@ import java.util.Optional;
 public class RuntimeBytecodeProvider implements BytecodeProvider {
 
     @Override
-    public Optional<byte[]> provide(Namespace namespace) {
+    public Verification<byte[]> provide(Namespace namespace) {
         try {
             Class<?> cls = Class.forName(namespace.internalName().replace('/', '.'));
             try (InputStream resource = cls.getResourceAsStream(namespace.className().replace('.', '$') + ".class")) {
                 if (resource != null) {
-                    return Optional.of(resource.readAllBytes());
+                    return Verification.success(resource.readAllBytes());
                 } else {
-                    return Optional.empty();
+                    return Verification.<byte[]>builder()
+                            .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
+                            .message("Could not find source for runtime-available class " + cls.getName())
+                            .build();
                 }
             }
-        } catch (ClassNotFoundException | IOException e) {
-            return Optional.empty();
+        } catch (ClassNotFoundException e) {
+            return Verification.<byte[]>builder()
+                    .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
+                    .message("Class " + namespace.name() + " is not available at runtime")
+                    .error(e)
+                    .build();
+        } catch (IOException e) {
+            return Verification.<byte[]>builder()
+                    .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
+                    .message("Encountered error while loading source for runtime-available class " + namespace.name() + ": " + e.getMessage())
+                    .error(e)
+                    .build();
         }
     }
 

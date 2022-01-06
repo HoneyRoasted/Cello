@@ -1,7 +1,8 @@
 package honeyroasted.cello.node.instruction.flow;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.LocalScope;
 import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
@@ -31,10 +32,10 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
     }
 
     @Override
-    public Verification<IfBlock> verify(Environment environment, LocalScope localScope) {
+    public Verification<IfBlock> verify(Environment environment, CodeContext context) {
         return Verification.builder(this)
                 .children(this.ifs.stream().map(i -> {
-                            LocalScope child = localScope.child();
+                            CodeContext child = context.childScope();
                             return Verification.builder(i)
                                     .child(i.condition().verify(environment, child))
                                     .child(i.body().verify(environment, child))
@@ -47,10 +48,10 @@ public class IfBlock extends AbstractPropertyHolder implements CodeNode<IfBlock,
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
         Label end = new Label();
         for (int i = 0; i < this.ifs.size(); i++) {
-            LocalScope child = localScope.child();
+            CodeContext child = context.childScope();
 
             If ifBlk = this.ifs.get(i);
             Label endBlk;

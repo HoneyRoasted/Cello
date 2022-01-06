@@ -1,17 +1,14 @@
 package honeyroasted.cello.verify;
 
-import honeyroasted.cello.environment.Var;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.informal.TypeInformal;
-import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class Verification<T> {
     private boolean success;
@@ -263,6 +260,11 @@ public class Verification<T> {
             return this.errorCode(ErrorCode.FAILED_MAPPING)
                     .message("Failed to map to new value internally");
         }
+
+        public Builder<T> thisNotAvailable() {
+            return this.errorCode(ErrorCode.THIS_NOT_AVAILABLE)
+                    .message("'this' not available in static context");
+        }
     }
 
     public enum ErrorCode {
@@ -279,6 +281,7 @@ public class Verification<T> {
         INVALID_ANNOTATION_ERROR,
         TYPE_NOT_FOUND_ERROR,
         DUPLICATE_TYPE_VAR,
+        THIS_NOT_AVAILABLE,
 
         FAILED_MAPPING
     }

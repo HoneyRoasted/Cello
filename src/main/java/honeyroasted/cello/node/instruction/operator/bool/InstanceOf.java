@@ -1,8 +1,9 @@
 package honeyroasted.cello.node.instruction.operator.bool;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.environment.TypeUtil;
+import honeyroasted.cello.environment.context.Var;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
@@ -29,8 +30,8 @@ public class InstanceOf extends AbstractPropertyHolder implements TypedNode<Inst
     }
 
     @Override
-    public Verification<InstanceOf> verify(Environment environment, LocalScope localScope) {
-        Verification<?> verification = this.value.verify(environment, localScope);
+    public Verification<InstanceOf> verify(Environment environment, CodeContext context) {
+        Verification<?> verification = this.value.verify(environment, context);
         if (verification.success()) {
             if (this.value.type().isPrimitive()) {
                 return Verification.builder(this)
@@ -44,13 +45,13 @@ public class InstanceOf extends AbstractPropertyHolder implements TypedNode<Inst
                         .build();
             } else {
                 if (this.patternVar != null) {
-                    if (localScope.has(this.patternVar)) {
+                    if (context.scope().has(this.patternVar)) {
                         return Verification.builder(this)
                                 .child(verification)
                                 .varAlreadyDefinedError(this.patternVar)
                                 .build();
                     } else {
-                        localScope.define(this.patternVar, this.type.withArguments());
+                        context.scope().define(this.patternVar, this.type.withArguments());
                     }
                 }
 
@@ -67,10 +68,16 @@ public class InstanceOf extends AbstractPropertyHolder implements TypedNode<Inst
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.value.apply(adapter, environment, localScope);
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        this.value.apply(adapter, environment, context);
+        if (this.patternVar != null) {
+            adapter.dup();
+        }
         adapter.instanceOf(TypeUtil.asmType(this.type));
-        localScope.define(this.patternVar, this.type.withArguments());
+        if(this.patternVar != null) {
+            Var var = context.scope().define(this.patternVar, this.type.withArguments()).get();
+            adapter.store(var.index(), TypeUtil.asmType(this.type));
+        }
     }
 
     @Override

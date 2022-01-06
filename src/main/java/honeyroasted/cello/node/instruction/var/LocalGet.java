@@ -1,9 +1,9 @@
 package honeyroasted.cello.node.instruction.var;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.environment.TypeUtil;
-import honeyroasted.cello.environment.Var;
+import honeyroasted.cello.environment.context.Var;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
@@ -28,8 +28,8 @@ public class LocalGet extends AbstractPropertyHolder implements TypedNode<LocalG
     }
 
     @Override
-    public Verification<LocalGet> verify(Environment environment, LocalScope localScope) {
-        Optional<Var> varOpt = localScope.fetch(this.name);
+    public Verification<LocalGet> verify(Environment environment, CodeContext context) {
+        Optional<Var> varOpt = context.scope().fetch(this.name);
         if (varOpt.isPresent() && varOpt.get().initialized()) {
             TypeInformal type = varOpt.get().type();
             if (this.expected != null && type.isAssignableTo(expected)) {
@@ -47,8 +47,8 @@ public class LocalGet extends AbstractPropertyHolder implements TypedNode<LocalG
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        adapter.load(localScope.fetch(this.name).get().index(),
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        adapter.load(context.scope().fetch(this.name).get().index(),
                 TypeUtil.asmType(this.type));
     }
 

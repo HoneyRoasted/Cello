@@ -1,5 +1,6 @@
-package honeyroasted.cello.environment;
+package honeyroasted.cello.environment.context;
 
+import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.Label;

@@ -1,7 +1,8 @@
 package honeyroasted.cello.node.instruction.value;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.LocalScope;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
@@ -14,9 +15,9 @@ import java.util.function.BiFunction;
 
 public class Cast extends AbstractPropertyHolder implements TypedNode<Cast, Cast> {
     private TypedNode value;
-    private BiFunction<Environment, LocalScope, TypeInformal> target;
+    private BiFunction<Environment, CodeContext, TypeInformal> target;
 
-    public Cast(TypedNode<?, ?> value, BiFunction<Environment, LocalScope, TypeInformal> target) {
+    public Cast(TypedNode<?, ?> value, BiFunction<Environment, CodeContext, TypeInformal> target) {
         this.value = value;
         this.target = target;
     }
@@ -30,12 +31,12 @@ public class Cast extends AbstractPropertyHolder implements TypedNode<Cast, Cast
     }
 
     @Override
-    public Verification<Cast> verify(Environment environment, LocalScope localScope) {
-        TypeInformal target = this.target.apply(environment, localScope);
+    public Verification<Cast> verify(Environment environment, CodeContext context) {
+        TypeInformal target = this.target.apply(environment, context);
         this.targetType = target;
         this.value.provideExpected(target);
 
-        Verification<TypedNode> verification = this.value.verify(environment, localScope);
+        Verification<TypedNode> verification = this.value.verify(environment, context);
 
         if (verification.success()) {
             if (target.isAssignableTo(this.value.type()) || this.value.type().isAssignableTo(target)) {
@@ -56,8 +57,8 @@ public class Cast extends AbstractPropertyHolder implements TypedNode<Cast, Cast
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.value.apply(adapter, environment, localScope);
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        this.value.apply(adapter, environment, context);
 
         TypeInformal origin = this.value.type();
         TypeInformal target = this.targetType;

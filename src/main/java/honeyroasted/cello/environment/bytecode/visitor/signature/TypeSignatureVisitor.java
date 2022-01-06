@@ -1,6 +1,7 @@
-package honeyroasted.cello.environment.bytecode.signature;
+package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.environment.Environment;
+import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Namespace;

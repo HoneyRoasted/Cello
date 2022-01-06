@@ -1,8 +1,9 @@
 package honeyroasted.cello.node.instruction.flow;
 
-import honeyroasted.cello.environment.Control;
+import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.Control;
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.LocalScope;
 import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
@@ -34,10 +35,10 @@ public class WhileBlock extends AbstractPropertyHolder implements CodeNode<While
     }
 
     @Override
-    public Verification<WhileBlock> verify(Environment environment, LocalScope localScope) {
-        LocalScope child = localScope.child();
-        child.createControl(Control.Kind.CONTINUE, this.name);
-        child.createControl(Control.Kind.BREAK, this.name);
+    public Verification<WhileBlock> verify(Environment environment, CodeContext context) {
+        CodeContext child = context.childScope();
+        child.scope().createControl(Control.Kind.CONTINUE, this.name);
+        child.scope().createControl(Control.Kind.BREAK, this.name);
 
         return Verification.builder(this)
                 .child(this.condition.verify(environment, child))
@@ -47,10 +48,10 @@ public class WhileBlock extends AbstractPropertyHolder implements CodeNode<While
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        LocalScope child = localScope.child();
-        Control cont = child.createControl(Control.Kind.CONTINUE, this.name);
-        Control brk = child.createControl(Control.Kind.BREAK, this.name);
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        CodeContext child = context.childScope();
+        Control cont = child.scope().createControl(Control.Kind.CONTINUE, this.name);
+        Control brk = child.scope().createControl(Control.Kind.BREAK, this.name);
 
         adapter.mark(cont.label());
         if (this.condition instanceof BooleanOperator bop) {

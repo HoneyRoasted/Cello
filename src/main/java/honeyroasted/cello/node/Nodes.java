@@ -1,7 +1,8 @@
 package honeyroasted.cello.node;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.LocalScope;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.node.instruction.flow.ScopeBlock;
@@ -53,7 +54,7 @@ public interface Nodes {
         return new Convert(val, (x, y) -> type);
     }
 
-    static TypedNode<?, ?> convert(TypedNode<?, ?> val, BiFunction<Environment, LocalScope, TypeInformal> target) {
+    static TypedNode<?, ?> convert(TypedNode<?, ?> val, BiFunction<Environment, CodeContext, TypeInformal> target) {
         return new Convert(val, target);
     }
 

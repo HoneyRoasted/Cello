@@ -102,9 +102,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(java.util.function.Consumer,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.bytecode.signature.TypeVarScope)">ClassNodeVisitor</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../../node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;&nbsp;construction,
+<div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(honeyroasted.cello.node.structure.ClassNode,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.TypeVarScope)">ClassNodeVisitor</a></span>&#8203;(<a href="../../../node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;node,
  <a href="../../Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../signature/TypeVarScope.html" title="class in honeyroasted.cello.environment.bytecode.signature">TypeVarScope</a>&nbsp;parentScope)</code></div>
+ <a href="../../TypeVarScope.html" title="class in honeyroasted.cello.environment">TypeVarScope</a>&nbsp;scope)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -190,11 +190,11 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.util.function.Consumer,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.bytecode.signature.TypeVarScope)">
+<section class="detail" id="&lt;init&gt;(honeyroasted.cello.node.structure.ClassNode,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.TypeVarScope)">
 <h3>ClassNodeVisitor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ClassNodeVisitor</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../../node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;&nbsp;construction,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ClassNodeVisitor</span>&#8203;<span class="parameters">(<a href="../../../node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;node,
  <a href="../../Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../signature/TypeVarScope.html" title="class in honeyroasted.cello.environment.bytecode.signature">TypeVarScope</a>&nbsp;parentScope)</span></div>
+ <a href="../../TypeVarScope.html" title="class in honeyroasted.cello.environment">TypeVarScope</a>&nbsp;scope)</span></div>
 </section>
 </li>
 </ul>
@@ -282,16 +282,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="visitPermittedSubclass(java.lang.String)">
-<h3>visitPermittedSubclass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitPermittedSubclass</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;permittedSubclass)</span></div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code>visitPermittedSubclass</code>&nbsp;in class&nbsp;<code>org.objectweb.asm.ClassVisitor</code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="visitInnerClass(java.lang.String,java.lang.String,java.lang.String,int)">
 <h3>visitInnerClass</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitInnerClass</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -301,6 +291,16 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>visitInnerClass</code>&nbsp;in class&nbsp;<code>org.objectweb.asm.ClassVisitor</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="visitPermittedSubclass(java.lang.String)">
+<h3>visitPermittedSubclass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitPermittedSubclass</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;permittedSubclass)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code>visitPermittedSubclass</code>&nbsp;in class&nbsp;<code>org.objectweb.asm.ClassVisitor</code></dd>
 </dl>
 </section>
 </li>

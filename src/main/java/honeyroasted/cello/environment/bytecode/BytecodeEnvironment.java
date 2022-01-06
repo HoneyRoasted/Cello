@@ -3,7 +3,7 @@ package honeyroasted.cello.environment.bytecode;
 import honeyroasted.cello.environment.AbstractCachingEnvironment;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.bytecode.provider.BytecodeProvider;
-import honeyroasted.cello.environment.bytecode.signature.TypeVarScope;
+import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.environment.bytecode.visitor.ClassNodeVisitor;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.FieldNode;
@@ -14,8 +14,8 @@ import honeyroasted.javatype.parameterized.TypeParameterized;
 import org.objectweb.asm.ClassReader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class BytecodeEnvironment extends AbstractCachingEnvironment {
     private List<BytecodeProvider> providers;
@@ -29,12 +29,12 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
         this.providers = providers;
     }
 
-    public BytecodeEnvironment(Environment parent) {
-        this(parent, new ArrayList<>());
+    public BytecodeEnvironment(Environment parent, BytecodeProvider... providers) {
+        this(parent, new ArrayList<>(Arrays.asList(providers)));
     }
 
-    public BytecodeEnvironment() {
-        this(new ArrayList<>());
+    public BytecodeEnvironment(BytecodeProvider... providers) {
+        this(new ArrayList<>(Arrays.asList(providers)));
     }
 
     public List<BytecodeProvider> providers() {
@@ -49,17 +49,24 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
                     .build()));
         } else if (namespace.isArray()) {
             return lookup(Types.OBJECT)
-                    .map(c -> new ClassNode(Types.parameterized()
-                            .namespace(namespace)
-                            .superclass(Types.OBJECT)
-                            .build())
-                            .setSuperclass(c).addField(new FieldNode("length", Types.INT)));
+                    .map(c -> {
+                        ClassNode node = new ClassNode(Types.parameterized()
+                                .namespace(namespace)
+                                .superclass(Types.OBJECT)
+                                .build())
+                                .setSuperclass(c);
+                        node.addField(new FieldNode("length", node, Types.INT));
+                        return node;
+                    });
         }
 
+        Verification.Builder<ClassNode> builder = Verification.builder();
+
         for (BytecodeProvider provider : this.providers) {
-            Optional<byte[]> cls = provider.provide(namespace);
+            Verification<byte[]> cls = provider.provide(namespace);
+            builder.child(cls);
             if (cls.isPresent()) {
-                byte[] arr = cls.get();
+                byte[] arr = cls.value();
 
                 TypeParameterized type = new TypeParameterized(namespace);
                 ClassNode node = new ClassNode(type);
@@ -70,16 +77,18 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
                 reader.accept(visitor, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES);
 
                 Verification<ClassNode> verification = visitor.verification();
+                builder.child(verification);
 
-                if (!verification.success()) {
+                if (!verification.isPresent()) {
                     remove(verification.value());
+                } else {
+                    builder.value(verification.value());
+                    return builder.success(true).build();
                 }
-
-                return verification;
             }
         }
 
-        return Verification.<ClassNode>builder()
+        return builder
                 .typeNotFoundError(namespace)
                 .build();
     }
@@ -87,10 +96,14 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
     @Override
     protected Verification<ClassNode> performArrayLookup(ClassNode element, Namespace namespace) {
         return lookup(Types.OBJECT)
-                .map(c -> new ClassNode(Types.parameterized()
-                        .namespace(namespace)
-                        .superclass(Types.OBJECT)
-                        .build())
-                        .setSuperclass(c).addField(new FieldNode("length", Types.INT)));
+                .map(c -> {
+                    ClassNode node = new ClassNode(Types.parameterized()
+                            .namespace(namespace)
+                            .superclass(Types.OBJECT)
+                            .build())
+                            .setSuperclass(c);
+                    node.addField(new FieldNode("length", node, Types.INT));
+                    return node;
+                });
     }
 }

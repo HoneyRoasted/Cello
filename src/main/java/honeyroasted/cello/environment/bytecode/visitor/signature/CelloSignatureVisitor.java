@@ -1,4 +1,4 @@
-package honeyroasted.cello.environment.bytecode.signature;
+package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Type;

@@ -11,15 +11,21 @@ public class FieldNode extends AbstractAnnotated {
     private String name;
     private TypeInformal type;
     private TypedNode value;
+    private ClassNode owner;
 
-    public FieldNode(String name, TypeInformal type, TypedNode value) {
+    public FieldNode(String name, ClassNode owner, TypeInformal type, TypedNode value) {
         this.name = name;
         this.type = type;
         this.value = value;
+        this.owner = owner;
     }
 
-    public FieldNode(String name, TypeFilled type) {
-        this(name, type, null);
+    public FieldNode(String name, ClassNode owner, TypeFilled type) {
+        this(name, owner, type, null);
+    }
+
+    public ClassNode owner() {
+        return this.owner;
     }
 
     public String name() {

@@ -1,8 +1,7 @@
 package honeyroasted.cello.node.instruction.value;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
-import honeyroasted.cello.node.Nodes;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;
 import honeyroasted.cello.verify.Verification;
@@ -27,7 +26,7 @@ public class Constant extends AbstractPropertyHolder implements TypedNode<Consta
     }
 
     @Override
-    public Verification<Constant> verify(Environment environment, LocalScope localScope) {
+    public Verification<Constant> verify(Environment environment, CodeContext context) {
         if (this.object == null) {
             if (this.type == null) {
                 this.type = Types.OBJECT;
@@ -69,7 +68,7 @@ public class Constant extends AbstractPropertyHolder implements TypedNode<Consta
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
         if (this.object == null) {
             adapter.aconst(null);
         } else if (this.object instanceof String str) {

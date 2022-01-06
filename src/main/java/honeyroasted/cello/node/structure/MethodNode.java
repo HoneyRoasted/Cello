@@ -2,9 +2,7 @@ package honeyroasted.cello.node.structure;
 
 import honeyroasted.cello.node.Node;
 import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
-import honeyroasted.javatype.Type;
 import honeyroasted.javatype.Types;
-import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.method.TypeMethodParameterized;
 import honeyroasted.javatype.parameterized.TypeVar;
@@ -23,9 +21,15 @@ public class MethodNode extends AbstractAnnotated implements Node {
     private List<TypeInformal> exceptions = new ArrayList<>();
 
     private String name;
+    private ClassNode owner;
 
-    public MethodNode(String name) {
+    public MethodNode(String name, ClassNode owner) {
         this.name = name;
+        this.owner = owner;
+    }
+
+    public ClassNode owner() {
+        return this.owner;
     }
 
     public TypeMethodParameterized type() {

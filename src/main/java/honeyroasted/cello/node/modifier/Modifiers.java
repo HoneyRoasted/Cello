@@ -1,5 +1,6 @@
 package honeyroasted.cello.node.modifier;
 
+import java.security.PublicKey;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,16 @@ public class Modifiers {
             }
         }
         return true;
+    }
+
+    public Access access() {
+        for (Access access : Access.values()) {
+            if (access.modifier() != null && has(access.modifier())) {
+                return access;
+            }
+        }
+
+        return Access.PACKAGE_PROTECTED;
     }
 
     public Modifiers add(Modifier... modifiers) {

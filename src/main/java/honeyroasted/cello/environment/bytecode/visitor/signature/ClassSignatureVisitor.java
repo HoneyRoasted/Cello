@@ -1,31 +1,47 @@
-package honeyroasted.cello.environment.bytecode.signature;
+package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.environment.Environment;
+import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
-import honeyroasted.javatype.method.TypeMethodParameterized;
+import honeyroasted.javatype.informal.TypeFilled;
+import honeyroasted.javatype.parameterized.TypeParameterized;
 import honeyroasted.javatype.parameterized.TypeVar;
 import org.objectweb.asm.signature.SignatureVisitor;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodParameterized> {
+public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameterized> {
+    private Namespace namespace;
     private TypeVarScope scope;
 
-    private TypeMethodParameterized.Builder type = Types.method();
+    private TypeParameterized superclass;
+    private List<TypeParameterized> interfaces;
+
+    private TypeParameterized.Builder type = Types.parameterized();
 
     private TypeVar previous;
     private TypeVar.Builder previousBuilder;
+
     private Environment environment;
 
-    public MethodSignatureVisitor(Consumer<Verification<TypeMethodParameterized>> end, TypeVarScope scope, Environment environment) {
+    public ClassSignatureVisitor(Consumer<Verification<TypeParameterized>> end, Namespace namespace, TypeVarScope scope, TypeParameterized superclass, List<TypeParameterized> interfaces, Environment environment) {
         super(end);
+        this.namespace = namespace;
         this.scope = scope;
+        this.superclass = superclass;
+        this.interfaces = interfaces;
         this.environment = environment;
     }
 
-    public MethodSignatureVisitor(TypeVarScope scope) {
+    public ClassSignatureVisitor(Namespace namespace, TypeVarScope scope, TypeParameterized superclass, List<TypeParameterized> interfaces, Environment environment) {
+        this.namespace = namespace;
         this.scope = scope;
+        this.superclass = superclass;
+        this.interfaces = interfaces;
+        this.environment = environment;
     }
 
     @Override
@@ -60,31 +76,21 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     }
 
     @Override
-    public SignatureVisitor visitParameterType() {
+    public SignatureVisitor visitSuperclass() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
             if (v.isPresent()) {
-                this.type.addParameter(v.value());
+                this.type.superclass((TypeFilled) v.value());
             }
         }, this.scope, this.environment));
     }
 
     @Override
-    public SignatureVisitor visitReturnType() {
+    public SignatureVisitor visitInterface() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
             if (v.isPresent()) {
-                this.type.returnType(v.value());
-            }
-        }, this.scope, this.environment));
-    }
-
-    @Override
-    public SignatureVisitor visitExceptionType() {
-        return this.logAndReturn(new TypeSignatureVisitor(v -> {
-            this.builder().child(v);
-            if (v.isPresent()) {
-                this.type.addException(v.value());
+                this.type.addInterface((TypeFilled) v.value());
             }
         }, this.scope, this.environment));
     }
@@ -94,8 +100,8 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
         if (this.previous != null) {
             this.previousBuilder.build(this.previous);
         }
+        this.type.namespace(this.namespace);
         setValue(this.type.build());
         this.builder().andChildren();
     }
-
 }

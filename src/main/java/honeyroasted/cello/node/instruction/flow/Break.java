@@ -1,8 +1,8 @@
 package honeyroasted.cello.node.instruction.flow;
 
-import honeyroasted.cello.environment.Control;
+import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.Control;
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
@@ -20,8 +20,8 @@ public class Break extends AbstractPropertyHolder implements CodeNode<Break, Bre
     }
 
     @Override
-    public Verification<Break> verify(Environment environment, LocalScope localScope) {
-        if (localScope.fetchControl(Control.Kind.BREAK, this.name).isPresent()) {
+    public Verification<Break> verify(Environment environment, CodeContext context) {
+        if (context.scope().fetchControl(Control.Kind.BREAK, this.name).isPresent()) {
             return Verification.success(this);
         }
 
@@ -31,7 +31,7 @@ public class Break extends AbstractPropertyHolder implements CodeNode<Break, Bre
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        adapter.goTo(localScope.fetchControl(Control.Kind.BREAK, this.name).get().label());
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        adapter.goTo(context.scope().fetchControl(Control.Kind.BREAK, this.name).get().label());
     }
 }

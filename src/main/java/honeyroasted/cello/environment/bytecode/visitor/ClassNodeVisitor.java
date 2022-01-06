@@ -1,10 +1,10 @@
 package honeyroasted.cello.environment.bytecode.visitor;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.bytecode.signature.ClassSignatureVisitor;
-import honeyroasted.cello.environment.bytecode.signature.MethodSignatureVisitor;
-import honeyroasted.cello.environment.bytecode.signature.TypeSignatureVisitor;
-import honeyroasted.cello.environment.bytecode.signature.TypeVarScope;
+import honeyroasted.cello.environment.bytecode.visitor.signature.ClassSignatureVisitor;
+import honeyroasted.cello.environment.bytecode.visitor.signature.MethodSignatureVisitor;
+import honeyroasted.cello.environment.bytecode.visitor.signature.TypeSignatureVisitor;
+import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.environment.bytecode.visitor.annotation.AnnotationNodeVisitor;
 import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.modifier.Modifier;
@@ -12,21 +12,19 @@ import honeyroasted.cello.node.modifier.ModifierTarget;
 import honeyroasted.cello.node.modifier.Modifiers;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.FieldNode;
+import honeyroasted.cello.node.structure.InnerClassNode;
 import honeyroasted.cello.node.structure.MethodNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
-import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.method.TypeMethodParameterized;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 import org.objectweb.asm.*;
 import org.objectweb.asm.signature.SignatureReader;
 
-import javax.naming.Name;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,11 +38,11 @@ public class ClassNodeVisitor extends ClassVisitor {
 
     private Verification.Builder<ClassNode> verification = Verification.builder();
 
-    public ClassNodeVisitor(ClassNode node, Environment environment, TypeVarScope parentScope) {
+    public ClassNodeVisitor(ClassNode node, Environment environment, TypeVarScope scope) {
         super(ASM9);
         this.node = node;
         this.environment = environment;
-        this.scope = parentScope.child();
+        this.scope = scope;
         this.verification.value(this.node);
     }
 
@@ -115,7 +113,9 @@ public class ClassNodeVisitor extends ClassVisitor {
         this.verification.child(fieldType);
 
         if (fieldType.isPresent()) {
-            FieldNode node = new FieldNode(name, fieldType.value().type().withArguments());
+            FieldNode node = new FieldNode(name, this.node, fieldType.value().type().withArguments());
+            node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.FIELD));
+            this.node.addField(node);
 
             if (node.modifiers().has(Modifier.STATIC) && value != null) {
                 node.setValue(Nodes.constant(value));
@@ -140,7 +140,9 @@ public class ClassNodeVisitor extends ClassVisitor {
 
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-        MethodNode node = new MethodNode(name);
+        MethodNode node = new MethodNode(name, this.node);
+        this.node.addMethod(node);
+
         node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.METHOD));
 
         Type asmMethod = Type.getMethodType(descriptor);
@@ -211,17 +213,33 @@ public class ClassNodeVisitor extends ClassVisitor {
 
     @Override
     public void visitNestMember(String nestMember) {
-        super.visitNestMember(nestMember);
+        Namespace namespace = Namespace.internal(nestMember);
+        Verification<ClassNode> lookup = this.environment.lookup(namespace);
+        this.verification.child(lookup);
+
+        if (lookup.isPresent()) {
+            this.node.addNestClass(lookup.value());
+        }
+    }
+
+    private int anon = 0;
+
+    @Override
+    public void visitInnerClass(String name, String outerName, String innerName, int access) {
+        Namespace namespace = Namespace.internal(name);
+        Verification<ClassNode> lookup = this.environment.lookup(namespace);
+        this.verification.child(lookup);
+
+        if (lookup.isPresent()) {
+            InnerClassNode node = new InnerClassNode(lookup.value(), innerName == null ? String.valueOf(anon++) : innerName, innerName == null);
+            node.modifiers().set(Modifiers.fromBits(access));
+            this.node.addInnerClass(node);
+        }
     }
 
     @Override
     public void visitPermittedSubclass(String permittedSubclass) {
-        super.visitPermittedSubclass(permittedSubclass);
-    }
-
-    @Override
-    public void visitInnerClass(String name, String outerName, String innerName, int access) {
-        super.visitInnerClass(name, outerName, innerName, access);
+        this.node.addPermittedSubclass(Namespace.internal(permittedSubclass));
     }
 
     @Override

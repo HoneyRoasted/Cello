@@ -99,7 +99,7 @@ implements <a href="../TypedNode.html" title="interface in honeyroasted.cello.no
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(honeyroasted.cello.node.instruction.TypedNode,java.util.function.BiFunction)">Cast</a></span>&#8203;(<a href="../TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;&nbsp;value,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>,&#8203;<a href="../../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>,&#8203;honeyroasted.javatype.informal.TypeInformal&gt;&nbsp;target)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>,&#8203;<a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>,&#8203;honeyroasted.javatype.informal.TypeInformal&gt;&nbsp;target)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -116,9 +116,9 @@ implements <a href="../TypedNode.html" title="interface in honeyroasted.cello.no
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">apply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">apply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
  <a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#preprocess()">preprocess</a></span>()</code></div>
@@ -127,8 +127,8 @@ implements <a href="../TypedNode.html" title="interface in honeyroasted.cello.no
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#type()">type</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">verify</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">verify</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
@@ -163,7 +163,7 @@ implements <a href="../TypedNode.html" title="interface in honeyroasted.cello.no
 <section class="detail" id="&lt;init&gt;(honeyroasted.cello.node.instruction.TypedNode,java.util.function.BiFunction)">
 <h3>Cast</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Cast</span>&#8203;<span class="parameters">(<a href="../TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&lt;?,&#8203;?&gt;&nbsp;value,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>,&#8203;<a href="../../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>,&#8203;honeyroasted.javatype.informal.TypeInformal&gt;&nbsp;target)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>,&#8203;<a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>,&#8203;honeyroasted.javatype.informal.TypeInformal&gt;&nbsp;target)</span></div>
 </section>
 </li>
 </ul>
@@ -187,25 +187,25 @@ implements <a href="../TypedNode.html" title="interface in honeyroasted.cello.no
 </section>
 </li>
 <li>
-<section class="detail" id="verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">
+<section class="detail" id="verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">
 <h3>verify</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>&gt;</span>&nbsp;<span class="element-name">verify</span>&#8203;<span class="parameters">(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</span></div>
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../CodeNode.html#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">verify</a></code>&nbsp;in interface&nbsp;<code><a href="../CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>,&#8203;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>&gt;</code></dd>
+<dd><code><a href="../CodeNode.html#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">verify</a></code>&nbsp;in interface&nbsp;<code><a href="../CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>,&#8203;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">
+<section class="detail" id="apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">
 <h3>apply</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span>&#8203;<span class="parameters">(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
  <a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/LocalScope.html" title="class in honeyroasted.cello.environment">LocalScope</a>&nbsp;localScope)</span></div>
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../CodeNode.html#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.LocalScope)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>,&#8203;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>&gt;</code></dd>
+<dd><code><a href="../CodeNode.html#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../CodeNode.html" title="interface in honeyroasted.cello.node.instruction">CodeNode</a>&lt;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>,&#8203;<a href="Cast.html" title="class in honeyroasted.cello.node.instruction.value">Cast</a>&gt;</code></dd>
 </dl>
 </section>
 </li>

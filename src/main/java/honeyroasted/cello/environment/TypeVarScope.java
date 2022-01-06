@@ -1,7 +1,5 @@
-package honeyroasted.cello.environment.bytecode.signature;
+package honeyroasted.cello.environment;
 
-import honeyroasted.cello.verify.Verification;
-import honeyroasted.cello.verify.VerificationException;
 import honeyroasted.javatype.parameterized.TypeVar;
 
 import java.util.HashSet;
@@ -12,6 +10,8 @@ import java.util.Set;
 
 public class TypeVarScope {
     private Map<String, TypeVar> vars = new LinkedHashMap<>();
+    private Set<TypeVar> defined = new HashSet<>();
+
     private TypeVarScope parent;
 
     private Set<TypeVarScope> children = new HashSet<>();
@@ -64,13 +64,22 @@ public class TypeVarScope {
 
     public TypeVar define(String name) {
         if (this.vars.containsKey(name)) {
-            throw new VerificationException(Verification.builder()
-                    .typeVarNotFoundError(name)
-                    .build());
+            TypeVar var = this.vars.get(name);
+            this.defined.add(var);
+            return var;
         } else {
             TypeVar var = new TypeVar();
             this.vars.put(name, var);
+            this.defined.add(var);
             return var;
         }
+    }
+
+    public Set<TypeVar> defined() {
+        return this.defined;
+    }
+
+    public Map<String, TypeVar> vars() {
+        return this.vars;
     }
 }

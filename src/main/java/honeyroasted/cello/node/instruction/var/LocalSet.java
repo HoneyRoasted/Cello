@@ -1,9 +1,9 @@
 package honeyroasted.cello.node.instruction.var;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.environment.TypeUtil;
-import honeyroasted.cello.environment.Var;
+import honeyroasted.cello.environment.context.Var;
 import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
@@ -31,7 +31,7 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
     @Override
     public LocalSet preprocess() {
         this.value = Nodes.convert(this.value.preprocessFully(),
-                (env, scope) -> scope.fetch(this.name).map(Var::type).orElse(Types.OBJECT));
+                (env, scope) -> scope.scope().fetch(this.name).map(Var::type).orElse(Types.OBJECT));
         return this;
     }
 
@@ -41,15 +41,15 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
     }
 
     @Override
-    public Verification<LocalSet> verify(Environment environment, LocalScope localScope) {
+    public Verification<LocalSet> verify(Environment environment, CodeContext context) {
         Verification.Builder<LocalSet> builder = Verification.builder();
         builder.value(this);
 
-        Verification<TypedNode> child = this.value.verify(environment, localScope);
+        Verification<TypedNode> child = this.value.verify(environment, context);
         builder.child(child);
 
         if (child.success()) {
-            Optional<Var> varOpt = localScope.fetch(this.name);
+            Optional<Var> varOpt = context.scope().fetch(this.name);
             if (varOpt.isPresent()) {
                 TypeInformal type = varOpt.get().type();
                 if (this.value.type().isAssignableTo(type)) {
@@ -76,16 +76,16 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.value.apply(adapter, environment, localScope);
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        this.value.apply(adapter, environment, context);
         if (TypeUtil.size(this.type) == 1) {
             adapter.dup();
         } else {
             adapter.dup2();
         }
-        adapter.store(localScope.fetch(this.name).get().index(),
+        adapter.store(context.scope().fetch(this.name).get().index(),
                 TypeUtil.asmType(this.type));
-        localScope.fetch(this.name).get().setInitialized(true);
+        context.scope().fetch(this.name).get().setInitialized(true);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class LocalSet extends AbstractPropertyHolder implements TypedNode<LocalS
         return new AlternativeProcessNode<>(this,
                 (adapter, environment, localScope) -> {
                    this.value.apply(adapter, environment, localScope);
-                   adapter.store(localScope.fetch(this.name).get().index(),
+                   adapter.store(localScope.scope().fetch(this.name).get().index(),
                            TypeUtil.asmType(this.type));
                 });
     }

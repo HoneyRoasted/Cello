@@ -1,7 +1,7 @@
 package honeyroasted.cello.node.instruction.util;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.verify.Verification;
@@ -38,17 +38,17 @@ public class TypeCaseNode extends AbstractPropertyHolder implements TypedNode {
     }
 
     @Override
-    public Verification<CodeNode> verify(Environment environment, LocalScope localScope) {
+    public Verification<CodeNode> verify(Environment environment, CodeContext context) {
         Verification.Builder<CodeNode> builder = Verification.builder();
 
         for (Map.Entry<Supplier<Boolean>, TypedNode> entry : this.cases.entrySet()) {
             Supplier<Boolean> test = entry.getKey();
             TypedNode node = entry.getValue();
 
-            Verification<CodeNode> typeCheck = node.verify(environment, localScope.copy());
+            Verification<CodeNode> typeCheck = node.verify(environment, context.copy());
             builder.child(typeCheck);
             if (typeCheck.success() && test.get()) {
-                node.verify(environment, localScope);
+                node.verify(environment, context);
                 this.chosen = node;
                 return builder.orChildren().value(this).build();
             }
@@ -58,8 +58,8 @@ public class TypeCaseNode extends AbstractPropertyHolder implements TypedNode {
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        this.chosen.apply(adapter, environment, localScope);
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        this.chosen.apply(adapter, environment, context);
     }
 
     @Override

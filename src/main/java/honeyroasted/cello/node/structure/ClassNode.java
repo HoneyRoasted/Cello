@@ -1,12 +1,16 @@
 package honeyroasted.cello.node.structure;
 
-import honeyroasted.cello.environment.bytecode.signature.TypeVarScope;
+import honeyroasted.cello.environment.TypeVarScope;
+import honeyroasted.cello.node.modifier.Access;
 import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ClassNode extends AbstractAnnotated {
     private TypeParameterized type;
@@ -18,12 +22,42 @@ public class ClassNode extends AbstractAnnotated {
     private List<MethodNode> methods = new ArrayList<>();
 
     private ClassNode outerClass;
-    private List<ClassNode> innerClasses = new ArrayList<>();
+    private List<InnerClassNode> innerClasses = new ArrayList<>();
+    private List<ClassNode> nestClasses = new ArrayList<>();
+    private List<Namespace> permittedSubclasses = new ArrayList<>();
 
     private TypeVarScope typeVarScope;
 
     public ClassNode(TypeParameterized type) {
         this.type = type;
+    }
+
+    public List<MethodNode> lookupMethods(Predicate<MethodNode> predicate) {
+        List<MethodNode> nodes = this.methods.stream().filter(predicate).collect(Collectors.toList());
+
+        if (this.superclass != null) {
+            nodes.addAll(this.superclass.lookupMethods(predicate));
+        }
+
+        for (ClassNode inter : this.interfaces) {
+            nodes.addAll(inter.lookupMethods(predicate));
+        }
+
+        return nodes;
+    }
+
+    public List<FieldNode> lookupFields(Predicate<FieldNode> predicate) {
+        List<FieldNode> nodes = this.fields.stream().filter(predicate).collect(Collectors.toList());
+
+        if (this.superclass != null) {
+            nodes.addAll(this.superclass.lookupFields(predicate));
+        }
+
+        for (ClassNode inter : this.interfaces) {
+            nodes.addAll(inter.lookupFields(predicate));
+        }
+
+        return nodes;
     }
 
     public TypeParameterized type() {
@@ -46,7 +80,16 @@ public class ClassNode extends AbstractAnnotated {
         return Optional.ofNullable(this.outerClass);
     }
 
-    public List<ClassNode> innerClasses() {
+    public List<Namespace> permittedSubclasses() {
+        return this.permittedSubclasses;
+    }
+
+    public ClassNode addPermittedSubclass(Namespace namespace) {
+        this.permittedSubclasses.add(namespace);
+        return this;
+    }
+
+    public List<InnerClassNode> innerClasses() {
         return innerClasses;
     }
 
@@ -59,12 +102,29 @@ public class ClassNode extends AbstractAnnotated {
         return this;
     }
 
+    public List<ClassNode> interfaces() {
+        return this.interfaces;
+    }
+
+    public ClassNode outerClass() {
+        return this.outerClass;
+    }
+
+    public List<ClassNode> nestClasses() {
+        return this.nestClasses;
+    }
+
+    public ClassNode addNestClass(ClassNode nest) {
+        this.nestClasses.add(nest);
+        return this;
+    }
+
     public ClassNode setOuterClass(ClassNode outerClass) {
         this.outerClass = outerClass;
         return this;
     }
 
-    public ClassNode addInnerClass(ClassNode innerClass) {
+    public ClassNode addInnerClass(InnerClassNode innerClass) {
         this.innerClasses.add(innerClass);
         return this;
     }

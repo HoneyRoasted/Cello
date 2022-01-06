@@ -1,7 +1,7 @@
 package honeyroasted.cello.node.instruction.value;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;
 import honeyroasted.cello.verify.Verification;
@@ -26,7 +26,7 @@ public class TypeConstant extends AbstractPropertyHolder implements TypedNode<Ty
     }
 
     @Override
-    public Verification<TypeConstant> verify(Environment environment, LocalScope localScope) {
+    public Verification<TypeConstant> verify(Environment environment, CodeContext context) {
         if (this.type instanceof TypeFilled) {
             return Verification.success(this);
         } else if (this.type instanceof TypeArray arr) {
@@ -42,7 +42,7 @@ public class TypeConstant extends AbstractPropertyHolder implements TypedNode<Ty
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
         if (this.type instanceof TypeFilled fld) {
             adapter.tconst(Type.getType(fld.type().descriptor()));
         } else if (this.type instanceof TypeArray arr) {

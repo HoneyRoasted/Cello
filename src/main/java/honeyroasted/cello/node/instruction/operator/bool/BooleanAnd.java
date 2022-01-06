@@ -1,7 +1,7 @@
 package honeyroasted.cello.node.instruction.operator.bool;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.instruction.TypedNode;
 import honeyroasted.cello.verify.Verification;
@@ -28,35 +28,35 @@ public class BooleanAnd extends AbstractPropertyHolder implements BooleanOperato
     }
 
     @Override
-    public Verification<BooleanAnd> verify(Environment environment, LocalScope localScope) {
+    public Verification<BooleanAnd> verify(Environment environment, CodeContext context) {
         return Verification.builder(this)
-                .children(this.arguments.stream().map(t -> (Verification<?>) t.verify(environment, localScope)).collect(Collectors.toList()))
+                .children(this.arguments.stream().map(t -> (Verification<?>) t.verify(environment, context)).collect(Collectors.toList()))
                 .andChildren()
                 .build();
     }
 
     @Override
-    public void jumpIfTrue(Label ifTrue, InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void jumpIfTrue(Label ifTrue, InstructionAdapter adapter, Environment environment, CodeContext context) {
         Label ifFalse = new Label();
-        jump(ifTrue, ifFalse, adapter, environment, localScope);
+        jump(ifTrue, ifFalse, adapter, environment, context);
         adapter.mark(ifFalse);
     }
 
     @Override
-    public void jumpIfFalse(Label ifFalse, InstructionAdapter adapter, Environment environment, LocalScope localScope) {
+    public void jumpIfFalse(Label ifFalse, InstructionAdapter adapter, Environment environment, CodeContext context) {
         for (TypedNode arg : this.arguments) {
             if (arg instanceof BooleanOperator bop) {
-                bop.jumpIfFalse(ifFalse, adapter, environment, localScope);
+                bop.jumpIfFalse(ifFalse, adapter, environment, context);
             } else {
-                arg.apply(adapter, environment, localScope);
+                arg.apply(adapter, environment, context);
                 adapter.ifeq(ifFalse);
             }
         }
     }
 
     @Override
-    public void jump(Label ifTrue, Label ifFalse, InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        jumpIfFalse(ifFalse, adapter, environment, localScope);
+    public void jump(Label ifTrue, Label ifFalse, InstructionAdapter adapter, Environment environment, CodeContext context) {
+        jumpIfFalse(ifFalse, adapter, environment, context);
         adapter.goTo(ifTrue);
     }
 }

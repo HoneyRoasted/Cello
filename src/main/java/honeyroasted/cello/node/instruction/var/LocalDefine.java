@@ -1,9 +1,9 @@
 package honeyroasted.cello.node.instruction.var;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.LocalScope;
+import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.environment.TypeUtil;
-import honeyroasted.cello.environment.Var;
+import honeyroasted.cello.environment.context.Var;
 import honeyroasted.cello.node.Nodes;
 import honeyroasted.cello.node.instruction.CodeNode;
 import honeyroasted.cello.node.instruction.TypedNode;
@@ -31,8 +31,8 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
     }
 
     @Override
-    public Verification<LocalDefine> verify(Environment environment, LocalScope localScope) {
-        if (localScope.has(this.name)) {
+    public Verification<LocalDefine> verify(Environment environment, CodeContext context) {
+        if (context.scope().has(this.name)) {
             return Verification.builder(this)
                     .varAlreadyDefinedError(this.name)
                     .build();
@@ -47,7 +47,7 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
                 this.value.provideExpected(this.type);
             }
 
-            Verification<TypedNode> verification = this.value.verify(environment, localScope);
+            Verification<TypedNode> verification = this.value.verify(environment, context);
             if (verification.success()) {
                 if (this.type == null) {
                     this.type = this.value.type();
@@ -82,11 +82,11 @@ public class LocalDefine extends AbstractPropertyHolder implements CodeNode<Loca
     }
 
     @Override
-    public void apply(InstructionAdapter adapter, Environment environment, LocalScope localScope) {
-        Var var = localScope.define(this.name, this.type).get();
+    public void apply(InstructionAdapter adapter, Environment environment, CodeContext context) {
+        Var var = context.scope().define(this.name, this.type).get();
         if (this.value != null) {
-            localScope.fetch(this.name).get().setInitialized(true);
-            this.value.apply(adapter, environment, localScope);
+            context.scope().fetch(this.name).get().setInitialized(true);
+            this.value.apply(adapter, environment, context);
             adapter.store(var.index(), TypeUtil.asmType(var.type()));
         }
     }

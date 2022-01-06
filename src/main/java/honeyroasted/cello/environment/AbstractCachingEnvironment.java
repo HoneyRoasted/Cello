@@ -32,7 +32,11 @@ public abstract class AbstractCachingEnvironment implements CachingEnvironment {
         if (opt.isPresent()) {
             return Verification.success(opt.get());
         } else {
-            return performArrayLookup(element, namespace);
+            Verification<ClassNode> lookup = performArrayLookup(element, namespace);
+            if (lookup.isPresent()) {
+                cache(lookup.value());
+            }
+            return lookup;
         }
     }
 
@@ -42,7 +46,11 @@ public abstract class AbstractCachingEnvironment implements CachingEnvironment {
         if (opt.isPresent()) {
             return Verification.success(opt.get());
         } else {
-            return performLookup(namespace);
+            Verification<ClassNode> lookup = performLookup(namespace);
+            if (lookup.isPresent()) {
+                cache(lookup.value());
+            }
+            return lookup;
         }
     }
 
