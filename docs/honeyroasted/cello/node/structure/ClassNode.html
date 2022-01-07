@@ -45,7 +45,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -77,7 +77,9 @@ loadScripts(document, 'script');</script>
 <div class="inheritance"><a href="../../properties/AbstractPropertyHolder.html" title="class in honeyroasted.cello.properties">honeyroasted.cello.properties.AbstractPropertyHolder</a>
 <div class="inheritance"><a href="../modifier/AbstractModifiable.html" title="class in honeyroasted.cello.node.modifier">honeyroasted.cello.node.modifier.AbstractModifiable</a>
 <div class="inheritance"><a href="annotation/AbstractAnnotated.html" title="class in honeyroasted.cello.node.structure.annotation">honeyroasted.cello.node.structure.annotation.AbstractAnnotated</a>
+<div class="inheritance"><a href="AbstractParameterized.html" title="class in honeyroasted.cello.node.structure">honeyroasted.cello.node.structure.AbstractParameterized</a>
 <div class="inheritance">honeyroasted.cello.node.structure.ClassNode</div>
+</div>
 </div>
 </div>
 </div>
@@ -85,14 +87,23 @@ loadScripts(document, 'script');</script>
 <section class="description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../modifier/Modifiable.html" title="interface in honeyroasted.cello.node.modifier">Modifiable</a></code>, <code><a href="../Node.html" title="interface in honeyroasted.cello.node">Node</a></code>, <code><a href="annotation/Annotated.html" title="interface in honeyroasted.cello.node.structure.annotation">Annotated</a></code>, <code><a href="../../properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></code></dd>
+<dd><code><a href="../modifier/Modifiable.html" title="interface in honeyroasted.cello.node.modifier">Modifiable</a></code>, <code><a href="annotation/Annotated.html" title="interface in honeyroasted.cello.node.structure.annotation">Annotated</a></code>, <code><a href="ParameterizedNode.html" title="interface in honeyroasted.cello.node.structure">ParameterizedNode</a></code>, <code><a href="../../properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ClassNode</span>
-<span class="extends-implements">extends <a href="annotation/AbstractAnnotated.html" title="class in honeyroasted.cello.node.structure.annotation">AbstractAnnotated</a></span></div>
+<span class="extends-implements">extends <a href="AbstractParameterized.html" title="class in honeyroasted.cello.node.structure">AbstractParameterized</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field.summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields.inherited.from.class.honeyroasted.cello.node.structure.AbstractParameterized">Fields inherited from class&nbsp;honeyroasted.cello.node.structure.<a href="AbstractParameterized.html" title="class in honeyroasted.cello.node.structure">AbstractParameterized</a></h3>
+<code><a href="AbstractParameterized.html#parent">parent</a></code></div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor.summary">
@@ -121,7 +132,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addField(honeyroasted.cello.node.structure.FieldNode)">addField</a></span>&#8203;(<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&nbsp;field)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addInnerClass(honeyroasted.cello.node.structure.InnerClassNode)">addInnerClass</a></span>&#8203;(<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&nbsp;innerClass)</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addInnerClass(honeyroasted.cello.node.structure.InnerClassNode)">addInnerClass</a></span>&#8203;(<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&nbsp;node)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addInterface(honeyroasted.cello.node.structure.ClassNode)">addInterface</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;inter)</code></div>
@@ -130,10 +141,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addMethod(honeyroasted.cello.node.structure.MethodNode)">addMethod</a></span>&#8203;(<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;method)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addNestClass(honeyroasted.cello.node.structure.ClassNode)">addNestClass</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;nest)</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addNestClass(honeyroasted.cello.node.structure.ClassNode)">addNestClass</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;nestClass)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#addPermittedSubclass(honeyroasted.javatype.Namespace)">addPermittedSubclass</a></span>&#8203;(honeyroasted.javatype.Namespace&nbsp;namespace)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#arrayElement()">arrayElement</a></span>()</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>honeyroasted.javatype.informal.TypeClass</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#buildType(honeyroasted.javatype.informal.TypeInformal...)">buildType</a></span>&#8203;(honeyroasted.javatype.informal.TypeInformal...&nbsp;arguments)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#fields()">fields</a></span>()</code></div>
@@ -144,12 +161,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#interfaces()">interfaces</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#lookupFields(java.util.function.Predicate)">lookupFields</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;&nbsp;predicate)</code></div>
-<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#lookupMethods(java.util.function.Predicate)">lookupMethods</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;&nbsp;predicate)</code></div>
-<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#methods()">methods</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
@@ -159,45 +170,63 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#nestHost()">nestHost</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#outerclass()">outerclass</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#outerClass()">outerClass</a></span>()</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#outerMethod()">outerMethod</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;honeyroasted.javatype.Namespace&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#permittedSubclasses()">permittedSubclasses</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#outerClass()">outerClass</a></span>()</code></div>
-<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#outerMethod()">outerMethod</a></span>()</code></div>
-<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;honeyroasted.javatype.Namespace&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#permittedSubclasses()">permittedSubclasses</a></span>()</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setArrayElement(honeyroasted.cello.node.structure.ClassNode)">setArrayElement</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;arrayElement)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setNestHost(honeyroasted.cello.node.structure.ClassNode)">setNestHost</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;nestHost)</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setFields(java.util.List)">setFields</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;&nbsp;fields)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setOuterClass(honeyroasted.cello.node.structure.ClassNode)">setOuterClass</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;outerClass)</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setInnerClasses(java.util.List)">setInnerClasses</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&gt;&nbsp;innerClasses)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setOuterMethod(honeyroasted.cello.node.structure.MethodNode)">setOuterMethod</a></span>&#8203;(<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;outerMethod)</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setInterfaces(java.util.List)">setInterfaces</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;&nbsp;interfaces)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setMethods(java.util.List)">setMethods</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;&nbsp;methods)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setNestClasses(java.util.List)">setNestClasses</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;&nbsp;nestClasses)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setNestHost(honeyroasted.cello.node.structure.ClassNode)">setNestHost</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;nestHost)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setOuterClass(honeyroasted.cello.node.structure.ClassNode)">setOuterClass</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;outerClass)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setOuterMethod(honeyroasted.cello.node.structure.MethodNode)">setOuterMethod</a></span>&#8203;(<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;outerMethod)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setPermittedSubclasses(java.util.List)">setPermittedSubclasses</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;honeyroasted.javatype.Namespace&gt;&nbsp;permittedSubclasses)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setSuperclass(honeyroasted.cello.node.structure.ClassNode)">setSuperclass</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;superclass)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setTypeVarScope(honeyroasted.cello.environment.TypeVarScope)">setTypeVarScope</a></span>&#8203;(<a href="../../environment/TypeVarScope.html" title="class in honeyroasted.cello.environment">TypeVarScope</a>&nbsp;typeVarScope)</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setType(honeyroasted.javatype.parameterized.TypeParameterized)">setType</a></span>&#8203;(honeyroasted.javatype.parameterized.TypeParameterized&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#superclass()">superclass</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>honeyroasted.javatype.parameterized.TypeParameterized</code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#type()">type</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../environment/TypeVarScope.html" title="class in honeyroasted.cello.environment">TypeVarScope</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#typeVarScope()">typeVarScope</a></span>()</code></div>
-<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
+<div class="inherited-list">
+<h3 id="methods.inherited.from.class.honeyroasted.cello.node.structure.AbstractParameterized">Methods inherited from class&nbsp;honeyroasted.cello.node.structure.<a href="AbstractParameterized.html" title="class in honeyroasted.cello.node.structure">AbstractParameterized</a></h3>
+<code><a href="AbstractParameterized.html#definedTypeVars()">definedTypeVars</a>, <a href="AbstractParameterized.html#defineTypeVar(java.lang.String)">defineTypeVar</a>, <a href="AbstractParameterized.html#fetchTypeVar(java.lang.String)">fetchTypeVar</a>, <a href="AbstractParameterized.html#putTypeVar(java.lang.String,honeyroasted.javatype.parameterized.TypeVar)">putTypeVar</a>, <a href="AbstractParameterized.html#typeVars()">typeVars</a></code></div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.honeyroasted.cello.node.structure.annotation.AbstractAnnotated">Methods inherited from class&nbsp;honeyroasted.cello.node.structure.annotation.<a href="annotation/AbstractAnnotated.html" title="class in honeyroasted.cello.node.structure.annotation">AbstractAnnotated</a></h3>
 <code><a href="annotation/AbstractAnnotated.html#annotations()">annotations</a></code></div>
@@ -210,6 +239,9 @@ loadScripts(document, 'script');</script>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<div class="inherited-list">
+<h3 id="methods.inherited.from.class.honeyroasted.cello.node.structure.ParameterizedNode">Methods inherited from interface&nbsp;honeyroasted.cello.node.structure.<a href="ParameterizedNode.html" title="interface in honeyroasted.cello.node.structure">ParameterizedNode</a></h3>
+<code><a href="ParameterizedNode.html#fetchOrPutTypeVar(java.lang.String)">fetchOrPutTypeVar</a>, <a href="ParameterizedNode.html#hasTypeVar(java.lang.String)">hasTypeVar</a>, <a href="ParameterizedNode.html#setTypeVars(java.util.List)">setTypeVars</a></code></div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.honeyroasted.cello.properties.PropertyHolder">Methods inherited from interface&nbsp;honeyroasted.cello.properties.<a href="../../properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></h3>
 <code><a href="../../properties/PropertyHolder.html#properties()">properties</a>, <a href="../../properties/PropertyHolder.html#withProperties(honeyroasted.cello.properties.Properties)">withProperties</a></code></div>
@@ -239,21 +271,105 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="lookupMethods(java.util.function.Predicate)">
-<h3>lookupMethods</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</span>&nbsp;<span class="element-name">lookupMethods</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;&nbsp;predicate)</span></div>
+<section class="detail" id="buildType(honeyroasted.javatype.informal.TypeInformal...)">
+<h3>buildType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">honeyroasted.javatype.informal.TypeClass</span>&nbsp;<span class="element-name">buildType</span>&#8203;<span class="parameters">(honeyroasted.javatype.informal.TypeInformal...&nbsp;arguments)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="type()">
+<h3>type</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">honeyroasted.javatype.parameterized.TypeParameterized</span>&nbsp;<span class="element-name">type</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setType(honeyroasted.javatype.parameterized.TypeParameterized)">
+<h3>setType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setType</span>&#8203;<span class="parameters">(honeyroasted.javatype.parameterized.TypeParameterized&nbsp;type)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="arrayElement()">
+<h3>arrayElement</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">arrayElement</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setArrayElement(honeyroasted.cello.node.structure.ClassNode)">
+<h3>setArrayElement</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setArrayElement</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;arrayElement)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="superclass()">
+<h3>superclass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">superclass</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setSuperclass(honeyroasted.cello.node.structure.ClassNode)">
+<h3>setSuperclass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setSuperclass</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;superclass)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="interfaces()">
+<h3>interfaces</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</span>&nbsp;<span class="element-name">interfaces</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setInterfaces(java.util.List)">
+<h3>setInterfaces</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setInterfaces</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;&nbsp;interfaces)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addInterface(honeyroasted.cello.node.structure.ClassNode)">
+<h3>addInterface</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addInterface</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;inter)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="outerClass()">
+<h3>outerClass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">outerClass</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setOuterClass(honeyroasted.cello.node.structure.ClassNode)">
+<h3>setOuterClass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setOuterClass</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;outerClass)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="outerMethod()">
 <h3>outerMethod</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</span>&nbsp;<span class="element-name">outerMethod</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></span>&nbsp;<span class="element-name">outerMethod</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setOuterMethod(honeyroasted.cello.node.structure.MethodNode)">
 <h3>setOuterMethod</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setOuterMethod</span>&#8203;<span class="parameters">(<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;outerMethod)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="innerClasses()">
+<h3>innerClasses</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&gt;</span>&nbsp;<span class="element-name">innerClasses</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setInnerClasses(java.util.List)">
+<h3>setInnerClasses</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setInnerClasses</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&gt;&nbsp;innerClasses)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addInnerClass(honeyroasted.cello.node.structure.InnerClassNode)">
+<h3>addInnerClass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addInnerClass</span>&#8203;<span class="parameters">(<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&nbsp;node)</span></div>
 </section>
 </li>
 <li>
@@ -269,39 +385,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="lookupFields(java.util.function.Predicate)">
-<h3>lookupFields</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;</span>&nbsp;<span class="element-name">lookupFields</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;&nbsp;predicate)</span></div>
+<section class="detail" id="nestClasses()">
+<h3>nestClasses</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</span>&nbsp;<span class="element-name">nestClasses</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="type()">
-<h3>type</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">honeyroasted.javatype.parameterized.TypeParameterized</span>&nbsp;<span class="element-name">type</span>()</div>
+<section class="detail" id="setNestClasses(java.util.List)">
+<h3>setNestClasses</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setNestClasses</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;&nbsp;nestClasses)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="fields()">
-<h3>fields</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;</span>&nbsp;<span class="element-name">fields</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="methods()">
-<h3>methods</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</span>&nbsp;<span class="element-name">methods</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="superclass()">
-<h3>superclass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</span>&nbsp;<span class="element-name">superclass</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="outerclass()">
-<h3>outerclass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</span>&nbsp;<span class="element-name">outerclass</span>()</div>
+<section class="detail" id="addNestClass(honeyroasted.cello.node.structure.ClassNode)">
+<h3>addNestClass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addNestClass</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;nestClass)</span></div>
 </section>
 </li>
 <li>
@@ -311,81 +409,45 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setPermittedSubclasses(java.util.List)">
+<h3>setPermittedSubclasses</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setPermittedSubclasses</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;honeyroasted.javatype.Namespace&gt;&nbsp;permittedSubclasses)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="addPermittedSubclass(honeyroasted.javatype.Namespace)">
 <h3>addPermittedSubclass</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addPermittedSubclass</span>&#8203;<span class="parameters">(honeyroasted.javatype.Namespace&nbsp;namespace)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="innerClasses()">
-<h3>innerClasses</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&gt;</span>&nbsp;<span class="element-name">innerClasses</span>()</div>
+<section class="detail" id="fields()">
+<h3>fields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;</span>&nbsp;<span class="element-name">fields</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="typeVarScope()">
-<h3>typeVarScope</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../environment/TypeVarScope.html" title="class in honeyroasted.cello.environment">TypeVarScope</a></span>&nbsp;<span class="element-name">typeVarScope</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setTypeVarScope(honeyroasted.cello.environment.TypeVarScope)">
-<h3>setTypeVarScope</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setTypeVarScope</span>&#8203;<span class="parameters">(<a href="../../environment/TypeVarScope.html" title="class in honeyroasted.cello.environment">TypeVarScope</a>&nbsp;typeVarScope)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="interfaces()">
-<h3>interfaces</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</span>&nbsp;<span class="element-name">interfaces</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="outerClass()">
-<h3>outerClass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">outerClass</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="nestClasses()">
-<h3>nestClasses</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&gt;</span>&nbsp;<span class="element-name">nestClasses</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="addNestClass(honeyroasted.cello.node.structure.ClassNode)">
-<h3>addNestClass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addNestClass</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;nest)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="setOuterClass(honeyroasted.cello.node.structure.ClassNode)">
-<h3>setOuterClass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setOuterClass</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;outerClass)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="addInnerClass(honeyroasted.cello.node.structure.InnerClassNode)">
-<h3>addInnerClass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addInnerClass</span>&#8203;<span class="parameters">(<a href="InnerClassNode.html" title="class in honeyroasted.cello.node.structure">InnerClassNode</a>&nbsp;innerClass)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="setSuperclass(honeyroasted.cello.node.structure.ClassNode)">
-<h3>setSuperclass</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setSuperclass</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;superclass)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="addInterface(honeyroasted.cello.node.structure.ClassNode)">
-<h3>addInterface</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addInterface</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;inter)</span></div>
+<section class="detail" id="setFields(java.util.List)">
+<h3>setFields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setFields</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&gt;&nbsp;fields)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(honeyroasted.cello.node.structure.FieldNode)">
 <h3>addField</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">addField</span>&#8203;<span class="parameters">(<a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a>&nbsp;field)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="methods()">
+<h3>methods</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;</span>&nbsp;<span class="element-name">methods</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setMethods(java.util.List)">
+<h3>setMethods</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></span>&nbsp;<span class="element-name">setMethods</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&gt;&nbsp;methods)</span></div>
 </section>
 </li>
 <li>

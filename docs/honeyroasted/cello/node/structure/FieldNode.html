@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 <section class="description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../modifier/Modifiable.html" title="interface in honeyroasted.cello.node.modifier">Modifiable</a></code>, <code><a href="../Node.html" title="interface in honeyroasted.cello.node">Node</a></code>, <code><a href="annotation/Annotated.html" title="interface in honeyroasted.cello.node.structure.annotation">Annotated</a></code>, <code><a href="../../properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></code></dd>
+<dd><code><a href="../modifier/Modifiable.html" title="interface in honeyroasted.cello.node.modifier">Modifiable</a></code>, <code><a href="annotation/Annotated.html" title="interface in honeyroasted.cello.node.structure.annotation">Annotated</a></code>, <code><a href="../../properties/PropertyHolder.html" title="interface in honeyroasted.cello.properties">PropertyHolder</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">FieldNode</span>
@@ -101,9 +101,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(java.lang.String,honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.informal.TypeFilled)">FieldNode</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(java.lang.String,honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.informal.TypeInformal)">FieldNode</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;owner,
- honeyroasted.javatype.informal.TypeFilled&nbsp;type)</code></div>
+ honeyroasted.javatype.informal.TypeInformal&nbsp;type)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(java.lang.String,honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.informal.TypeInformal,honeyroasted.cello.node.instruction.TypedNode)">FieldNode</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;owner,
@@ -129,6 +129,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#owner()">owner</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setOwner(honeyroasted.cello.node.structure.ClassNode)">setOwner</a></span>&#8203;(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;owner)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setType(honeyroasted.javatype.informal.TypeInformal)">setType</a></span>&#8203;(honeyroasted.javatype.informal.TypeInformal&nbsp;type)</code></div>
@@ -181,11 +187,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.informal.TypeFilled)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.informal.TypeInformal)">
 <h3>FieldNode</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">FieldNode</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;owner,
- honeyroasted.javatype.informal.TypeFilled&nbsp;type)</span></div>
+ honeyroasted.javatype.informal.TypeInformal&nbsp;type)</span></div>
 </section>
 </li>
 </ul>
@@ -218,6 +224,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="value()">
 <h3>value</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../instruction/TypedNode.html" title="interface in honeyroasted.cello.node.instruction">TypedNode</a>&gt;</span>&nbsp;<span class="element-name">value</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setName(java.lang.String)">
+<h3>setName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></span>&nbsp;<span class="element-name">setName</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setOwner(honeyroasted.cello.node.structure.ClassNode)">
+<h3>setOwner</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></span>&nbsp;<span class="element-name">setOwner</span>&#8203;<span class="parameters">(<a href="ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a>&nbsp;owner)</span></div>
 </section>
 </li>
 <li>

@@ -44,7 +44,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -74,7 +74,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class Verification" class="title">Class Verification&lt;T&gt;</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">honeyroasted.cello.Verification&lt;T&gt;</div>
+<div class="inheritance">honeyroasted.cello.verify.Verification&lt;T&gt;</div>
 </div>
 <section class="description">
 <hr>
@@ -83,24 +83,6 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<li>
-<section class="nested-class-summary" id="nested.class.summary">
-<h2>Nested Class Summary</h2>
-<div class="caption"><span>Nested Classes</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a>&lt;<a href="Verification.Builder.html" title="type parameter in Verification.Builder">T</a>&gt;</span></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="Verification.ErrorCode.html" title="enum class in honeyroasted.cello.verify">Verification.ErrorCode</a></span></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor.summary">
@@ -109,12 +91,13 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(boolean,java.lang.String,T,java.lang.Throwable,java.util.List,honeyroasted.cello.Verification.ErrorCode)">Verification</a></span>&#8203;(boolean&nbsp;success,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+<div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(honeyroasted.cello.verify.Verify.Level,T,java.lang.String,java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.Throwable,java.util.List)">Verification</a></span>&#8203;(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level,
  <a href="Verification.html" title="type parameter in Verification">T</a>&nbsp;value,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;error,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;&nbsp;children,
- <a href="Verification.ErrorCode.html" title="enum class in honeyroasted.cello.verify">Verification.ErrorCode</a>&nbsp;errorCode)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ <a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;exception,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;&nbsp;children)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -130,26 +113,57 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;T&gt;&nbsp;<a href="Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a>&lt;T&gt;</code></div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="VerificationBuilder.html" title="class in honeyroasted.cello.verify">VerificationBuilder</a>&lt;K&gt;</code></div>
 <div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#builder()">builder</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;T&gt;&nbsp;<a href="Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a>&lt;T&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#builder(T)">builder</a></span>&#8203;(T&nbsp;value)</code></div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="VerificationBuilder.html" title="class in honeyroasted.cello.verify">VerificationBuilder</a>&lt;K&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#builder(K)">builder</a></span>&#8203;(K&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;</code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#children()">children</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#error()">error</a></span>()</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#code()">code</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Verification.ErrorCode.html" title="enum class in honeyroasted.cello.verify">Verification.ErrorCode</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#errorCode()">errorCode</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#error(honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Object...)">error</a></span>&#8203;(<a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</code></div>
+<div class="col-last even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#error(honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Throwable,java.lang.Object...)">error</a></span>&#8203;(<a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#error(java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Object...)">error</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ <a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</code></div>
+<div class="col-last even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#error(java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Throwable,java.lang.Object...)">error</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ <a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#exception()">exception</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#format()">format</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#isPresent()">isPresent</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#format(honeyroasted.cello.verify.Verify.Level)">format</a></span>&#8203;(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#format(honeyroasted.cello.verify.Verify.Level,boolean)">format</a></span>&#8203;(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level,
+ boolean&nbsp;unicode)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#level()">level</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>&lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#map(java.util.function.Function)">map</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="Verification.html" title="type parameter in Verification">T</a>,&#8203;K&gt;&nbsp;function)</code></div>
@@ -160,21 +174,37 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Verification.html" title="type parameter in Verification">T</a></code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#orElse(T)">orElse</a></span>&#8203;(<a href="Verification.html" title="type parameter in Verification">T</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#source()">source</a></span>()</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#success()">success</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#success()">success</a></span>()</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#success(honeyroasted.cello.verify.Verify.Level)">success</a></span>&#8203;(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;T&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;T&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#success(T)">success</a></span>&#8203;(T&nbsp;val)</code></div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#success(java.lang.Object,K)">success</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ K&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="Verification.html" title="type parameter in Verification">T</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#value()">value</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static &lt;K&gt;&nbsp;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#success(K)">success</a></span>&#8203;(K&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="VerificationBuilder.html" title="class in honeyroasted.cello.verify">VerificationBuilder</a>&lt;<a href="Verification.html" title="type parameter in Verification">T</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#toBuilder()">toBuilder</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#toString()">toString</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Verification.html" title="type parameter in Verification">T</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#value()">value</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -187,14 +217,15 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(boolean,java.lang.String,T,java.lang.Throwable,java.util.List,honeyroasted.cello.Verification.ErrorCode)">
-<h3 id="&lt;init&gt;(boolean,java.lang.String,java.lang.Object,java.lang.Throwable,java.util.List,honeyroasted.cello.Verification.ErrorCode)">Verification</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Verification</span>&#8203;<span class="parameters">(boolean&nbsp;success,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+<section class="detail" id="&lt;init&gt;(honeyroasted.cello.verify.Verify.Level,T,java.lang.String,java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.Throwable,java.util.List)">
+<h3 id="&lt;init&gt;(honeyroasted.cello.verify.Verify.Level,java.lang.Object,java.lang.String,java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.Throwable,java.util.List)">Verification</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Verification</span>&#8203;<span class="parameters">(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level,
  <a href="Verification.html" title="type parameter in Verification">T</a>&nbsp;value,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;error,
- <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;&nbsp;children,
- <a href="Verification.ErrorCode.html" title="enum class in honeyroasted.cello.verify">Verification.ErrorCode</a>&nbsp;errorCode)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ <a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;exception,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;&nbsp;children)</span></div>
 </section>
 </li>
 </ul>
@@ -208,55 +239,62 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="builder()">
 <h3>builder</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a>&lt;T&gt;</span>&nbsp;<span class="element-name">builder</span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="VerificationBuilder.html" title="class in honeyroasted.cello.verify">VerificationBuilder</a>&lt;K&gt;</span>&nbsp;<span class="element-name">builder</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="builder(T)">
+<section class="detail" id="builder(K)">
 <h3 id="builder(java.lang.Object)">builder</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a>&lt;T&gt;</span>&nbsp;<span class="element-name">builder</span>&#8203;<span class="parameters">(T&nbsp;value)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="VerificationBuilder.html" title="class in honeyroasted.cello.verify">VerificationBuilder</a>&lt;K&gt;</span>&nbsp;<span class="element-name">builder</span>&#8203;<span class="parameters">(K&nbsp;value)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="errorCode()">
-<h3>errorCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Verification.ErrorCode.html" title="enum class in honeyroasted.cello.verify">Verification.ErrorCode</a></span>&nbsp;<span class="element-name">errorCode</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="children()">
-<h3>children</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">children</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="success()">
-<h3>success</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">success</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="message()">
-<h3>message</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">message</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="value()">
-<h3>value</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Verification.html" title="type parameter in Verification">T</a></span>&nbsp;<span class="element-name">value</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="error()">
-<h3>error</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="element-name">error</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="success(T)">
+<section class="detail" id="success(K)">
 <h3 id="success(java.lang.Object)">success</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;T&gt;</span>&nbsp;<span class="element-name">success</span>&#8203;<span class="parameters">(T&nbsp;val)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</span>&nbsp;<span class="element-name">success</span>&#8203;<span class="parameters">(K&nbsp;value)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="success(java.lang.Object,K)">
+<h3 id="success(java.lang.Object,java.lang.Object)">success</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</span>&nbsp;<span class="element-name">success</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ K&nbsp;value)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="error(honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Object...)">
+<h3>error</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</span>&nbsp;<span class="element-name">error</span>&#8203;<span class="parameters">(<a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="error(honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Throwable,java.lang.Object...)">
+<h3>error</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</span>&nbsp;<span class="element-name">error</span>&#8203;<span class="parameters">(<a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="error(java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Object...)">
+<h3>error</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</span>&nbsp;<span class="element-name">error</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ <a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="error(java.lang.Object,honeyroasted.cello.verify.Verify.Code,java.lang.String,java.lang.Throwable,java.lang.Object...)">
+<h3>error</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;K&gt;</span>&nbsp;<span class="return-type"><a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;K&gt;</span>&nbsp;<span class="element-name">error</span>&#8203;<span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;source,
+ <a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex,
+ <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;format)</span></div>
 </section>
 </li>
 <li>
@@ -272,15 +310,92 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="isPresent()">
-<h3>isPresent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPresent</span>()</div>
+<section class="detail" id="toBuilder()">
+<h3>toBuilder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="VerificationBuilder.html" title="class in honeyroasted.cello.verify">VerificationBuilder</a>&lt;<a href="Verification.html" title="type parameter in Verification">T</a>&gt;</span>&nbsp;<span class="element-name">toBuilder</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="format(honeyroasted.cello.verify.Verify.Level,boolean)">
+<h3>format</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">format</span>&#8203;<span class="parameters">(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level,
+ boolean&nbsp;unicode)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="format(honeyroasted.cello.verify.Verify.Level)">
+<h3>format</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">format</span>&#8203;<span class="parameters">(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="format()">
 <h3>format</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">format</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="toString()">
+<h3>toString</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="success(honeyroasted.cello.verify.Verify.Level)">
+<h3>success</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">success</span>&#8203;<span class="parameters">(<a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a>&nbsp;level)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="success()">
+<h3>success</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">success</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="level()">
+<h3>level</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Verify.Level.html" title="enum class in honeyroasted.cello.verify">Verify.Level</a></span>&nbsp;<span class="element-name">level</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="value()">
+<h3>value</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Verification.html" title="type parameter in Verification">T</a>&gt;</span>&nbsp;<span class="element-name">value</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="message()">
+<h3>message</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">message</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="source()">
+<h3>source</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">source</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="code()">
+<h3>code</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Verify.Code.html" title="enum class in honeyroasted.cello.verify">Verify.Code</a></span>&nbsp;<span class="element-name">code</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="exception()">
+<h3>exception</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="element-name">exception</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="children()">
+<h3>children</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">children</span>()</div>
 </section>
 </li>
 </ul>

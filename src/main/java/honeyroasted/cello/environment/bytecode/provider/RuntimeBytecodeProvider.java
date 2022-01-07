@@ -21,7 +21,7 @@ public class RuntimeBytecodeProvider implements BytecodeProvider {
                 }
             }
         } catch (ClassNotFoundException e) {
-            return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Class '%s' is not available at runtime", e, namespace.className());
+            return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Class '%s' is not available at runtime", e, namespace.name());
         } catch (IOException e) {
             return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Encountered error while loading classfile for class '%s'", e, namespace.name());
         }
