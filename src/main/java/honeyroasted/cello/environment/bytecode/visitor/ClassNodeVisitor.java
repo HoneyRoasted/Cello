@@ -23,8 +23,10 @@ import org.objectweb.asm.*;
 import org.objectweb.asm.signature.SignatureReader;
 
 import java.lang.annotation.Annotation;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,23 +36,20 @@ public class ClassNodeVisitor extends ClassVisitor {
     private ClassNode node;
 
     private Environment environment;
-    private TypeVarScope scope;
-
     private Verification.Builder<ClassNode> verification = Verification.builder();
 
-    public ClassNodeVisitor(ClassNode node, Environment environment, TypeVarScope scope) {
+    private List<Runnable> delay = new ArrayList<>();
+
+    public ClassNodeVisitor(ClassNode node, Environment environment) {
         super(ASM9);
         this.node = node;
         this.environment = environment;
-        this.scope = scope;
         this.verification.value(this.node);
     }
 
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaceNames) {
         Namespace namespace = Namespace.internal(name);
-
-        this.node.setTypeVarScope(this.scope);
         this.node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.CLASS));
 
         TypeParameterized.Builder builder = TypeParameterized.builder().namespace(namespace);
@@ -85,7 +84,7 @@ public class ClassNodeVisitor extends ClassVisitor {
                 if (v.isPresent()) {
                     builder.from(v.value());
                 }
-            }, namespace, this.scope, superclass, interfaces, this.environment);
+            }, namespace, this.node.typeVarScope(), superclass, interfaces, this.environment);
 
             SignatureReader reader = new SignatureReader(signature);
             reader.accept(visitor);
@@ -127,7 +126,7 @@ public class ClassNodeVisitor extends ClassVisitor {
                     if (v.isPresent()) {
                         node.setType(v.value());
                     }
-                }, this.scope, this.environment);
+                }, this.node.typeVarScope(), this.environment);
 
                 SignatureReader reader = new SignatureReader(signature);
                 reader.acceptType(visitor);
@@ -141,6 +140,7 @@ public class ClassNodeVisitor extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         MethodNode node = new MethodNode(name, this.node);
+        node.typeVarScope().provideParent(this.node.typeVarScope());
         this.node.addMethod(node);
 
         node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.METHOD));
@@ -158,13 +158,13 @@ public class ClassNodeVisitor extends ClassVisitor {
             Verification<ClassNode> paramClass = this.environment.lookup(n);
             this.verification.child(paramClass);
             return paramClass;
-        }).collect(Collectors.toList());
+        }).toList();
 
         List<Verification<ClassNode>> exceptionNodes = exceptionNames.stream().map(n -> {
             Verification<ClassNode> exc = this.environment.lookup(n);
             this.verification.child(exc);
             return exc;
-        }).collect(Collectors.toList());
+        }).toList();
 
         if (retClass.isPresent() &&
                 paramClasses.stream().allMatch(Verification::isPresent) &&
@@ -180,23 +180,15 @@ public class ClassNodeVisitor extends ClassVisitor {
             }
         }
 
+        node.setErased(node.type());
+
         if (signature != null) {
             MethodSignatureVisitor visitor = new MethodSignatureVisitor(v -> {
                 this.verification.child(v);
                 if (v.isPresent()) {
-                    TypeMethodParameterized type = v.value();
-
-                    node.setReturn(type.returnType());
-
-                    node.exceptions().clear();
-                    node.exceptions().addAll(type.exceptions());
-
-                    node.parameters().clear();
-                    for (int i = 0; i < type.parameters().size(); i++) {
-                        node.addParameter(type.parameters().get(i), "arg" + i);
-                    }
+                    node.setType(v.value());
                 }
-            }, this.scope.child(), this.environment);
+            }, node.typeVarScope(), this.environment);
 
             SignatureReader reader = new SignatureReader(signature);
             reader.accept(visitor);
@@ -208,33 +200,69 @@ public class ClassNodeVisitor extends ClassVisitor {
 
     @Override
     public void visitOuterClass(String owner, String name, String descriptor) {
-        super.visitOuterClass(owner, name, descriptor);
-    }
-
-    @Override
-    public void visitNestMember(String nestMember) {
-        Namespace namespace = Namespace.internal(nestMember);
+        Namespace namespace = Namespace.internal(owner);
         Verification<ClassNode> lookup = this.environment.lookup(namespace);
         this.verification.child(lookup);
 
         if (lookup.isPresent()) {
-            this.node.addNestClass(lookup.value());
+            ClassNode node = lookup.value();
+            this.node.setOuterClass(node);
+
+            if (name != null && descriptor != null) {
+                Optional<MethodNode> opt = node.methods().stream().filter(m -> m.name().equals(name) && m.erased().descriptor().equals(descriptor)).findFirst();
+                if (opt.isPresent()) {
+                    this.node.setOuterMethod(opt.get());
+                    this.node.typeVarScope().provideParent(opt.get().typeVarScope());
+                }
+            }
+
+            node.innerClasses().stream().filter(c -> c.cls() == node).findFirst().ifPresent(in -> {
+                if (!in.modifiers().has(Modifier.STATIC)) {
+                    this.node.typeVarScope().provideParent(node.typeVarScope());
+                }
+            });
         }
+    }
+
+    @Override
+    public void visitNestHost(String nestHost) {
+        Namespace namespace = Namespace.internal(nestHost);
+        Verification<ClassNode> lookup = this.environment.lookup(namespace);
+        this.verification.child(lookup);
+
+        if (lookup.isPresent()) {
+            this.node.setNestHost(lookup.value());
+        }
+    }
+
+    @Override
+    public void visitNestMember(String nestMember) {
+        this.delay.add(() -> {
+            Namespace namespace = Namespace.internal(nestMember);
+            Verification<ClassNode> lookup = this.environment.lookup(namespace);
+            this.verification.child(lookup);
+
+            if (lookup.isPresent()) {
+                this.node.addNestClass(lookup.value());
+            }
+        });
     }
 
     private int anon = 0;
 
     @Override
     public void visitInnerClass(String name, String outerName, String innerName, int access) {
-        Namespace namespace = Namespace.internal(name);
-        Verification<ClassNode> lookup = this.environment.lookup(namespace);
-        this.verification.child(lookup);
+        this.delay.add(() -> {
+            Namespace namespace = Namespace.internal(name);
+            Verification<ClassNode> lookup = this.environment.lookup(namespace);
+            this.verification.child(lookup);
 
-        if (lookup.isPresent()) {
-            InnerClassNode node = new InnerClassNode(lookup.value(), innerName == null ? String.valueOf(anon++) : innerName, innerName == null);
-            node.modifiers().set(Modifiers.fromBits(access));
-            this.node.addInnerClass(node);
-        }
+            if (lookup.isPresent()) {
+                InnerClassNode node = new InnerClassNode(lookup.value(), innerName == null ? String.valueOf(anon++) : innerName, innerName == null);
+                node.modifiers().set(Modifiers.fromBits(access));
+                this.node.addInnerClass(node);
+            }
+        });
     }
 
     @Override
@@ -245,6 +273,7 @@ public class ClassNodeVisitor extends ClassVisitor {
     @Override
     public void visitEnd() {
         super.visitEnd();
+        this.delay.forEach(Runnable::run);
     }
 
     public Verification<ClassNode> verification() {

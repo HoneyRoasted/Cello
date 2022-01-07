@@ -3,6 +3,7 @@ package honeyroasted.cello.environment;
 import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeArray;
@@ -16,6 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public interface TypeUtil {
 

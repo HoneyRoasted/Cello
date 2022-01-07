@@ -4,7 +4,7 @@
 Cello is a node-based JVM bytecode instrumentation library.
 
 ## Building
-Fill may be built using jitpack:  
+Cello may be built using jitpack:  
 [![Release](https://jitpack.io/v/HoneyRoasted/Cello.svg)](https://jitpack.io/#HoneyRoasted/Cello)
 
 ```groovy

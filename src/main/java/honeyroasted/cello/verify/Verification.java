@@ -257,12 +257,12 @@ public class Verification<T> {
 
         public Builder<T> typeNotFoundError(Type type) {
             return this.errorCode(ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Could not resolve " + type.externalName());
+                    .message("Could not resolve class " + type.externalName());
         }
 
         public Builder<T> typeNotFoundError(Namespace namespace) {
             return this.errorCode(ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Could not resolve " + namespace.name());
+                    .message("Could not resolve class " + namespace.name());
         }
 
         public Builder<T> typeVarNotFoundError(T name) {

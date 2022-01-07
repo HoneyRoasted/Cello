@@ -31,18 +31,4 @@ public class MultiEnvironment extends AbstractCachingEnvironment {
         return builder.typeNotFoundError(namespace).build();
     }
 
-    @Override
-    protected Verification<ClassNode> performArrayLookup(ClassNode element, Namespace namespace) {
-        Verification.Builder<ClassNode> builder = Verification.builder();
-
-        for (Environment environment : this.environments) {
-            Verification<ClassNode> lookup = environment.lookup(namespace);
-            builder.child(lookup);
-            if (lookup.isPresent()) {
-                return builder.value(lookup.value()).build();
-            }
-        }
-
-        return builder.typeNotFoundError(namespace).build();
-    }
 }

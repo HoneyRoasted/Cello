@@ -1,7 +1,11 @@
 package honeyroasted.cello.node.structure;
 
+import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.node.Node;
+import honeyroasted.cello.node.modifier.Modifiable;
+import honeyroasted.cello.node.modifier.Modifiers;
 import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
+import honeyroasted.cello.properties.Properties;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.method.TypeMethodParameterized;
@@ -23,13 +27,35 @@ public class MethodNode extends AbstractAnnotated implements Node {
     private String name;
     private ClassNode owner;
 
+    private TypeMethodParameterized erased;
+
+    private TypeVarScope typeVarScope = new TypeVarScope();
+
     public MethodNode(String name, ClassNode owner) {
         this.name = name;
         this.owner = owner;
     }
 
+    public TypeVarScope typeVarScope() {
+        return typeVarScope;
+    }
+
+    public MethodNode setTypeVarScope(TypeVarScope scope) {
+        this.typeVarScope = scope;
+        return this;
+    }
+
     public ClassNode owner() {
         return this.owner;
+    }
+
+    public TypeMethodParameterized erased() {
+        return erased;
+    }
+
+    public MethodNode setErased(TypeMethodParameterized erased) {
+        this.erased = erased;
+        return this;
     }
 
     public TypeMethodParameterized type() {
@@ -39,6 +65,35 @@ public class MethodNode extends AbstractAnnotated implements Node {
                 .typeParameters(this.typeParameters)
                 .exceptions(this.exceptions)
                 .build();
+    }
+
+    public MethodNode setType(TypeMethodParameterized type) {
+        this.setReturn(type.returnType());
+
+        this.typeParameters = new ArrayList<>(type.typeParameters());
+        this.exceptions = new ArrayList<>(type.exceptions());
+
+        List<ParameterNode> parameters = new ArrayList<>();
+
+        for (int i = 0; i < type.parameters().size(); i++) {
+            String name = "arg" + i;
+            Modifiers modifiers = new Modifiers();
+            Properties properties = new Properties();
+
+            if (i < this.parameters.size()) {
+                ParameterNode node = this.parameters.get(i);
+                name = node.name();
+                modifiers = node.modifiers();
+                properties = node.properties();
+            }
+
+            ParameterNode node = new ParameterNode(type.parameters().get(i), name);
+            node.modifiers().set(modifiers);
+            parameters.add(node.withProperties(properties));
+        }
+
+        this.parameters = parameters;
+        return this;
     }
 
     public List<TypeInformal> exceptions() {

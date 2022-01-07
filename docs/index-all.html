@@ -303,7 +303,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor"><span class="type-name-link">ClassNodeVisitor</span></a> - Class in <a href="honeyroasted/cello/environment/bytecode/visitor/package-summary.html">honeyroasted.cello.environment.bytecode.visitor</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html#%3Cinit%3E(honeyroasted.cello.node.structure.ClassNode,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.TypeVarScope)">ClassNodeVisitor(ClassNode, Environment, TypeVarScope)</a></span> - Constructor for class honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor">ClassNodeVisitor</a></dt>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html#%3Cinit%3E(honeyroasted.cello.node.structure.ClassNode,honeyroasted.cello.environment.Environment)">ClassNodeVisitor(ClassNode, Environment)</a></span> - Constructor for class honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor">ClassNodeVisitor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="honeyroasted/cello/environment/bytecode/visitor/signature/ClassSignatureVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor.signature"><span class="type-name-link">ClassSignatureVisitor</span></a> - Class in <a href="honeyroasted/cello/environment/bytecode/visitor/signature/package-summary.html">honeyroasted.cello.environment.bytecode.visitor.signature</a></dt>
 <dd>&nbsp;</dd>
@@ -408,6 +408,8 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.Enum.html#enumClass()">enumClass()</a></span> - Method in class honeyroasted.cello.node.structure.annotation.<a href="honeyroasted/cello/node/structure/annotation/AnnotationValue.Enum.html" title="class in honeyroasted.cello.node.structure.annotation">AnnotationValue.Enum</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="honeyroasted/cello/environment/Environment.html" title="interface in honeyroasted.cello.environment"><span class="type-name-link">Environment</span></a> - Interface in <a href="honeyroasted/cello/environment/package-summary.html">honeyroasted.cello.environment</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#erased()">erased()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/verify/Verification.Builder.html#error()">error()</a></span> - Method in class honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a></dt>
 <dd>&nbsp;</dd>
@@ -690,10 +692,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/Environment.html#lookup(java.lang.Class)">lookup(Class&lt;?&gt;)</a></span> - Method in interface honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html#lookupArray(honeyroasted.cello.node.structure.ClassNode)">lookupArray(ClassNode)</a></span> - Method in class honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html" title="class in honeyroasted.cello.environment">AbstractCachingEnvironment</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/Environment.html#lookupArray(honeyroasted.cello.node.structure.ClassNode)">lookupArray(ClassNode)</a></span> - Method in interface honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#lookupFields(java.util.function.Predicate)">lookupFields(Predicate&lt;FieldNode&gt;)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#lookupMethods(java.util.function.Predicate)">lookupMethods(Predicate&lt;MethodNode&gt;)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
@@ -772,6 +770,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#nestClasses()">nestClasses()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#nestHost()">nestHost()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/verify/Verification.Builder.html#noChildError()">noChildError()</a></span> - Method in class honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="honeyroasted/cello/node/Node.html" title="interface in honeyroasted.cello.node"><span class="type-name-link">Node</span></a> - Interface in <a href="honeyroasted/cello/node/package-summary.html">honeyroasted.cello.node</a></dt>
@@ -791,6 +791,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#outerClass()">outerClass()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#outerMethod()">outerMethod()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/context/CodeContext.html#owner()">owner()</a></span> - Method in class honeyroasted.cello.environment.context.<a href="honeyroasted/cello/environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/FieldNode.html#owner()">owner()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></dt>
@@ -809,12 +811,6 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ParameterNode.html#%3Cinit%3E(honeyroasted.javatype.informal.TypeInformal,java.lang.String)">ParameterNode(TypeInformal, String)</a></span> - Constructor for class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ParameterNode.html" title="class in honeyroasted.cello.node.structure">ParameterNode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#parameters()">parameters()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html#performArrayLookup(honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.Namespace)">performArrayLookup(ClassNode, Namespace)</a></span> - Method in class honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html" title="class in honeyroasted.cello.environment">AbstractCachingEnvironment</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/BytecodeEnvironment.html#performArrayLookup(honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.Namespace)">performArrayLookup(ClassNode, Namespace)</a></span> - Method in class honeyroasted.cello.environment.bytecode.<a href="honeyroasted/cello/environment/bytecode/BytecodeEnvironment.html" title="class in honeyroasted.cello.environment.bytecode">BytecodeEnvironment</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/MultiEnvironment.html#performArrayLookup(honeyroasted.cello.node.structure.ClassNode,honeyroasted.javatype.Namespace)">performArrayLookup(ClassNode, Namespace)</a></span> - Method in class honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/MultiEnvironment.html" title="class in honeyroasted.cello.environment">MultiEnvironment</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html#performLookup(honeyroasted.javatype.Namespace)">performLookup(Namespace)</a></span> - Method in class honeyroasted.cello.environment.<a href="honeyroasted/cello/environment/AbstractCachingEnvironment.html" title="class in honeyroasted.cello.environment">AbstractCachingEnvironment</a></dt>
 <dd>&nbsp;</dd>
@@ -964,11 +960,17 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/modifier/Modifiers.html#set(honeyroasted.cello.node.modifier.Modifiers)">set(Modifiers)</a></span> - Method in class honeyroasted.cello.node.modifier.<a href="honeyroasted/cello/node/modifier/Modifiers.html" title="class in honeyroasted.cello.node.modifier">Modifiers</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#setErased(honeyroasted.javatype.method.TypeMethodParameterized)">setErased(TypeMethodParameterized)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/context/Var.html#setInitialized(boolean)">setInitialized(boolean)</a></span> - Method in class honeyroasted.cello.environment.context.<a href="honeyroasted/cello/environment/context/Var.html" title="class in honeyroasted.cello.environment.context">Var</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ParameterNode.html#setName(java.lang.String)">setName(String)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ParameterNode.html" title="class in honeyroasted.cello.node.structure">ParameterNode</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#setNestHost(honeyroasted.cello.node.structure.ClassNode)">setNestHost(ClassNode)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#setOuterClass(honeyroasted.cello.node.structure.ClassNode)">setOuterClass(ClassNode)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#setOuterMethod(honeyroasted.cello.node.structure.MethodNode)">setOuterMethod(MethodNode)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#setReturn(honeyroasted.javatype.informal.TypeInformal)">setReturn(TypeInformal)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
 <dd>&nbsp;</dd>
@@ -976,7 +978,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/FieldNode.html#setType(honeyroasted.javatype.informal.TypeInformal)">setType(TypeInformal)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#setType(honeyroasted.javatype.method.TypeMethodParameterized)">setType(TypeMethodParameterized)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#setTypeVarScope(honeyroasted.cello.environment.TypeVarScope)">setTypeVarScope(TypeVarScope)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#setTypeVarScope(honeyroasted.cello.environment.TypeVarScope)">setTypeVarScope(TypeVarScope)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/FieldNode.html#setValue(honeyroasted.cello.node.instruction.TypedNode)">setValue(TypedNode)</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/FieldNode.html" title="class in honeyroasted.cello.node.structure">FieldNode</a></dt>
 <dd>&nbsp;</dd>
@@ -1104,6 +1110,8 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/verify/Verification.Builder.html#typeVarNotFoundError(T)">typeVarNotFoundError(T)</a></span> - Method in class honeyroasted.cello.verify.<a href="honeyroasted/cello/verify/Verification.Builder.html" title="class in honeyroasted.cello.verify">Verification.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/ClassNode.html#typeVarScope()">typeVarScope()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/ClassNode.html" title="class in honeyroasted.cello.node.structure">ClassNode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/node/structure/MethodNode.html#typeVarScope()">typeVarScope()</a></span> - Method in class honeyroasted.cello.node.structure.<a href="honeyroasted/cello/node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="honeyroasted/cello/environment/TypeVarScope.html" title="class in honeyroasted.cello.environment"><span class="type-name-link">TypeVarScope</span></a> - Class in <a href="honeyroasted/cello/environment/package-summary.html">honeyroasted.cello.environment</a></dt>
 <dd>&nbsp;</dd>
@@ -1323,6 +1331,8 @@ the order they are declared.</div>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/visitor/signature/MethodSignatureVisitor.html#visitInterfaceBound()">visitInterfaceBound()</a></span> - Method in class honeyroasted.cello.environment.bytecode.visitor.signature.<a href="honeyroasted/cello/environment/bytecode/visitor/signature/MethodSignatureVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor.signature">MethodSignatureVisitor</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html#visitMethod(int,java.lang.String,java.lang.String,java.lang.String,java.lang.String%5B%5D)">visitMethod(int, String, String, String, String[])</a></span> - Method in class honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor">ClassNodeVisitor</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html#visitNestHost(java.lang.String)">visitNestHost(String)</a></span> - Method in class honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor">ClassNodeVisitor</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html#visitNestMember(java.lang.String)">visitNestMember(String)</a></span> - Method in class honeyroasted.cello.environment.bytecode.visitor.<a href="honeyroasted/cello/environment/bytecode/visitor/ClassNodeVisitor.html" title="class in honeyroasted.cello.environment.bytecode.visitor">ClassNodeVisitor</a></dt>
 <dd>&nbsp;</dd>

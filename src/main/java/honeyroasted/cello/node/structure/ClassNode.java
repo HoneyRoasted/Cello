@@ -22,11 +22,13 @@ public class ClassNode extends AbstractAnnotated {
     private List<MethodNode> methods = new ArrayList<>();
 
     private ClassNode outerClass;
+    private MethodNode outerMethod;
+    private ClassNode nestHost;
     private List<InnerClassNode> innerClasses = new ArrayList<>();
     private List<ClassNode> nestClasses = new ArrayList<>();
     private List<Namespace> permittedSubclasses = new ArrayList<>();
 
-    private TypeVarScope typeVarScope;
+    private TypeVarScope typeVarScope = new TypeVarScope();
 
     public ClassNode(TypeParameterized type) {
         this.type = type;
@@ -44,6 +46,24 @@ public class ClassNode extends AbstractAnnotated {
         }
 
         return nodes;
+    }
+
+    public Optional<MethodNode> outerMethod() {
+        return Optional.ofNullable(this.outerMethod);
+    }
+
+    public ClassNode setOuterMethod(MethodNode outerMethod) {
+        this.outerMethod = outerMethod;
+        return this;
+    }
+
+    public ClassNode nestHost() {
+        return nestHost;
+    }
+
+    public ClassNode setNestHost(ClassNode nestHost) {
+        this.nestHost = nestHost;
+        return this;
     }
 
     public List<FieldNode> lookupFields(Predicate<FieldNode> predicate) {

@@ -21,25 +21,6 @@ public abstract class AbstractCachingEnvironment implements CachingEnvironment {
 
     protected abstract Verification<ClassNode> performLookup(Namespace namespace);
 
-    protected abstract Verification<ClassNode> performArrayLookup(ClassNode element, Namespace namespace);
-
-    @Override
-    public Verification<ClassNode> lookupArray(ClassNode element) {
-        Namespace namespace = element.type().namespace();
-        Namespace arr = Namespace.of(namespace.packageName(), namespace.className() + "[]");
-
-        Optional<ClassNode> opt = fromCache(arr);
-        if (opt.isPresent()) {
-            return Verification.success(opt.get());
-        } else {
-            Verification<ClassNode> lookup = performArrayLookup(element, namespace);
-            if (lookup.isPresent()) {
-                cache(lookup.value());
-            }
-            return lookup;
-        }
-    }
-
     @Override
     public Verification<ClassNode> lookup(Namespace namespace) {
         Optional<ClassNode> opt = fromCache(namespace);

@@ -10,8 +10,6 @@ import honeyroasted.javatype.parameterized.TypeParameterized;
 
 public interface Environment {
 
-    Verification<ClassNode> lookupArray(ClassNode element);
-
     Verification<ClassNode> lookup(Namespace namespace);
 
     default Verification<ClassNode> lookup(TypeParameterized type) {

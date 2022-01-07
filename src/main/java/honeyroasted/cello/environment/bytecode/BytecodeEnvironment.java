@@ -72,7 +72,7 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
                 ClassNode node = new ClassNode(type);
                 cache(namespace, node);
 
-                ClassNodeVisitor visitor = new ClassNodeVisitor(node, this, new TypeVarScope());
+                ClassNodeVisitor visitor = new ClassNodeVisitor(node, this);
                 ClassReader reader = new ClassReader(arr);
                 reader.accept(visitor, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES);
 
@@ -93,17 +93,4 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
                 .build();
     }
 
-    @Override
-    protected Verification<ClassNode> performArrayLookup(ClassNode element, Namespace namespace) {
-        return lookup(Types.OBJECT)
-                .map(c -> {
-                    ClassNode node = new ClassNode(Types.parameterized()
-                            .namespace(namespace)
-                            .superclass(Types.OBJECT)
-                            .build())
-                            .setSuperclass(c);
-                    node.addField(new FieldNode("length", node, Types.INT));
-                    return node;
-                });
-    }
 }
