@@ -1,23 +1,20 @@
 package honeyroasted.cello.node.structure.annotation;
 
-import honeyroasted.cello.node.Node;
-import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.properties.PropertyHolder;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.javatype.Namespace;
-import honeyroasted.javatype.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public interface AnnotationValue extends Node {
+public interface AnnotationValue extends PropertyHolder {
 
     class Array extends AbstractPropertyHolder implements AnnotationValue {
         private List<AnnotationValue> values = new ArrayList<>();
 
         public Array add(AnnotationValue... values) {
-            for (AnnotationValue value : values) {
-                this.values.add(value);
-            }
+            Collections.addAll(this.values, values);
             return this;
         }
 

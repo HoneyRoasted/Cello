@@ -1,9 +1,9 @@
 package honeyroasted.cello.node.structure;
 
-import honeyroasted.cello.environment.TypeVarScope;
-import honeyroasted.cello.node.modifier.Access;
-import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
+import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.javatype.Namespace;
+import honeyroasted.javatype.informal.TypeClass;
+import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.ArrayList;
@@ -12,113 +12,76 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ClassNode extends AbstractAnnotated {
+public class ClassNode extends AbstractParameterized {
     private TypeParameterized type;
+
+    private ClassNode arrayElement;
 
     private ClassNode superclass;
     private List<ClassNode> interfaces = new ArrayList<>();
 
+    private ClassNode outerClass;
+    private MethodNode outerMethod;
+    private List<InnerClassNode> innerClasses = new ArrayList<>();
+
+    private ClassNode nestHost;
+    private List<ClassNode> nestClasses = new ArrayList<>();
+
+    private List<Namespace> permittedSubclasses = new ArrayList<>();
+
     private List<FieldNode> fields = new ArrayList<>();
     private List<MethodNode> methods = new ArrayList<>();
 
-    private ClassNode outerClass;
-    private MethodNode outerMethod;
-    private ClassNode nestHost;
-    private List<InnerClassNode> innerClasses = new ArrayList<>();
-    private List<ClassNode> nestClasses = new ArrayList<>();
-    private List<Namespace> permittedSubclasses = new ArrayList<>();
-
-    private TypeVarScope typeVarScope = new TypeVarScope();
-
     public ClassNode(TypeParameterized type) {
         this.type = type;
+        this.parent = () -> {
+            if (this.outerMethod != null) {
+                return this.outerMethod;
+            }
+
+            if (this.outerClass != null) {
+                Optional<InnerClassNode> self = this.outerClass.innerClasses().stream().filter(i -> i.classNode() == this).findFirst();
+                if (self.isPresent() && !self.get().modifiers().has(Modifier.STATIC)) {
+                    return self.get().classNode();
+                }
+            }
+
+            return null;
+        };
     }
 
-    public List<MethodNode> lookupMethods(Predicate<MethodNode> predicate) {
-        List<MethodNode> nodes = this.methods.stream().filter(predicate).collect(Collectors.toList());
-
-        if (this.superclass != null) {
-            nodes.addAll(this.superclass.lookupMethods(predicate));
+    public TypeClass buildType(TypeInformal... arguments) {
+        if (this.type.namespace().isArray() && this.arrayElement != null) {
+            return (TypeClass) this.arrayElement.buildType(arguments).array(1);
+        } else {
+            return this.type.withArguments(arguments);
         }
-
-        for (ClassNode inter : this.interfaces) {
-            nodes.addAll(inter.lookupMethods(predicate));
-        }
-
-        return nodes;
-    }
-
-    public Optional<MethodNode> outerMethod() {
-        return Optional.ofNullable(this.outerMethod);
-    }
-
-    public ClassNode setOuterMethod(MethodNode outerMethod) {
-        this.outerMethod = outerMethod;
-        return this;
-    }
-
-    public ClassNode nestHost() {
-        return nestHost;
-    }
-
-    public ClassNode setNestHost(ClassNode nestHost) {
-        this.nestHost = nestHost;
-        return this;
-    }
-
-    public List<FieldNode> lookupFields(Predicate<FieldNode> predicate) {
-        List<FieldNode> nodes = this.fields.stream().filter(predicate).collect(Collectors.toList());
-
-        if (this.superclass != null) {
-            nodes.addAll(this.superclass.lookupFields(predicate));
-        }
-
-        for (ClassNode inter : this.interfaces) {
-            nodes.addAll(inter.lookupFields(predicate));
-        }
-
-        return nodes;
     }
 
     public TypeParameterized type() {
         return this.type;
     }
 
-    public List<FieldNode> fields() {
-        return fields;
-    }
-
-    public List<MethodNode> methods() {
-        return methods;
-    }
-
-    public Optional<ClassNode> superclass() {
-        return Optional.ofNullable(superclass);
-    }
-
-    public Optional<ClassNode> outerclass() {
-        return Optional.ofNullable(this.outerClass);
-    }
-
-    public List<Namespace> permittedSubclasses() {
-        return this.permittedSubclasses;
-    }
-
-    public ClassNode addPermittedSubclass(Namespace namespace) {
-        this.permittedSubclasses.add(namespace);
+    public ClassNode setType(TypeParameterized type) {
+        this.type = type;
         return this;
     }
 
-    public List<InnerClassNode> innerClasses() {
-        return innerClasses;
+    public ClassNode arrayElement() {
+        return this.arrayElement;
     }
 
-    public TypeVarScope typeVarScope() {
-        return typeVarScope;
+    public ClassNode setArrayElement(ClassNode arrayElement) {
+        this.arrayElement = arrayElement;
+        return this;
     }
 
-    public ClassNode setTypeVarScope(TypeVarScope typeVarScope) {
-        this.typeVarScope = typeVarScope;
+    public ClassNode superclass() {
+        return this.superclass;
+    }
+
+    public ClassNode setSuperclass(ClassNode superclass) {
+        this.superclass = superclass;
         return this;
     }
 
@@ -126,31 +89,8 @@ public class ClassNode extends AbstractAnnotated {
         return this.interfaces;
     }
 
-    public ClassNode outerClass() {
-        return this.outerClass;
-    }
-
-    public List<ClassNode> nestClasses() {
-        return this.nestClasses;
-    }
-
-    public ClassNode addNestClass(ClassNode nest) {
-        this.nestClasses.add(nest);
-        return this;
-    }
-
-    public ClassNode setOuterClass(ClassNode outerClass) {
-        this.outerClass = outerClass;
-        return this;
-    }
-
-    public ClassNode addInnerClass(InnerClassNode innerClass) {
-        this.innerClasses.add(innerClass);
-        return this;
-    }
-
-    public ClassNode setSuperclass(ClassNode superclass) {
-        this.superclass = superclass;
+    public ClassNode setInterfaces(List<ClassNode> interfaces) {
+        this.interfaces = interfaces;
         return this;
     }
 
@@ -159,8 +99,95 @@ public class ClassNode extends AbstractAnnotated {
         return this;
     }
 
+    public ClassNode outerClass() {
+        return this.outerClass;
+    }
+
+    public ClassNode setOuterClass(ClassNode outerClass) {
+        this.outerClass = outerClass;
+        return this;
+    }
+
+    public MethodNode outerMethod() {
+        return this.outerMethod;
+    }
+
+    public ClassNode setOuterMethod(MethodNode outerMethod) {
+        this.outerMethod = outerMethod;
+        return this;
+    }
+
+    public List<InnerClassNode> innerClasses() {
+        return this.innerClasses;
+    }
+
+    public ClassNode setInnerClasses(List<InnerClassNode> innerClasses) {
+        this.innerClasses = innerClasses;
+        return this;
+    }
+
+    public ClassNode addInnerClass(InnerClassNode node) {
+        this.innerClasses.add(node);
+        return this;
+    }
+
+    public ClassNode nestHost() {
+        return this.nestHost;
+    }
+
+    public ClassNode setNestHost(ClassNode nestHost) {
+        this.nestHost = nestHost;
+        return this;
+    }
+
+    public List<ClassNode> nestClasses() {
+        return this.nestClasses;
+    }
+
+    public ClassNode setNestClasses(List<ClassNode> nestClasses) {
+        this.nestClasses = nestClasses;
+        return this;
+    }
+
+    public ClassNode addNestClass(ClassNode nestClass) {
+        this.nestClasses.add(nestClass);
+        return this;
+    }
+
+    public List<Namespace> permittedSubclasses() {
+        return this.permittedSubclasses;
+    }
+
+    public ClassNode setPermittedSubclasses(List<Namespace> permittedSubclasses) {
+        this.permittedSubclasses = permittedSubclasses;
+        return this;
+    }
+
+    public ClassNode addPermittedSubclass(Namespace namespace) {
+        this.permittedSubclasses.add(namespace);
+        return this;
+    }
+
+    public List<FieldNode> fields() {
+        return this.fields;
+    }
+
+    public ClassNode setFields(List<FieldNode> fields) {
+        this.fields = fields;
+        return this;
+    }
+
     public ClassNode addField(FieldNode field) {
         this.fields.add(field);
+        return this;
+    }
+
+    public List<MethodNode> methods() {
+        return this.methods;
+    }
+
+    public ClassNode setMethods(List<MethodNode> methods) {
+        this.methods = methods;
         return this;
     }
 
@@ -168,5 +195,4 @@ public class ClassNode extends AbstractAnnotated {
         this.methods.add(method);
         return this;
     }
-
 }

@@ -20,7 +20,7 @@ public class FieldNode extends AbstractAnnotated {
         this.owner = owner;
     }
 
-    public FieldNode(String name, ClassNode owner, TypeFilled type) {
+    public FieldNode(String name, ClassNode owner, TypeInformal type) {
         this(name, owner, type, null);
     }
 
@@ -38,6 +38,16 @@ public class FieldNode extends AbstractAnnotated {
 
     public Optional<TypedNode> value() {
         return Optional.ofNullable(this.value);
+    }
+
+    public FieldNode setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public FieldNode setOwner(ClassNode owner) {
+        this.owner = owner;
+        return this;
     }
 
     public FieldNode setValue(TypedNode value) {

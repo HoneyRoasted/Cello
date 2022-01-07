@@ -2,6 +2,7 @@ package honeyroasted.cello.environment;
 
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.informal.TypeFilled;
@@ -28,8 +29,8 @@ public interface Environment {
         if (type instanceof TypeInformal inf) {
             if (inf instanceof TypeFilled fld) {
                 Verification<TypeParameterized> opt = resolve(fld.type());
-                if (opt.success()) {
-                    inf = fld.toBuilder().type(opt.value()).build();
+                if (opt.success() && opt.value().isPresent()) {
+                    inf = fld.toBuilder().type(opt.value().get()).build();
                 } else {
                     return (Verification<T>) opt;
                 }
@@ -38,8 +39,8 @@ public interface Environment {
             boolean[] success = {true};
             TypeInformal res = inf.map(t -> {
                 Verification<TypeInformal> opt = resolve(t);
-                if (opt.success()) {
-                    return opt.value();
+                if (opt.success() && opt.value().isPresent()) {
+                    return opt.value().get();
                 } else {
                     success[0] = false;
                     return t;
@@ -54,7 +55,8 @@ public interface Environment {
         }
 
         return Verification.<T>builder().
-                typeNotFoundError(type).build();
+                error(Verify.Code.TYPE_NOT_FOUND_ERROR, "Could not resolve type %s", type.internalName())
+                .build();
     }
 
 }

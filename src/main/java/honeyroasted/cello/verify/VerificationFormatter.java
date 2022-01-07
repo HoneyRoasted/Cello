@@ -1,6 +1,5 @@
 package honeyroasted.cello.verify;
 
-import javax.swing.Box;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,15 +11,15 @@ public class VerificationFormatter {
     private static final int lineCount = 2;
     private static final String indentStr = "    ";
 
-    public static String format(Verification<?> verification) {
-        return format(verification, false);
-    }
+    public static String format(Verification<?> verification, boolean useUnicode, Verify.Level level) {
+        if (verification.level().weight() < level.weight()) {
+            return " 0. " + verification.code() + ": " + verification.message();
+        }
 
-    public static String format(Verification<?> verification, boolean useUnicode) {
         CharMatrix matrix = new CharMatrix();
         List<Box> boxes = new ArrayList<>();
 
-        formatMessage(verification, 0, 0, 0, matrix, boxes);
+        formatMessage(verification, 0, 0, 0, matrix, boxes, level);
 
         Map<Box, Integer> columns = new HashMap<>();
         walkBoxColumns(matrix, boxes, columns);
@@ -107,22 +106,21 @@ public class VerificationFormatter {
 
             int[] column = {max};
 
-            while (box.children().stream().anyMatch(b -> columns.get(b) == column[0])) {
+            while (box.children().stream().anyMatch(b -> columns.get(b) >= column[0])) {
                 column[0] += 3;
             }
 
             columns.put(box, column[0]);
         }
     }
-    
-    private static int formatMessage(Verification<?> verification, int indentCount, int row, int number, CharMatrix matrix, List<Box> boxes) {
-        String indent = indentStr.repeat(indentCount);
-        int start = row;
-        matrix.write(row++, indent + " " + number + ". " + verification.errorCode() + ": " + verification.message());
 
-        if (!verification.success()) {
-            if (verification.error().isPresent()) {
-                Throwable err = verification.error().get();
+    private static int formatMessage(Verification<?> verification, int indentCount, int row, int number, CharMatrix matrix, List<Box> boxes, Verify.Level level) {
+        if (verification.level().weight() >= level.weight()) {
+            String indent = indentStr.repeat(indentCount);
+            int start = row;
+            matrix.write(row++, indent + " " + number + ". " + verification.code() + ": " + verification.message());
+            if (verification.exception().isPresent()) {
+                Throwable err = verification.exception().get();
 
                 while (err != null) {
                     matrix.write(row++, indent + indentStr + ": " + err.getClass().getName() + ": " + err.getMessage());
@@ -133,7 +131,7 @@ public class VerificationFormatter {
                     err = err.getCause();
                 }
 
-                for (Throwable sup : verification.error().get().getSuppressed()) {
+                for (Throwable sup : verification.exception().get().getSuppressed()) {
                     matrix.write(row++, indent + indentStr + ": " + sup.getClass().getName() + ": " + sup.getMessage());
                     StackTraceElement[] elements = sup.getStackTrace();
                     for (int i = 0; i < lineCount && i < elements.length; i++) {
@@ -150,7 +148,7 @@ public class VerificationFormatter {
                 int k = 1;
 
                 for (Verification<?> v : verification.children()) {
-                    row = formatMessage(v, indentCount + 1, row, k++, matrix, children);
+                    row = formatMessage(v, indentCount + 1, row, k++, matrix, children, level);
                 }
 
                 int end = row;

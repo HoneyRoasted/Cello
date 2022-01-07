@@ -1,10 +1,10 @@
 package honeyroasted.cello.environment.bytecode.provider;
 
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Path;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -25,20 +25,12 @@ public class JarBytecodeProvider implements BytecodeProvider {
             JarEntry entry = file.getJarEntry(namespace.internalName() + ".class");
             if (entry != null) {
                 byte[] arr = file.getInputStream(entry).readAllBytes();
-                return Verification.success(arr);
+                return Verification.success(this, arr);
             } else {
-                return Verification.<byte[]>builder()
-                        .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                        .message("Could not locate class " + namespace.name() + " in jar " + this.jar)
-                        .typeNotFoundError(namespace)
-                        .build();
+                return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Could not locate class '%s' in jar '%s'", namespace.name(), this.jar);
             }
         } catch (IOException e) {
-            return Verification.<byte[]>builder()
-                    .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Encountered error while loading source for class " + namespace.name() + " in jar " + this.jar + ": " + e.getMessage())
-                    .error(e)
-                    .build();
+            return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Encountered error while loading classfile for class '%s' in jar '%s'", e, namespace.name(), this.jar);
         } finally {
             if (file != null) {
                 try {

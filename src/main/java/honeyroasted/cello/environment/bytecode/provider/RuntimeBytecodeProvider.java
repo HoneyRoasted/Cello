@@ -1,11 +1,11 @@
 package honeyroasted.cello.environment.bytecode.provider;
 
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 
 public class RuntimeBytecodeProvider implements BytecodeProvider {
 
@@ -15,26 +15,15 @@ public class RuntimeBytecodeProvider implements BytecodeProvider {
             Class<?> cls = Class.forName(namespace.internalName().replace('/', '.'));
             try (InputStream resource = cls.getResourceAsStream(namespace.className().replace('.', '$') + ".class")) {
                 if (resource != null) {
-                    return Verification.success(resource.readAllBytes());
+                    return Verification.success(this, resource.readAllBytes());
                 } else {
-                    return Verification.<byte[]>builder()
-                            .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                            .message("Could not find source for runtime-available class " + cls.getName())
-                            .build();
+                    return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Could not find classfile for runtime-available class '%s'", cls.getName());
                 }
             }
         } catch (ClassNotFoundException e) {
-            return Verification.<byte[]>builder()
-                    .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Class " + namespace.name() + " is not available at runtime")
-                    .error(e)
-                    .build();
+            return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Class '%s' is not available at runtime", e, namespace.className());
         } catch (IOException e) {
-            return Verification.<byte[]>builder()
-                    .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Encountered error while loading source for runtime-available class " + namespace.name() + ": " + e.getMessage())
-                    .error(e)
-                    .build();
+            return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Encountered error while loading classfile for class '%s'", e, namespace.name());
         }
     }
 

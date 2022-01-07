@@ -21,11 +21,11 @@ public class InnerClassNode extends AbstractModifiable {
         return this.innerName;
     }
 
-    public ClassNode cls() {
+    public ClassNode classNode() {
         return this.cls;
     }
 
-    public InnerClassNode cls(ClassNode cls) {
+    public InnerClassNode setClassNode(ClassNode cls) {
         this.cls = cls;
         return this;
     }

@@ -1,11 +1,9 @@
 package honeyroasted.cello.node.structure;
 
-import honeyroasted.cello.environment.TypeVarScope;
-import honeyroasted.cello.node.Node;
-import honeyroasted.cello.node.modifier.Modifiable;
+import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.cello.node.modifier.Modifiers;
-import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
 import honeyroasted.cello.properties.Properties;
+import honeyroasted.cello.properties.PropertyHolder;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.method.TypeMethodParameterized;
@@ -16,61 +14,43 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MethodNode extends AbstractAnnotated implements Node {
-    private TypeInformal ret = Types.VOID;
+public class MethodNode extends AbstractParameterized implements PropertyHolder {
+    private TypeInformal returnType = Types.VOID;
 
     private List<ParameterNode> parameters = new ArrayList<>();
-    private List<TypeVar> typeParameters = new ArrayList<>();
-
     private List<TypeInformal> exceptions = new ArrayList<>();
+    private List<ClassNode> innerClasses = new ArrayList<>();
 
     private String name;
     private ClassNode owner;
 
     private TypeMethodParameterized erased;
 
-    private TypeVarScope typeVarScope = new TypeVarScope();
-
     public MethodNode(String name, ClassNode owner) {
         this.name = name;
         this.owner = owner;
-    }
-
-    public TypeVarScope typeVarScope() {
-        return typeVarScope;
-    }
-
-    public MethodNode setTypeVarScope(TypeVarScope scope) {
-        this.typeVarScope = scope;
-        return this;
-    }
-
-    public ClassNode owner() {
-        return this.owner;
-    }
-
-    public TypeMethodParameterized erased() {
-        return erased;
-    }
-
-    public MethodNode setErased(TypeMethodParameterized erased) {
-        this.erased = erased;
-        return this;
+        this.parent = () -> {
+            if (!this.modifiers().has(Modifier.STATIC)) {
+                return this.owner;
+            } else {
+                return null;
+            }
+        };
     }
 
     public TypeMethodParameterized type() {
         return Types.method()
-                .returnType(this.ret)
+                .returnType(this.returnType)
                 .parameters(this.parameters.stream().map(ParameterNode::type).collect(Collectors.toList()))
-                .typeParameters(this.typeParameters)
+                .typeParameters(this.definedTypeVars())
                 .exceptions(this.exceptions)
                 .build();
     }
 
     public MethodNode setType(TypeMethodParameterized type) {
-        this.setReturn(type.returnType());
+        this.setReturnType(type.returnType());
 
-        this.typeParameters = new ArrayList<>(type.typeParameters());
+        this.setTypeVars(type.typeParameters());
         this.exceptions = new ArrayList<>(type.exceptions());
 
         List<ParameterNode> parameters = new ArrayList<>();
@@ -96,48 +76,81 @@ public class MethodNode extends AbstractAnnotated implements Node {
         return this;
     }
 
-    public List<TypeInformal> exceptions() {
-        return exceptions;
+    public TypeInformal returnType() {
+        return this.returnType;
     }
 
-    public MethodNode addException(TypeInformal type) {
-        this.exceptions.add(type);
+    public MethodNode setReturnType(TypeInformal returnType) {
+        this.returnType = returnType;
         return this;
-    }
-
-    public MethodNode addTypeParameter(String name, TypeInformal... bounds) {
-        return this.addTypeParameter(name, Arrays.asList(bounds));
-    }
-
-    public MethodNode addTypeParameter(String name, List<TypeInformal> bounds) {
-        this.typeParameters.add(new TypeVar(name, bounds));
-        return this;
-    }
-
-    public MethodNode addParameter(TypeInformal type, String name) {
-        this.parameters.add(new ParameterNode(type, name));
-        return this;
-    }
-
-    public MethodNode setReturn(TypeInformal ret) {
-        this.ret = ret;
-        return this;
-    }
-
-    public TypeInformal ret() {
-        return ret;
     }
 
     public List<ParameterNode> parameters() {
-        return parameters;
+        return this.parameters;
     }
 
-    public List<TypeVar> typeParameters() {
-        return typeParameters;
+    public MethodNode setParameters(List<ParameterNode> parameters) {
+        this.parameters = parameters;
+        return this;
+    }
+
+    public MethodNode addParameter(ParameterNode node) {
+        this.parameters.add(node);
+        return this;
+    }
+
+    public List<TypeInformal> exceptions() {
+        return this.exceptions;
+    }
+
+    public MethodNode setExceptions(List<TypeInformal> exceptions) {
+        this.exceptions = exceptions;
+        return this;
+    }
+
+    public MethodNode addException(TypeInformal exception) {
+        this.exceptions.add(exception);
+        return this;
+    }
+
+    public List<ClassNode> innerClasses() {
+        return this.innerClasses;
+    }
+
+    public MethodNode setInnerClasses(List<ClassNode> innerClasses) {
+        this.innerClasses = innerClasses;
+        return this;
+    }
+
+    public MethodNode addInnerClass(ClassNode innerClass) {
+        this.innerClasses.add(innerClass);
+        return this;
     }
 
     public String name() {
-        return name;
+        return this.name;
     }
 
+    public MethodNode setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public ClassNode owner() {
+        return this.owner;
+    }
+
+    public MethodNode setOwner(ClassNode owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    public TypeMethodParameterized erased() {
+        return this.erased;
+    }
+
+    public MethodNode setErased(TypeMethodParameterized erased) {
+        this.erased = erased;
+        return this;
+    }
 }

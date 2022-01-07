@@ -28,8 +28,8 @@ public abstract class AbstractCachingEnvironment implements CachingEnvironment {
             return Verification.success(opt.get());
         } else {
             Verification<ClassNode> lookup = performLookup(namespace);
-            if (lookup.isPresent()) {
-                cache(lookup.value());
+            if (lookup.success() && lookup.value().isPresent()) {
+                cache(lookup.value().get());
             }
             return lookup;
         }

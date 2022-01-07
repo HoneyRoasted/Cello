@@ -20,6 +20,11 @@ public class ParameterNode extends AbstractAnnotated {
         return this.name;
     }
 
+    public ParameterNode setType(TypeInformal type) {
+        this.type = type;
+        return this;
+    }
+
     public ParameterNode setName(String name) {
         this.name = name;
         return this;

@@ -1,13 +1,11 @@
 package honeyroasted.cello.environment.bytecode.visitor.annotation;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.node.Node;
-import honeyroasted.cello.node.Nodes;
+import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
-import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 import org.objectweb.asm.AnnotationVisitor;
 

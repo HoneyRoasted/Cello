@@ -4,9 +4,8 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.bytecode.visitor.signature.ClassSignatureVisitor;
 import honeyroasted.cello.environment.bytecode.visitor.signature.MethodSignatureVisitor;
 import honeyroasted.cello.environment.bytecode.visitor.signature.TypeSignatureVisitor;
-import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.environment.bytecode.visitor.annotation.AnnotationNodeVisitor;
-import honeyroasted.cello.node.Nodes;
+import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.cello.node.modifier.ModifierTarget;
 import honeyroasted.cello.node.modifier.Modifiers;
@@ -14,16 +13,16 @@ import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.FieldNode;
 import honeyroasted.cello.node.structure.InnerClassNode;
 import honeyroasted.cello.node.structure.MethodNode;
+import honeyroasted.cello.node.structure.ParameterNode;
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.VerificationBuilder;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
-import honeyroasted.javatype.method.TypeMethodParameterized;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 import org.objectweb.asm.*;
 import org.objectweb.asm.signature.SignatureReader;
 
 import java.lang.annotation.Annotation;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public class ClassNodeVisitor extends ClassVisitor {
     private ClassNode node;
 
     private Environment environment;
-    private Verification.Builder<ClassNode> verification = Verification.builder();
+    private VerificationBuilder<ClassNode> verification = Verification.builder();
 
     private List<Runnable> delay = new ArrayList<>();
 
@@ -60,18 +59,18 @@ public class ClassNodeVisitor extends ClassVisitor {
         if (superName != null) {
             Verification<ClassNode> lookup = this.environment.lookup(Namespace.internal(superName));
             this.verification.child(lookup);
-            if (lookup.isPresent()) {
-                superclass = lookup.value().type();
+            if (lookup.success() && lookup.value().isPresent()) {
+                superclass = lookup.value().get().type();
                 builder.superclass(superclass.withArguments());
-                this.node.setSuperclass(lookup.value());
+                this.node.setSuperclass(lookup.value().get());
             }
         }
 
         for (String interfaceName : interfaceNames) {
             Verification<ClassNode> lookup = this.environment.lookup(Namespace.internal(interfaceName));
             this.verification.child(lookup);
-            if (lookup.isPresent()) {
-                ClassNode inter = lookup.value();
+            if (lookup.success() && lookup.value().isPresent()) {
+                ClassNode inter = lookup.value().get();
                 interfaces.add(inter.type());
                 builder.addInterface(inter.type().withArguments());
                 this.node.addInterface(inter);
@@ -81,10 +80,10 @@ public class ClassNodeVisitor extends ClassVisitor {
         if (signature != null) {
             ClassSignatureVisitor visitor = new ClassSignatureVisitor(v -> {
                 this.verification.child(v);
-                if (v.isPresent()) {
-                    builder.from(v.value());
+                if (v.success() && v.value().isPresent()) {
+                    builder.from(v.value().get());
                 }
-            }, namespace, this.node.typeVarScope(), superclass, interfaces, this.environment);
+            }, namespace, this.node, superclass, interfaces, this.environment);
 
             SignatureReader reader = new SignatureReader(signature);
             reader.accept(visitor);
@@ -111,8 +110,8 @@ public class ClassNodeVisitor extends ClassVisitor {
         Verification<ClassNode> fieldType = this.environment.lookup(namespace);
         this.verification.child(fieldType);
 
-        if (fieldType.isPresent()) {
-            FieldNode node = new FieldNode(name, this.node, fieldType.value().type().withArguments());
+        if (fieldType.success() && fieldType.value().isPresent()) {
+            FieldNode node = new FieldNode(name, this.node, fieldType.value().get().buildType());
             node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.FIELD));
             this.node.addField(node);
 
@@ -123,10 +122,10 @@ public class ClassNodeVisitor extends ClassVisitor {
             if (signature != null) {
                 TypeSignatureVisitor visitor = new TypeSignatureVisitor(v -> {
                     this.verification.child(v);
-                    if (v.isPresent()) {
-                        node.setType(v.value());
+                    if (v.success() && v.value().isPresent()) {
+                        node.setType(v.value().get());
                     }
-                }, this.node.typeVarScope(), this.environment);
+                }, this.node, this.environment);
 
                 SignatureReader reader = new SignatureReader(signature);
                 reader.acceptType(visitor);
@@ -140,15 +139,14 @@ public class ClassNodeVisitor extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         MethodNode node = new MethodNode(name, this.node);
-        node.typeVarScope().provideParent(this.node.typeVarScope());
         this.node.addMethod(node);
 
         node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.METHOD));
 
         Type asmMethod = Type.getMethodType(descriptor);
 
-        Namespace retName = Namespace.internal(asmMethod.getReturnType().getInternalName());
-        List<Namespace> paramNames = Stream.of(asmMethod.getArgumentTypes()).map(Type::getInternalName).map(Namespace::internal).collect(Collectors.toList());
+        Namespace retName = Namespace.descriptor(asmMethod.getReturnType().getDescriptor());
+        List<Namespace> paramNames = Stream.of(asmMethod.getArgumentTypes()).map(Type::getDescriptor).map(Namespace::descriptor).collect(Collectors.toList());
         List<Namespace> exceptionNames = Stream.of(exceptions == null ? new String[0] : exceptions).map(Namespace::internal).collect(Collectors.toList());
 
         Verification<ClassNode> retClass = this.environment.lookup(retName);
@@ -166,16 +164,16 @@ public class ClassNodeVisitor extends ClassVisitor {
             return exc;
         }).toList();
 
-        if (retClass.isPresent() &&
-                paramClasses.stream().allMatch(Verification::isPresent) &&
-                exceptionNodes.stream().allMatch(Verification::isPresent)) {
+        if (retClass.value().isPresent() &&
+                paramClasses.stream().allMatch(v -> v.value().isPresent()) &&
+                exceptionNodes.stream().allMatch(v -> v.value().isPresent())) {
             int param = 0;
 
-            node.setReturn(retClass.value().type().withArguments());
-            exceptionNodes.forEach(v -> node.addException(v.value().type().withArguments()));
+            node.setReturnType(retClass.value().get().buildType());
+            exceptionNodes.forEach(v -> node.addException(v.value().get().buildType()));
 
             for (Verification<ClassNode> v : paramClasses) {
-                node.addParameter(v.value().type().withArguments(), "arg" + param);
+                node.addParameter(new ParameterNode(v.value().get().buildType(), "arg" + param));
                 param++;
             }
         }
@@ -185,10 +183,10 @@ public class ClassNodeVisitor extends ClassVisitor {
         if (signature != null) {
             MethodSignatureVisitor visitor = new MethodSignatureVisitor(v -> {
                 this.verification.child(v);
-                if (v.isPresent()) {
-                    node.setType(v.value());
+                if (v.success() && v.value().isPresent()) {
+                    node.setType(v.value().get());
                 }
-            }, node.typeVarScope(), this.environment);
+            }, node, this.environment);
 
             SignatureReader reader = new SignatureReader(signature);
             reader.accept(visitor);
@@ -204,23 +202,17 @@ public class ClassNodeVisitor extends ClassVisitor {
         Verification<ClassNode> lookup = this.environment.lookup(namespace);
         this.verification.child(lookup);
 
-        if (lookup.isPresent()) {
-            ClassNode node = lookup.value();
+        if (lookup.success() && lookup.value().isPresent()) {
+            ClassNode node = lookup.value().get();
             this.node.setOuterClass(node);
 
             if (name != null && descriptor != null) {
                 Optional<MethodNode> opt = node.methods().stream().filter(m -> m.name().equals(name) && m.erased().descriptor().equals(descriptor)).findFirst();
-                if (opt.isPresent()) {
-                    this.node.setOuterMethod(opt.get());
-                    this.node.typeVarScope().provideParent(opt.get().typeVarScope());
-                }
+                opt.ifPresent(methodNode -> {
+                    this.node.setOuterMethod(methodNode);
+                    methodNode.addInnerClass(this.node);
+                });
             }
-
-            node.innerClasses().stream().filter(c -> c.cls() == node).findFirst().ifPresent(in -> {
-                if (!in.modifiers().has(Modifier.STATIC)) {
-                    this.node.typeVarScope().provideParent(node.typeVarScope());
-                }
-            });
         }
     }
 
@@ -230,8 +222,8 @@ public class ClassNodeVisitor extends ClassVisitor {
         Verification<ClassNode> lookup = this.environment.lookup(namespace);
         this.verification.child(lookup);
 
-        if (lookup.isPresent()) {
-            this.node.setNestHost(lookup.value());
+        if (lookup.success() && lookup.value().isPresent()) {
+            this.node.setNestHost(lookup.value().get());
         }
     }
 
@@ -242,8 +234,8 @@ public class ClassNodeVisitor extends ClassVisitor {
             Verification<ClassNode> lookup = this.environment.lookup(namespace);
             this.verification.child(lookup);
 
-            if (lookup.isPresent()) {
-                this.node.addNestClass(lookup.value());
+            if (lookup.success() && lookup.value().isPresent()) {
+                this.node.addNestClass(lookup.value().get());
             }
         });
     }
@@ -257,8 +249,8 @@ public class ClassNodeVisitor extends ClassVisitor {
             Verification<ClassNode> lookup = this.environment.lookup(namespace);
             this.verification.child(lookup);
 
-            if (lookup.isPresent()) {
-                InnerClassNode node = new InnerClassNode(lookup.value(), innerName == null ? String.valueOf(anon++) : innerName, innerName == null);
+            if (lookup.success() && lookup.value().isPresent()) {
+                InnerClassNode node = new InnerClassNode(lookup.value().get(), innerName == null ? String.valueOf(anon++) : innerName, innerName == null);
                 node.modifiers().set(Modifiers.fromBits(access));
                 this.node.addInnerClass(node);
             }

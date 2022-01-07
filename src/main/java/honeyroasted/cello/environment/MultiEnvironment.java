@@ -2,6 +2,8 @@ package honeyroasted.cello.environment;
 
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.VerificationBuilder;
+import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 
 import java.util.ArrayList;
@@ -18,17 +20,18 @@ public class MultiEnvironment extends AbstractCachingEnvironment {
 
     @Override
     protected Verification<ClassNode> performLookup(Namespace namespace) {
-        Verification.Builder<ClassNode> builder = Verification.builder();
+        VerificationBuilder<ClassNode> builder = Verification.builder();
+        builder.source(this);
 
         for (Environment environment : this.environments) {
             Verification<ClassNode> lookup = environment.lookup(namespace);
             builder.child(lookup);
-            if (lookup.isPresent()) {
-                return builder.value(lookup.value()).build();
+            if (lookup.success() && lookup.value().isPresent()) {
+                return builder.value(lookup.value().get()).build();
             }
         }
 
-        return builder.typeNotFoundError(namespace).build();
+        return builder.error(Verify.Code.TYPE_NOT_FOUND_ERROR, "Could not resolve class '%s'", namespace.name()).build();
     }
 
 }

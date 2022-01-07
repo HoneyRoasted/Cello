@@ -1,6 +1,7 @@
 package honeyroasted.cello.environment.bytecode.provider;
 
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 
 import java.io.IOException;
@@ -19,19 +20,12 @@ public class DirBytecodeProvider implements BytecodeProvider {
         Path path = this.root.resolve(namespace.internalName() + ".class");
         if (Files.exists(path)) {
             try {
-                return Verification.success(Files.readAllBytes(path));
+                return Verification.success(this, Files.readAllBytes(path));
             } catch (IOException e) {
-                return Verification.<byte[]>builder()
-                        .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                        .message("Encountered error while loading source for class " + namespace.name() + " in directory " + this.root + ": " + e.getMessage())
-                        .error(e)
-                        .build();
+                return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Encountered error while loading classfile for class '%s' at path '%s'", e, namespace.name(), path);
             }
         } else {
-            return Verification.<byte[]>builder()
-                    .errorCode(Verification.ErrorCode.TYPE_NOT_FOUND_ERROR)
-                    .message("Could not locate class " + namespace.name() + " at path " + path)
-                    .build();
+            return Verification.error(this, Verify.Code.TYPE_NOT_FOUND_ERROR, "Could not locate class '%s' at path '%s'", namespace.name(), path);
         }
     }
 

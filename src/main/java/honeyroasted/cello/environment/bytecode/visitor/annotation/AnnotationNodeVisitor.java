@@ -1,7 +1,7 @@
 package honeyroasted.cello.environment.bytecode.visitor.annotation;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.node.Nodes;
+import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;

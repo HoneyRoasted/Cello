@@ -1,7 +1,7 @@
 package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.TypeVarScope;
+import honeyroasted.cello.node.structure.ParameterizedNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.method.TypeMethodParameterized;
@@ -11,7 +11,7 @@ import org.objectweb.asm.signature.SignatureVisitor;
 import java.util.function.Consumer;
 
 public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodParameterized> {
-    private TypeVarScope scope;
+    private ParameterizedNode scope;
 
     private TypeMethodParameterized.Builder type = Types.method();
 
@@ -19,13 +19,13 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     private TypeVar.Builder previousBuilder;
     private Environment environment;
 
-    public MethodSignatureVisitor(Consumer<Verification<TypeMethodParameterized>> end, TypeVarScope scope, Environment environment) {
+    public MethodSignatureVisitor(Consumer<Verification<TypeMethodParameterized>> end, ParameterizedNode scope, Environment environment) {
         super(end);
         this.scope = scope;
         this.environment = environment;
     }
 
-    public MethodSignatureVisitor(TypeVarScope scope) {
+    public MethodSignatureVisitor(ParameterizedNode scope) {
         this.scope = scope;
     }
 
@@ -35,7 +35,7 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
             this.previousBuilder.build(this.previous);
         }
 
-        this.previous = this.scope.define(name);
+        this.previous = this.scope.defineTypeVar(name);
         this.previousBuilder = Types.var().name(name);
         this.type.addTypeParameter(this.previous);
     }
@@ -44,8 +44,8 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     public SignatureVisitor visitClassBound() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.previousBuilder.addBound(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.previousBuilder.addBound(v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -54,8 +54,8 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     public SignatureVisitor visitInterfaceBound() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.previousBuilder.addBound(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.previousBuilder.addBound(v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -64,8 +64,8 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     public SignatureVisitor visitParameterType() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.type.addParameter(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.type.addParameter(v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -74,8 +74,8 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     public SignatureVisitor visitReturnType() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.type.returnType(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.type.returnType(v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -84,8 +84,8 @@ public class MethodSignatureVisitor extends CelloSignatureVisitor<TypeMethodPara
     public SignatureVisitor visitExceptionType() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.type.addException(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.type.addException(v.value().get());
             }
         }, this.scope, this.environment));
     }

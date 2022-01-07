@@ -1,6 +1,7 @@
 package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.verify.Verification;
+import honeyroasted.cello.verify.VerificationBuilder;
 import honeyroasted.javatype.Type;
 
 import org.objectweb.asm.signature.SignatureVisitor;
@@ -15,7 +16,7 @@ public class CelloSignatureVisitor<T extends Type> extends SignatureVisitor {
     private List<CelloSignatureVisitor<?>> visitors = new ArrayList<>();
     private Consumer<Verification<T>> end;
 
-    private Verification.Builder<T> value = Verification.builder();
+    private VerificationBuilder<T> value = Verification.builder();
 
     public CelloSignatureVisitor(Consumer<Verification<T>> end) {
         super(ASM9);
@@ -50,7 +51,7 @@ public class CelloSignatureVisitor<T extends Type> extends SignatureVisitor {
         this.value.value(value);
     }
 
-    public Verification.Builder<T> builder() {
+    public VerificationBuilder<T> builder() {
         return this.value;
     }
 

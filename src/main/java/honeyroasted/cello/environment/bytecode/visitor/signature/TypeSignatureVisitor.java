@@ -1,8 +1,8 @@
 package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.TypeVarScope;
 import honeyroasted.cello.node.structure.ClassNode;
+import honeyroasted.cello.node.structure.ParameterizedNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
@@ -14,7 +14,7 @@ import org.objectweb.asm.signature.SignatureVisitor;
 import java.util.function.Consumer;
 
 public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
-    private TypeVarScope scope;
+    private ParameterizedNode scope;
     private Environment environment;
 
     private TypeFilled.Builder filled = null;
@@ -22,13 +22,13 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
 
     private TypeInformal type = null;
 
-    public TypeSignatureVisitor(Consumer<Verification<TypeInformal>> end, TypeVarScope scope, Environment environment) {
+    public TypeSignatureVisitor(Consumer<Verification<TypeInformal>> end, ParameterizedNode scope, Environment environment) {
         super(end);
         this.scope = scope;
         this.environment = environment;
     }
 
-    public TypeSignatureVisitor(TypeVarScope scope, Environment environment) {
+    public TypeSignatureVisitor(ParameterizedNode scope, Environment environment) {
         this.scope = scope;
         this.environment = environment;
     }
@@ -41,7 +41,7 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
 
     @Override
     public void visitTypeVariable(String name) {
-        this.type = Types.ref(this.scope.fetchOrPut(name));
+        this.type = Types.ref(this.scope.fetchOrPutTypeVar(name));
         this.setValue(this.type);
     }
 
@@ -49,8 +49,8 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
     public SignatureVisitor visitArrayType() {
         return logAndReturn(new TypeSignatureVisitor(f -> {
             this.builder().child(f);
-            if (f.isPresent()) {
-                this.type = f.value().array(1);
+            if (f.success() && f.value().isPresent()) {
+                this.type = f.value().get().array(1);
             }
         }, this.scope, this.environment));
     }
@@ -61,8 +61,8 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
         Verification<ClassNode> node = this.environment.lookup(namespace);
         this.builder().child(node);
 
-        if (node.isPresent()) {
-            this.filled = Types.filled().type(node.value().type());
+        if (node.success() && node.value().isPresent()) {
+            this.filled = Types.filled().type(node.value().get().type());
         }
     }
 
@@ -80,12 +80,12 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
                 return logAndReturn(new TypeSignatureVisitor(f -> {
                     this.builder().child(f);
 
-                    if (f.isPresent()) {
+                    if (f.success() && f.value().isPresent()) {
                         TypeWild wild;
                         if (wildcard == '-') {
-                            wild = Types.wild().lower(f.value()).build();
+                            wild = Types.wild().lower(f.value().get()).build();
                         } else {
-                            wild = Types.wild().upper(f.value()).build();
+                            wild = Types.wild().upper(f.value().get()).build();
                         }
                         this.filled.addGeneric(wild);
                     }
@@ -94,8 +94,8 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
                 return logAndReturn(new TypeSignatureVisitor(f -> {
                     this.builder().child(f);
 
-                    if (f.isPresent()) {
-                        this.filled.addGeneric(f.value());
+                    if (f.success() && f.value().isPresent()) {
+                        this.filled.addGeneric(f.value().get());
                     }
                 }, this.scope, this.environment));
             }
@@ -105,7 +105,7 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
 
     @Override
     public void finish() {
-        if (this.builder().value() == null) {
+        if (this.builder().value().isPresent()) {
             if (this.filled != null) {
                 this.setValue(this.filled.build());
             } else if (this.wild != null) {

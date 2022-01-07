@@ -1,7 +1,7 @@
 package honeyroasted.cello.environment.bytecode.visitor.signature;
 
 import honeyroasted.cello.environment.Environment;
-import honeyroasted.cello.environment.TypeVarScope;
+import honeyroasted.cello.node.structure.ParameterizedNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameterized> {
     private Namespace namespace;
-    private TypeVarScope scope;
+    private ParameterizedNode scope;
 
     private TypeParameterized superclass;
     private List<TypeParameterized> interfaces;
@@ -27,7 +27,7 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
 
     private Environment environment;
 
-    public ClassSignatureVisitor(Consumer<Verification<TypeParameterized>> end, Namespace namespace, TypeVarScope scope, TypeParameterized superclass, List<TypeParameterized> interfaces, Environment environment) {
+    public ClassSignatureVisitor(Consumer<Verification<TypeParameterized>> end, Namespace namespace, ParameterizedNode scope, TypeParameterized superclass, List<TypeParameterized> interfaces, Environment environment) {
         super(end);
         this.namespace = namespace;
         this.scope = scope;
@@ -36,7 +36,7 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
         this.environment = environment;
     }
 
-    public ClassSignatureVisitor(Namespace namespace, TypeVarScope scope, TypeParameterized superclass, List<TypeParameterized> interfaces, Environment environment) {
+    public ClassSignatureVisitor(Namespace namespace, ParameterizedNode scope, TypeParameterized superclass, List<TypeParameterized> interfaces, Environment environment) {
         this.namespace = namespace;
         this.scope = scope;
         this.superclass = superclass;
@@ -50,7 +50,7 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
             this.previousBuilder.build(this.previous);
         }
 
-        this.previous = this.scope.define(name);
+        this.previous = this.scope.defineTypeVar(name);
         this.previousBuilder = Types.var().name(name);
         this.type.addTypeParameter(this.previous);
     }
@@ -59,8 +59,8 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
     public SignatureVisitor visitClassBound() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.previousBuilder.addBound(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.previousBuilder.addBound(v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -69,8 +69,8 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
     public SignatureVisitor visitInterfaceBound() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.previousBuilder.addBound(v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.previousBuilder.addBound(v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -79,8 +79,8 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
     public SignatureVisitor visitSuperclass() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.type.superclass((TypeFilled) v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.type.superclass((TypeFilled) v.value().get());
             }
         }, this.scope, this.environment));
     }
@@ -89,8 +89,8 @@ public class ClassSignatureVisitor extends CelloSignatureVisitor<TypeParameteriz
     public SignatureVisitor visitInterface() {
         return this.logAndReturn(new TypeSignatureVisitor(v -> {
             this.builder().child(v);
-            if (v.isPresent()) {
-                this.type.addInterface((TypeFilled) v.value());
+            if (v.success() && v.value().isPresent()) {
+                this.type.addInterface((TypeFilled) v.value().get());
             }
         }, this.scope, this.environment));
     }
