@@ -51,7 +51,7 @@ public interface Environment {
                 return Verification.success((T) res);
             }
         } else if (type instanceof TypeParameterized prm) {
-            return (Verification<T>) lookup(prm.namespace()).map(ClassNode::type);
+            return (Verification<T>) lookup(prm.namespace()).map(ClassNode::parameterizedType);
         }
 
         return Verification.<T>builder().

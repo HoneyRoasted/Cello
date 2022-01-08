@@ -28,7 +28,7 @@ public class FieldNodeVisitor extends FieldVisitor {
     @Override
     public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
         Namespace namespace = Namespace.descriptor(descriptor);
-        TypeParameterized type = this.environment.lookup(namespace).map(ClassNode::type).orElse(Types.parameterized()
+        TypeParameterized type = this.environment.lookup(namespace).map(ClassNode::parameterizedType).orElse(Types.parameterized()
                 .namespace(namespace)
                 .superclass(Types.OBJECT)
                 .addInterface(Types.parameterized(Annotation.class).withArguments()).build());

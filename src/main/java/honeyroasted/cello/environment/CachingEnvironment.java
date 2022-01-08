@@ -12,7 +12,7 @@ public interface CachingEnvironment extends Environment {
     void cache(Namespace namespace, ClassNode node);
 
     default void cache(ClassNode node) {
-        cache(node.type().namespace(), node);
+        cache(node.parameterizedType().namespace(), node);
     }
 
     void remove(ClassNode node);

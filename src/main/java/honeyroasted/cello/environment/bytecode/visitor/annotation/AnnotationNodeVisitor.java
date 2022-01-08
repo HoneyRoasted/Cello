@@ -41,7 +41,7 @@ public class AnnotationNodeVisitor extends AnnotationVisitor {
     @Override
     public AnnotationVisitor visitAnnotation(String name, String descriptor) {
         Namespace namespace = Namespace.descriptor(descriptor);
-        TypeParameterized type = this.environment.lookup(namespace).map(ClassNode::type).orElse(Types.parameterized()
+        TypeParameterized type = this.environment.lookup(namespace).map(ClassNode::parameterizedType).orElse(Types.parameterized()
                 .namespace(namespace)
                 .superclass(Types.OBJECT)
                 .addInterface(Types.parameterized(Annotation.class).withArguments()).build());

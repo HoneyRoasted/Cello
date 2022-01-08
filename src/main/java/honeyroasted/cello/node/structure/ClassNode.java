@@ -9,8 +9,6 @@ import honeyroasted.javatype.parameterized.TypeParameterized;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ClassNode extends AbstractParameterized {
     private TypeParameterized type;
@@ -50,19 +48,19 @@ public class ClassNode extends AbstractParameterized {
         };
     }
 
-    public TypeClass buildType(TypeInformal... arguments) {
+    public TypeClass type(TypeInformal... arguments) {
         if (this.type.namespace().isArray() && this.arrayElement != null) {
-            return (TypeClass) this.arrayElement.buildType(arguments).array(1);
+            return (TypeClass) this.arrayElement.type(arguments).array(1);
         } else {
             return this.type.withArguments(arguments);
         }
     }
 
-    public TypeParameterized type() {
+    public TypeParameterized parameterizedType() {
         return this.type;
     }
 
-    public ClassNode setType(TypeParameterized type) {
+    public ClassNode setParameterizedType(TypeParameterized type) {
         this.type = type;
         return this;
     }

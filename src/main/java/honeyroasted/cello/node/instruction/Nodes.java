@@ -6,7 +6,7 @@ import honeyroasted.javatype.informal.TypeFilled;
 
 public interface Nodes {
 
-    static TypedNode defaultValue(TypeFilled type) {
+    static Node defaultValue(TypeFilled type) {
         if (type.equals(Types.BOOLEAN)) {
             return Nodes.constant(false);
         } else if (type.equals(Types.BYTE)) {
@@ -28,7 +28,7 @@ public interface Nodes {
         }
     }
 
-    static <K extends TypedNode & AnnotationValue> K constant(Object val) {
+    static <K extends AnnotationValue & Node> K constant(Object val) {
         return null;
     }
 

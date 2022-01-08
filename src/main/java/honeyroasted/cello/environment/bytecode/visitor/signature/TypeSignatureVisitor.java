@@ -62,7 +62,7 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
         this.builder().child(node);
 
         if (node.success() && node.value().isPresent()) {
-            this.filled = Types.filled().type(node.value().get().type());
+            this.filled = Types.filled().type(node.value().get().parameterizedType());
         }
     }
 

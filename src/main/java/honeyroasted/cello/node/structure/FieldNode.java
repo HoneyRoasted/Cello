@@ -1,8 +1,7 @@
 package honeyroasted.cello.node.structure;
 
-import honeyroasted.cello.node.instruction.TypedNode;
+import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.structure.annotation.AbstractAnnotated;
-import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 
 import java.util.Optional;
@@ -10,10 +9,10 @@ import java.util.Optional;
 public class FieldNode extends AbstractAnnotated {
     private String name;
     private TypeInformal type;
-    private TypedNode value;
+    private Node value;
     private ClassNode owner;
 
-    public FieldNode(String name, ClassNode owner, TypeInformal type, TypedNode value) {
+    public FieldNode(String name, ClassNode owner, TypeInformal type, Node value) {
         this.name = name;
         this.type = type;
         this.value = value;
@@ -36,7 +35,7 @@ public class FieldNode extends AbstractAnnotated {
         return this.type;
     }
 
-    public Optional<TypedNode> value() {
+    public Optional<Node> value() {
         return Optional.ofNullable(this.value);
     }
 
@@ -50,7 +49,7 @@ public class FieldNode extends AbstractAnnotated {
         return this;
     }
 
-    public FieldNode setValue(TypedNode value) {
+    public FieldNode setValue(Node value) {
         this.value = value;
         return this;
     }

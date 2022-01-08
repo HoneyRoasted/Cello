@@ -49,7 +49,7 @@ public abstract class AbstractCachingEnvironment implements CachingEnvironment {
         if (this.parent instanceof CachingEnvironment ce) {
             ce.remove(node);
         } else {
-            this.cache.remove(node.type().namespace());
+            this.cache.remove(node.parameterizedType().namespace());
         }
     }
 

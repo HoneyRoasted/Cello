@@ -60,7 +60,7 @@ public class ClassNodeVisitor extends ClassVisitor {
             Verification<ClassNode> lookup = this.environment.lookup(Namespace.internal(superName));
             this.verification.child(lookup);
             if (lookup.success() && lookup.value().isPresent()) {
-                superclass = lookup.value().get().type();
+                superclass = lookup.value().get().parameterizedType();
                 builder.superclass(superclass.withArguments());
                 this.node.setSuperclass(lookup.value().get());
             }
@@ -71,8 +71,8 @@ public class ClassNodeVisitor extends ClassVisitor {
             this.verification.child(lookup);
             if (lookup.success() && lookup.value().isPresent()) {
                 ClassNode inter = lookup.value().get();
-                interfaces.add(inter.type());
-                builder.addInterface(inter.type().withArguments());
+                interfaces.add(inter.parameterizedType());
+                builder.addInterface(inter.parameterizedType().withArguments());
                 this.node.addInterface(inter);
             }
         }
@@ -90,13 +90,13 @@ public class ClassNodeVisitor extends ClassVisitor {
             visitor.visitFinish();
         }
 
-        builder.build(this.node.type());
+        builder.build(this.node.parameterizedType());
     }
 
     @Override
     public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
         Namespace namespace = Namespace.descriptor(descriptor);
-        TypeParameterized type = this.environment.lookup(namespace).map(ClassNode::type).orElse(Types.parameterized()
+        TypeParameterized type = this.environment.lookup(namespace).map(ClassNode::parameterizedType).orElse(Types.parameterized()
                 .namespace(namespace)
                 .superclass(Types.OBJECT)
                 .addInterface(Types.parameterized(Annotation.class).withArguments()).build());
@@ -111,7 +111,7 @@ public class ClassNodeVisitor extends ClassVisitor {
         this.verification.child(fieldType);
 
         if (fieldType.success() && fieldType.value().isPresent()) {
-            FieldNode node = new FieldNode(name, this.node, fieldType.value().get().buildType());
+            FieldNode node = new FieldNode(name, this.node, fieldType.value().get().type());
             node.modifiers().set(Modifiers.fromBits(access, ModifierTarget.FIELD));
             this.node.addField(node);
 
@@ -169,11 +169,11 @@ public class ClassNodeVisitor extends ClassVisitor {
                 exceptionNodes.stream().allMatch(v -> v.value().isPresent())) {
             int param = 0;
 
-            node.setReturnType(retClass.value().get().buildType());
-            exceptionNodes.forEach(v -> node.addException(v.value().get().buildType()));
+            node.setReturnType(retClass.value().get().type());
+            exceptionNodes.forEach(v -> node.addException(v.value().get().type()));
 
             for (Verification<ClassNode> v : paramClasses) {
-                node.addParameter(new ParameterNode(v.value().get().buildType(), "arg" + param));
+                node.addParameter(new ParameterNode(v.value().get().type(), "arg" + param));
                 param++;
             }
         }

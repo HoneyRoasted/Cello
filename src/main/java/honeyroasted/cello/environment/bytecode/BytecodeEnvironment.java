@@ -5,7 +5,6 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.bytecode.provider.BytecodeProvider;
 import honeyroasted.cello.environment.bytecode.visitor.ClassNodeVisitor;
 import honeyroasted.cello.node.structure.ClassNode;
-import honeyroasted.cello.node.structure.FieldNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.verify.VerificationBuilder;
 import honeyroasted.cello.verify.Verify;
@@ -44,7 +43,7 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
     }
 
     private Verification<ClassNode> buildArrayClass(ClassNode node, ClassNode element) {
-        Namespace namespace = Namespace.of(element.type().namespace().packageName(), element.type().namespace().className() + "[]");
+        Namespace namespace = Namespace.of(element.parameterizedType().namespace().packageName(), element.parameterizedType().namespace().className() + "[]");
 
         VerificationBuilder<ClassNode> verification = Verification.builder();
         verification.source(this);
@@ -60,7 +59,7 @@ public class BytecodeEnvironment extends AbstractCachingEnvironment {
                 serializable.success() && serializable.value().isPresent()) {
 
 
-            node.setType(Types.parameterized()
+            node.setParameterizedType(Types.parameterized()
                     .namespace(namespace)
                     .superclass(Types.OBJECT)
                     .addInterface(Types.parameterized(Cloneable.class).withArguments())

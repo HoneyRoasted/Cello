@@ -72,6 +72,11 @@ public class VerificationBuilder<T> {
 
     public VerificationBuilder<T> level(Verify.Level level) {
         this.level = level;
+        if (level == Verify.Level.ERROR && this.code == Verify.Code.SUCCESS) {
+            this.code = Verify.Code.UNKNOWN_ERROR;
+        } else if (level == Verify.Level.SUCCESS) {
+            this.code = Verify.Code.SUCCESS;
+        }
         return this;
     }
 
