@@ -14,11 +14,13 @@ import honeyroasted.cello.verify.VerificationBuilder;
 import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.informal.TypeClass;
+import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class GetField extends AbstractNode implements Node {
@@ -30,6 +32,8 @@ public class GetField extends AbstractNode implements Node {
         this.source = source;
         this.name = name;
     }
+
+    private FieldNode target;
 
     public static Verification<FieldNode> lookupInstanceField(Node source, String name, Environment environment, CodeContext context) {
         VerificationBuilder<FieldNode> builder = Verification.builder();
@@ -86,11 +90,21 @@ public class GetField extends AbstractNode implements Node {
 
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
-        return lookupInstanceField(this.source, this.name, environment, context).map(FieldNode::type);
+        return lookupInstanceField(this.source, this.name, environment, context).map(f -> {
+            this.target = f;
+
+            Optional<TypeClass> parent = this.source.type().supertype(f.owner().parameterizedType());
+            if (parent.isPresent() && parent.get() instanceof TypeFilled fld) {
+                return f.type().resolveTypeVariables(fld);
+            } else {
+                return f.type();
+            }
+        });
     }
 
     @Override
     protected void doApply(InstructionAdapter adapter, Environment environment, CodeContext context) {
-
+        this.source.apply(adapter, environment, context);
+        adapter.getfield(this.target.owner().namespace().internalName(), this.name,this.target.type().descriptor());
     }
 }

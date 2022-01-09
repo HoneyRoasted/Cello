@@ -11,6 +11,7 @@ import honeyroasted.javatype.informal.TypeArray;
 import honeyroasted.javatype.informal.TypeClass;
 import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
+import honeyroasted.javatype.informal.TypeWild;
 import honeyroasted.javatype.method.TypeMethodFilled;
 import honeyroasted.javatype.method.TypeMethodParameterized;
 import honeyroasted.javatype.parameterized.TypeParameterized;
@@ -37,15 +38,41 @@ public interface TypeUtil {
     }
 
     static org.objectweb.asm.Type asmType(Type type) {
-        if (type instanceof TypeFilled ||
-                type instanceof TypeArray ||
-                type instanceof TypeParameterized ||
-                type instanceof TypeMethodFilled ||
-                type instanceof TypeMethodParameterized) {
-            return org.objectweb.asm.Type.getType(type.descriptor());
+        return org.objectweb.asm.Type.getType(type instanceof TypeInformal inf ?
+                inf.erasure().descriptor() : type.descriptor());
+    }
+
+    static TypeInformal widestPrimitive(TypeInformal a, TypeInformal b) {
+        if (a.equals(Types.DOUBLE) || b.equals(Types.DOUBLE)) {
+            return Types.DOUBLE;
+        } else if (a.equals(Types.FLOAT) || b.equals(Types.FLOAT)) {
+            return Types.FLOAT;
+        } else if (a.equals(Types.LONG) || b.equals(Types.LONG)) {
+            return Types.LONG;
+        } else if (a.equals(Types.INT) || b.equals(Types.INT)) {
+            return Types.INT;
+        } else if (a.equals(Types.SHORT) || b.equals(Types.SHORT)) {
+            return Types.SHORT;
+        } else if (a.equals(Types.CHAR) || b.equals(Types.CHAR)) {
+            return Types.CHAR;
+        } else if (a.equals(Types.BYTE) || b.equals(Types.BYTE)) {
+            return Types.BYTE;
+        } else if (a.equals(Types.BOOLEAN) || b.equals(Types.BOOLEAN)) {
+            return Types.BOOLEAN;
         } else {
-            return org.objectweb.asm.Type.getType(Object.class);
+            return Types.VOID;
         }
+    }
+
+    static boolean isInteger32(TypeInformal a) {
+        return a.equals(Types.INT) || a.equals(Types.SHORT) ||
+                a.equals(Types.CHAR) || a.equals(Types.BYTE);
+    }
+
+    static boolean isNumeric(TypeInformal a) {
+        return a.equals(Types.DOUBLE) || a.equals(Types.FLOAT) || a.equals(Types.LONG) ||
+                a.equals(Types.INT) || a.equals(Types.SHORT) || a.equals(Types.CHAR) ||
+                a.equals(Types.BYTE);
     }
 
     static Set<TypeClass> flatten(TypeInformal type) {

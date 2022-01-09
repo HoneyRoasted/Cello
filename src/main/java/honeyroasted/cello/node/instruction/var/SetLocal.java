@@ -24,7 +24,7 @@ public class SetLocal extends AbstractNode implements Node {
 
     public SetLocal(String name, Node value, boolean dup) {
         this.name = name;
-        this.value = Nodes.conversion(value, (e, c) -> c.scope().fetch(this.name).map(Var::type).orElse(value.type()));
+        this.value = Nodes.convert(value, (e, c) -> c.scope().fetch(this.name).map(Var::type).orElse(value.type()));
         this.dup = dup;
     }
 
@@ -64,6 +64,6 @@ public class SetLocal extends AbstractNode implements Node {
 
     @Override
     public Node toUntyped() {
-        return new SetLocal(this.name, Nodes.unwrapConversion(this.value), false).withProperties(this.properties());
+        return new SetLocal(this.name, Nodes.unwrapConvert(this.value), false).withProperties(this.properties());
     }
 }

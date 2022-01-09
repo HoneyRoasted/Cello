@@ -3,6 +3,7 @@ package honeyroasted.cello.node.instruction.val;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.node.instruction.BooleanValue;
 import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.instruction.util.AbstractNode;
 import honeyroasted.cello.node.instruction.util.Child;
@@ -11,16 +12,17 @@ import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 import java.util.function.BiFunction;
 
-public class Conversion extends AbstractNode implements Node {
+public class Cast extends AbstractNode implements Node, BooleanValue {
     @Child
     private Node value;
     private BiFunction<Environment, CodeContext, Verification<TypeInformal>> target;
 
-    public Conversion(Node value, BiFunction<Environment, CodeContext, Verification<TypeInformal>> target) {
+    public Cast(Node value, BiFunction<Environment, CodeContext, Verification<TypeInformal>> target) {
         this.value = value;
         this.target = target;
     }
@@ -40,10 +42,10 @@ public class Conversion extends AbstractNode implements Node {
         if (verification.success()) {
             TypeInformal target = verification.value().orElse(null);
 
-            if (this.value.type().isAssignableTo(target)) {
+            if (target == null || this.value.type().isAssignableTo(target) || target.isAssignableTo(this.value.type())) {
                 return Verification.success(this, target);
             } else {
-                return Verification.error(Verify.Code.TYPE_ERROR, "%s is not assignable to %s", this.value.type().externalName(), target.externalName());
+                return Verification.error(this, Verify.Code.TYPE_ERROR, "%s is not castable to %s", this.value.type(), target);
             }
         } else {
             return verification;
@@ -55,13 +57,24 @@ public class Conversion extends AbstractNode implements Node {
         this.value.apply(adapter, environment, context);
 
         TypeInformal src = this.value.type();
-        TypeInformal dst = this.target.apply(environment, context).value().get();
+        TypeInformal dst = this.target.apply(environment, context).value().orElse(null);
 
+        cast(src, dst, adapter);
+    }
+
+    public static void cast(TypeInformal src, TypeInformal dst, InstructionAdapter adapter) {
         if (dst != null) {
             if (src instanceof TypeFilled srcFld && dst instanceof TypeFilled dstFld) {
-                if (srcFld.isPrimitive() && dstFld.isPrimitive()) {
+                if (srcFld.isAssignableTo(dstFld)) {
+                    Convert.convert(src, dst, adapter);
+                } else if (srcFld.isPrimitive() && dstFld.isPrimitive()) {
                     //Primitive conversion
                     adapter.cast(TypeUtil.asmType(srcFld), TypeUtil.asmType(dstFld));
+                } else if (!srcFld.isPrimitive() && Types.unbox(srcFld).isPrimitive() &&
+                        !dstFld.isPrimitive() && Types.unbox(dstFld).isPrimitive()) {
+                    //Conversion between primitive boxes
+                    cast(srcFld, Types.unbox(srcFld), adapter);
+                    cast(Types.unbox(srcFld), dst, adapter);
                 } else if (srcFld.isPrimitive() && !dstFld.isPrimitive()) {
                     //Primitive boxing
 
@@ -93,8 +106,44 @@ public class Conversion extends AbstractNode implements Node {
                         adapter.invokevirtual(Types.box(dstFld).internalName(), dstFld.externalName() + "Value",
                                 Types.method().returnType(dstFld).build().descriptor(), false);
                     }
+                } else if (!src.erasure().isAssignableTo(dst.erasure())) {
+                    adapter.checkcast(TypeUtil.asmType(dst));
                 }
+            } else if (!src.erasure().isAssignableTo(dst.erasure())) {
+                adapter.checkcast(TypeUtil.asmType(dst));
             }
         }
     }
+
+    @Override
+    public void jumpIfTrue(Label ifTrue, InstructionAdapter adapter, Environment environment, CodeContext context) {
+        if (this.value instanceof BooleanValue bop && this.value.type().isAssignableTo(Types.BOOLEAN)) {
+            bop.jumpIfTrue(ifTrue, adapter, environment, context);
+        } else {
+            this.apply(adapter, environment, context);
+            adapter.ifne(ifTrue);
+        }
+    }
+
+    @Override
+    public void jumpIfFalse(Label ifFalse, InstructionAdapter adapter, Environment environment, CodeContext context) {
+        if (this.value instanceof BooleanValue bop && this.value.type().isAssignableTo(Types.BOOLEAN)) {
+            bop.jumpIfFalse(ifFalse, adapter, environment, context);
+        } else {
+            this.apply(adapter, environment, context);
+            adapter.ifeq(ifFalse);
+        }
+    }
+
+    @Override
+    public void jump(Label ifTrue, Label ifFalse, InstructionAdapter adapter, Environment environment, CodeContext context) {
+        if (this.value instanceof BooleanValue bop && this.value.type().isAssignableTo(Types.BOOLEAN)) {
+            bop.jump(ifTrue, ifFalse, adapter, environment, context);
+        } else {
+            this.apply(adapter, environment, context);
+            adapter.ifne(ifTrue);
+            adapter.goTo(ifFalse);
+        }
+    }
+
 }

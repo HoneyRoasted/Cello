@@ -2,18 +2,23 @@ package honeyroasted.cello.node.instruction;
 
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.node.instruction.control.Scope;
+import honeyroasted.cello.node.instruction.control.Sequence;
+import honeyroasted.cello.node.instruction.control.While;
+import honeyroasted.cello.node.instruction.val.Cast;
 import honeyroasted.cello.node.instruction.val.Constant;
-import honeyroasted.cello.node.instruction.val.Conversion;
-import honeyroasted.cello.node.instruction.val.LoadThis;
+import honeyroasted.cello.node.instruction.val.Convert;
 import honeyroasted.cello.node.instruction.val.PrimitiveConstant;
 import honeyroasted.cello.node.instruction.val.TypeConstant;
-import honeyroasted.cello.node.structure.annotation.AnnotationValue;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public interface Nodes {
@@ -50,16 +55,40 @@ public interface Nodes {
         }
     }
 
-    static Node conversion(Node node, BiFunction<Environment, CodeContext, TypeInformal> type) {
-        return new Conversion(node, type.andThen(Verification::success));
-    }
-    
-    static Node conversion(Node node, TypeInformal type) {
-        return conversion(node, (e, c) -> type);
+    static Cast cast(Node node, BiFunction<Environment, CodeContext, TypeInformal> type) {
+        return new Cast(node, type.andThen(Verification::success));
     }
 
-    static Node unwrapConversion(Node node) {
-        return node instanceof Conversion cnv ? cnv.value() : node;
+    static Cast cast(Node node, TypeInformal type) {
+        return cast(node, (e, c) -> type);
+    }
+
+    static Node unwrapCast(Node node) {
+        return node instanceof Cast cnv ? cnv.value() : node;
+    }
+
+    static Convert convert(Node node, BiFunction<Environment, CodeContext, TypeInformal> type) {
+        return new Convert(node, type.andThen(Verification::success));
+    }
+    
+    static Convert convert(Node node, TypeInformal type) {
+        return convert(node, (e, c) -> type);
+    }
+
+    static Node unwrapConvert(Node node) {
+        return node instanceof Convert cnv ? cnv.value() : node;
+    }
+
+    static Node sequence(Node... nodes) {
+        return new Sequence(Arrays.asList(nodes));
+    }
+
+    static Node sequence(List<Node> nodes) {
+        return new Sequence(nodes);
+    }
+
+    static Node scope(Node node) {
+        return new Scope(node);
     }
 
 }

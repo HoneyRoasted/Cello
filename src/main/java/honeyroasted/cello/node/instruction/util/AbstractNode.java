@@ -69,10 +69,14 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
         List<Field> fields = new ArrayList<>();
         walkFields(this.getClass(), fields);
 
+        CodeContext subScope = context.childScope();
+        CodeContext instancedSubScope = subScope.copy();
+        CodeContext instancedScope = context.copy();
+
         for (Field field : fields) {
             if (field.isAnnotationPresent(Child.class)) {
                 Child child = field.getAnnotation(Child.class);
-                if (child.order() == order) {
+                if (child.order() == order || child.order() == Child.BOTH) {
                     Class<?> type = field.getType();
                     field.trySetAccessible();
 
@@ -81,8 +85,30 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
                             Node node = (Node) field.get(this);
 
                             if (node != null) {
-                                CodeContext codeContext = child.scope() == Child.SUB_SCOPE || child.scope() == Child.SHARED_SUB_SCOPE ? context.childScope() : context;
-                                codeContext = child.instance() == Child.INSTANCE || child.instance() == Child.SHARED_INSTANCE ? codeContext.copy() : codeContext;
+                                CodeContext codeContext;
+                                if (child.scope() == Child.SHARED_SUB_SCOPE) {
+                                    if (child.instance() == Child.SHARED_INSTANCE) {
+                                        codeContext = instancedSubScope;
+                                    } else if (child.instance() == Child.INSTANCE) {
+                                        codeContext = subScope.copy();
+                                    } else {
+                                        codeContext = subScope;
+                                    }
+                                } else if (child.scope() == Child.SUB_SCOPE) {
+                                    if (child.instance() == Child.INSTANCE || child.instance() == Child.SHARED_INSTANCE) {
+                                        codeContext = context.childScope().copy();
+                                    } else {
+                                        codeContext = context.childScope();
+                                    }
+                                } else {
+                                    if (child.instance() == Child.SHARED_INSTANCE) {
+                                        codeContext = instancedScope;
+                                    } else if (child.instance() == Child.INSTANCE) {
+                                        codeContext = context.copy();
+                                    } else {
+                                        codeContext = context;
+                                    }
+                                }
 
                                 Verification<TypeInformal> childVerify = node.verify(environment, codeContext);
                                 builder.child(childVerify);
@@ -156,6 +182,14 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
         }
     }
 
+    protected void doExpected(Environment environment, CodeContext context) {
+
+    }
+
+    protected void acceptChildContext(Environment environment, CodeContext child) {
+
+    }
+
     protected abstract Verification<TypeInformal> doVerify(Environment environment, CodeContext context);
 
     @Override
@@ -183,10 +217,6 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
     @Override
     public TypeInformal expected() {
         return this.expected;
-    }
-
-    protected void doExpected(Environment environment, CodeContext context) {
-
     }
 
 }

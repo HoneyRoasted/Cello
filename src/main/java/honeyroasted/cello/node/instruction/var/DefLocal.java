@@ -25,7 +25,7 @@ public class DefLocal extends AbstractNode implements Node {
         this.type = type;
         this.name = name;
 
-        this.value = value == null ? null : Nodes.conversion(value, type);
+        this.value = value == null ? null : Nodes.convert(value, type);
     }
 
     public DefLocal(String name, Node value) {

@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../val/Conversion.html" title="class in honeyroasted.cello.node.instruction.val">Conversion</a></code>, <code><a href="../var/DefLocal.html" title="class in honeyroasted.cello.node.instruction.var">DefLocal</a></code>, <code><a href="../var/GetLocal.html" title="class in honeyroasted.cello.node.instruction.var">GetLocal</a></code>, <code><a href="../var/GetStatic.html" title="class in honeyroasted.cello.node.instruction.var">GetStatic</a></code>, <code><a href="../val/LoadThis.html" title="class in honeyroasted.cello.node.instruction.val">LoadThis</a></code>, <code><a href="../val/PrimitiveConstant.html" title="class in honeyroasted.cello.node.instruction.val">PrimitiveConstant</a></code>, <code><a href="../var/SetLocal.html" title="class in honeyroasted.cello.node.instruction.var">SetLocal</a></code>, <code><a href="SimpleNode.html" title="class in honeyroasted.cello.node.instruction.util">SimpleNode</a></code>, <code><a href="../val/TypeConstant.html" title="class in honeyroasted.cello.node.instruction.val">TypeConstant</a></code></dd>
+<dd><code><a href="../operator/BinaryOperator.html" title="class in honeyroasted.cello.node.instruction.operator">BinaryOperator</a></code>, <code><a href="../operator/bitwise/BitwiseAnd.html" title="class in honeyroasted.cello.node.instruction.operator.bitwise">BitwiseAnd</a></code>, <code><a href="../operator/bitwise/BitwiseOr.html" title="class in honeyroasted.cello.node.instruction.operator.bitwise">BitwiseOr</a></code>, <code><a href="../operator/bitwise/BitwiseXor.html" title="class in honeyroasted.cello.node.instruction.operator.bitwise">BitwiseXor</a></code>, <code><a href="../operator/bool/BooleanAnd.html" title="class in honeyroasted.cello.node.instruction.operator.bool">BooleanAnd</a></code>, <code><a href="../operator/bool/BooleanNot.html" title="class in honeyroasted.cello.node.instruction.operator.bool">BooleanNot</a></code>, <code><a href="../operator/bool/BooleanOr.html" title="class in honeyroasted.cello.node.instruction.operator.bool">BooleanOr</a></code>, <code><a href="../control/Break.html" title="class in honeyroasted.cello.node.instruction.control">Break</a></code>, <code><a href="../val/Cast.html" title="class in honeyroasted.cello.node.instruction.val">Cast</a></code>, <code><a href="../control/Continue.html" title="class in honeyroasted.cello.node.instruction.control">Continue</a></code>, <code><a href="../val/Convert.html" title="class in honeyroasted.cello.node.instruction.val">Convert</a></code>, <code><a href="../var/DefLocal.html" title="class in honeyroasted.cello.node.instruction.var">DefLocal</a></code>, <code><a href="../control/DoWhile.html" title="class in honeyroasted.cello.node.instruction.control">DoWhile</a></code>, <code><a href="../operator/bool/Equal.html" title="class in honeyroasted.cello.node.instruction.operator.bool">Equal</a></code>, <code><a href="../var/GetField.html" title="class in honeyroasted.cello.node.instruction.var">GetField</a></code>, <code><a href="../var/GetLocal.html" title="class in honeyroasted.cello.node.instruction.var">GetLocal</a></code>, <code><a href="../var/GetStatic.html" title="class in honeyroasted.cello.node.instruction.var">GetStatic</a></code>, <code><a href="../operator/bool/InstanceOf.html" title="class in honeyroasted.cello.node.instruction.operator.bool">InstanceOf</a></code>, <code><a href="../operator/bitwise/LeftShift.html" title="class in honeyroasted.cello.node.instruction.operator.bitwise">LeftShift</a></code>, <code><a href="../val/LoadThis.html" title="class in honeyroasted.cello.node.instruction.val">LoadThis</a></code>, <code><a href="../operator/Negate.html" title="class in honeyroasted.cello.node.instruction.operator">Negate</a></code>, <code><a href="../val/PrimitiveConstant.html" title="class in honeyroasted.cello.node.instruction.val">PrimitiveConstant</a></code>, <code><a href="../operator/bitwise/RightShift.html" title="class in honeyroasted.cello.node.instruction.operator.bitwise">RightShift</a></code>, <code><a href="../control/Scope.html" title="class in honeyroasted.cello.node.instruction.control">Scope</a></code>, <code><a href="../control/Sequence.html" title="class in honeyroasted.cello.node.instruction.control">Sequence</a></code>, <code><a href="../var/SetField.html" title="class in honeyroasted.cello.node.instruction.var">SetField</a></code>, <code><a href="../var/SetLocal.html" title="class in honeyroasted.cello.node.instruction.var">SetLocal</a></code>, <code><a href="../var/SetStatic.html" title="class in honeyroasted.cello.node.instruction.var">SetStatic</a></code>, <code><a href="SimpleNode.html" title="class in honeyroasted.cello.node.instruction.util">SimpleNode</a></code>, <code><a href="../operator/Ternary.html" title="class in honeyroasted.cello.node.instruction.operator">Ternary</a></code>, <code><a href="../val/TypeConstant.html" title="class in honeyroasted.cello.node.instruction.val">TypeConstant</a></code>, <code><a href="../control/While.html" title="class in honeyroasted.cello.node.instruction.control">While</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractNode</span>
@@ -118,40 +118,44 @@ implements <a href="../Node.html" title="interface in honeyroasted.cello.node.in
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">apply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
- <a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
-<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code><span class="member-name-link"><a href="#doApply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">doApply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
- <a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
-<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#doExpected(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">doExpected</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
-<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code>protected abstract <a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;honeyroasted.javatype.informal.TypeInformal&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code><span class="member-name-link"><a href="#doVerify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">doVerify</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
-<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>honeyroasted.javatype.informal.TypeInformal</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#expected()">expected</a></span>()</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#acceptChildContext(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">acceptChildContext</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;child)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setExpected(honeyroasted.javatype.informal.TypeInformal)">setExpected</a></span>&#8203;(honeyroasted.javatype.informal.TypeInformal&nbsp;type)</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#apply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">apply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
+ <a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>honeyroasted.javatype.informal.TypeInformal</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#type()">type</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code><span class="member-name-link"><a href="#doApply(org.objectweb.asm.commons.InstructionAdapter,honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">doApply</a></span>&#8203;(org.objectweb.asm.commons.InstructionAdapter&nbsp;adapter,
+ <a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#doExpected(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">doExpected</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code>protected abstract <a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;honeyroasted.javatype.informal.TypeInformal&gt;</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3"><code><span class="member-name-link"><a href="#doVerify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">doVerify</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>honeyroasted.javatype.informal.TypeInformal</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#expected()">expected</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#setExpected(honeyroasted.javatype.informal.TypeInformal)">setExpected</a></span>&#8203;(honeyroasted.javatype.informal.TypeInformal&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;honeyroasted.javatype.informal.TypeInformal&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#verification()">verification</a></span>()</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>honeyroasted.javatype.informal.TypeInformal</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#type()">type</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;honeyroasted.javatype.informal.TypeInformal&gt;</code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">verify</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#verification()">verification</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../../verify/Verification.html" title="class in honeyroasted.cello.verify">Verification</a>&lt;honeyroasted.javatype.informal.TypeInformal&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">verify</a></span>&#8203;(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -201,6 +205,20 @@ implements <a href="../Node.html" title="interface in honeyroasted.cello.node.in
 <dt>Specified by:</dt>
 <dd><code><a href="../Node.html#verify(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">verify</a></code>&nbsp;in interface&nbsp;<code><a href="../Node.html" title="interface in honeyroasted.cello.node.instruction">Node</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="doExpected(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">
+<h3>doExpected</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doExpected</span>&#8203;<span class="parameters">(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="acceptChildContext(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">
+<h3>acceptChildContext</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">acceptChildContext</span>&#8203;<span class="parameters">(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
+ <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;child)</span></div>
 </section>
 </li>
 <li>
@@ -268,13 +286,6 @@ implements <a href="../Node.html" title="interface in honeyroasted.cello.node.in
 <dt>Specified by:</dt>
 <dd><code><a href="../Node.html#expected()">expected</a></code>&nbsp;in interface&nbsp;<code><a href="../Node.html" title="interface in honeyroasted.cello.node.instruction">Node</a></code></dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="doExpected(honeyroasted.cello.environment.Environment,honeyroasted.cello.environment.context.CodeContext)">
-<h3>doExpected</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doExpected</span>&#8203;<span class="parameters">(<a href="../../../environment/Environment.html" title="interface in honeyroasted.cello.environment">Environment</a>&nbsp;environment,
- <a href="../../../environment/context/CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a>&nbsp;context)</span></div>
 </section>
 </li>
 </ul>

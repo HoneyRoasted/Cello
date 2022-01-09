@@ -90,8 +90,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#optional()">optional</a></span></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#scope()">scope</a></span></code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#order()">order</a></span></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#scope()">scope</a></span></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -105,32 +108,41 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#INSTANCE">INSTANCE</a></span></code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#BOTH">BOTH</a></span></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#NO_INSTANCE">NO_INSTANCE</a></span></code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#INSTANCE">INSTANCE</a></span></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#NORMAL_SCOPE">NORMAL_SCOPE</a></span></code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#NO_INSTANCE">NO_INSTANCE</a></span></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#ONE_REQUIRED">ONE_REQUIRED</a></span></code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#NORMAL_SCOPE">NORMAL_SCOPE</a></span></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#OPTIONAL">OPTIONAL</a></span></code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#ONE_REQUIRED">ONE_REQUIRED</a></span></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#REQUIRED">REQUIRED</a></span></code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#OPTIONAL">OPTIONAL</a></span></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#SHARED_INSTANCE">SHARED_INSTANCE</a></span></code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#POST">POST</a></span></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#SHARED_SUB_SCOPE">SHARED_SUB_SCOPE</a></span></code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#PRE">PRE</a></span></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#SUB_SCOPE">SUB_SCOPE</a></span></code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#REQUIRED">REQUIRED</a></span></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static int</code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#SHARED_INSTANCE">SHARED_INSTANCE</a></span></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static int</code></div>
+<div class="col-second even-row-color"><code><span class="member-name-link"><a href="#SHARED_SUB_SCOPE">SHARED_SUB_SCOPE</a></span></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static int</code></div>
+<div class="col-second odd-row-color"><code><span class="member-name-link"><a href="#SUB_SCOPE">SUB_SCOPE</a></span></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -233,6 +245,36 @@ loadScripts(document, 'script');</script>
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="PRE">
+<h3>PRE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">PRE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../../../../../constant-values.html#honeyroasted.cello.node.instruction.util.Child.PRE">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="POST">
+<h3>POST</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">POST</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../../../../../constant-values.html#honeyroasted.cello.node.instruction.util.Child.POST">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="BOTH">
+<h3>BOTH</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">BOTH</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../../../../../constant-values.html#honeyroasted.cello.node.instruction.util.Child.BOTH">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -241,6 +283,16 @@ loadScripts(document, 'script');</script>
 <section class="member-details">
 <h2>Element Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="order()">
+<h3>order</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">order</span></div>
+<dl class="notes">
+<dt>Default:</dt>
+<dd>0</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="optional()">
 <h3>optional</h3>

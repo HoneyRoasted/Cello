@@ -19,6 +19,7 @@ public @interface Child {
 
     int PRE = 0;
     int POST = 1;
+    int BOTH = 2;
 
     int order() default PRE;
 

@@ -42,11 +42,11 @@ public interface Node extends PropertyHolder {
             int size = TypeUtil.size(this.type());
 
             if (size % 2 != 0) {
-                a.dup();
+                a.pop();
             }
 
             for (int i = 0; i < size / 2; i++) {
-                a.dup2();
+                a.pop2();
             }
         }).withProperties(this.properties());
     }

@@ -7,20 +7,13 @@ import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.instruction.util.AbstractNode;
 import honeyroasted.cello.node.instruction.util.Child;
-import honeyroasted.cello.node.instruction.val.Conversion;
-import honeyroasted.cello.node.modifier.Modifier;
-import honeyroasted.cello.node.structure.ClassNode;
+import honeyroasted.cello.node.instruction.val.Convert;
 import honeyroasted.cello.node.structure.FieldNode;
 import honeyroasted.cello.verify.Verification;
-import honeyroasted.cello.verify.VerificationBuilder;
-import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class SetStatic extends AbstractNode implements Node {
     private Namespace cls;
@@ -32,7 +25,7 @@ public class SetStatic extends AbstractNode implements Node {
     public SetStatic(Namespace cls, String name, Node value, boolean dup) {
         this.cls = cls;
         this.name = name;
-        this.value = new Conversion(value, (e, c) -> GetStatic.lookupStaticField(cls, name, e, c).map(FieldNode::type));
+        this.value = new Convert(value, (e, c) -> GetStatic.lookupStaticField(cls, name, e, c).map(FieldNode::type));
         this.dup = dup;
     }
 
@@ -68,6 +61,6 @@ public class SetStatic extends AbstractNode implements Node {
 
     @Override
     public Node toUntyped() {
-        return new SetStatic(this.cls, this.name, Nodes.unwrapConversion(this.value), true);
+        return new SetStatic(this.cls, this.name, Nodes.unwrapConvert(this.value), true);
     }
 }
