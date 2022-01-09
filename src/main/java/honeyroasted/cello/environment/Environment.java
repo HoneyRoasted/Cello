@@ -5,6 +5,8 @@ import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.verify.Verify;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
+import honeyroasted.javatype.informal.TypeArray;
+import honeyroasted.javatype.informal.TypeClass;
 import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.parameterized.TypeParameterized;
@@ -23,6 +25,20 @@ public interface Environment {
 
     default Verification<ClassNode> lookup(Class<?> cls) {
         return lookup(Namespace.of(cls));
+    }
+
+    default Verification<ClassNode> lookup(TypeClass cls) {
+        if (cls instanceof TypeFilled fld) {
+            return lookup(fld);
+        } else if (cls instanceof TypeArray arr) {
+            TypeInformal element = arr.deepElement();
+            if (element instanceof TypeFilled ele) {
+                Namespace ename = ele.type().namespace();
+                return lookup(Namespace.of(ename.packageName(), ename.className() + "[]".repeat(arr.depth())));
+            }
+        }
+
+        return Verification.error(Verify.Code.TYPE_NOT_FOUND_ERROR, "Could not resolve class for type '%s'", cls.externalName());
     }
 
     default <T extends Type> Verification<T> resolve(T type) {

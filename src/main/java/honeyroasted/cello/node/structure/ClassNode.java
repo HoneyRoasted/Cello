@@ -91,6 +91,14 @@ public class ClassNode extends AbstractParameterized {
         }
     }
 
+    public String externalName() {
+        return this.namespace().name();
+    }
+
+    public Namespace namespace() {
+        return this.type.namespace();
+    }
+
     public TypeParameterized parameterizedType() {
         return this.type;
     }

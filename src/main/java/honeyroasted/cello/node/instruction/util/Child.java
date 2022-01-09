@@ -17,6 +17,11 @@ public @interface Child {
     int REQUIRED = 1;
     int ONE_REQUIRED = 2;
 
+    int PRE = 0;
+    int POST = 1;
+
+    int order() default PRE;
+
     int optional() default REQUIRED;
 
     int instance() default NO_INSTANCE;

@@ -64,6 +64,6 @@ public class SetLocal extends AbstractNode implements Node {
 
     @Override
     public Node toUntyped() {
-        return new SetLocal(this.name, this.value, false).withProperties(this.properties());
+        return new SetLocal(this.name, Nodes.unwrapConversion(this.value), false).withProperties(this.properties());
     }
 }

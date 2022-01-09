@@ -16,6 +16,7 @@ import honeyroasted.javatype.method.TypeMethodParameterized;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,9 +49,11 @@ public interface TypeUtil {
     }
 
     static Set<TypeClass> flatten(TypeInformal type) {
-        Set<TypeClass> set = new HashSet<>();
-        if (type instanceof TypeClass cls) {
+        Set<TypeClass> set = new LinkedHashSet<>();
+        if (type instanceof TypeFilled cls) {
             set.add(cls);
+        } else if (type instanceof TypeArray arr) {
+            flatten(arr.element()).forEach(e -> set.add((TypeClass) e.array(1)));
         } else {
             type.pseudoParents().forEach(t -> set.addAll(flatten(t)));
         }

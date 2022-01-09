@@ -18,25 +18,35 @@ import java.util.function.BiFunction;
 public class Conversion extends AbstractNode implements Node {
     @Child
     private Node value;
-    private BiFunction<Environment, CodeContext, TypeInformal> target;
+    private BiFunction<Environment, CodeContext, Verification<TypeInformal>> target;
 
-    public Conversion(Node value, BiFunction<Environment, CodeContext, TypeInformal> target) {
+    public Conversion(Node value, BiFunction<Environment, CodeContext, Verification<TypeInformal>> target) {
         this.value = value;
         this.target = target;
     }
 
+    public Node value() {
+        return this.value;
+    }
+
     @Override
     protected void doExpected(Environment environment, CodeContext context) {
-        this.value.setExpected(this.target.apply(environment, context));
+        this.target.apply(environment, context).value().ifPresent(t -> this.value.setExpected(t));
     }
 
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
-        TypeInformal target = this.target.apply(environment, context);
-        if (target == null || this.value.type().isAssignableTo(target)) {
-            return Verification.success(this, target);
+        Verification<TypeInformal> verification = this.target.apply(environment, context);
+        if (verification.success()) {
+            TypeInformal target = verification.value().orElse(null);
+
+            if (this.value.type().isAssignableTo(target)) {
+                return Verification.success(this, target);
+            } else {
+                return Verification.error(Verify.Code.TYPE_ERROR, "%s is not assignable to %s", this.value.type().externalName(), target.externalName());
+            }
         } else {
-            return Verification.error(Verify.Code.TYPE_ERROR, "%s is not assignable to %s", this.value.type().externalName(), target.externalName());
+            return verification;
         }
     }
 
@@ -45,7 +55,7 @@ public class Conversion extends AbstractNode implements Node {
         this.value.apply(adapter, environment, context);
 
         TypeInformal src = this.value.type();
-        TypeInformal dst = this.target.apply(environment, context);
+        TypeInformal dst = this.target.apply(environment, context).value().get();
 
         if (dst != null) {
             if (src instanceof TypeFilled srcFld && dst instanceof TypeFilled dstFld) {

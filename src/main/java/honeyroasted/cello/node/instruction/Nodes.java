@@ -8,6 +8,7 @@ import honeyroasted.cello.node.instruction.val.LoadThis;
 import honeyroasted.cello.node.instruction.val.PrimitiveConstant;
 import honeyroasted.cello.node.instruction.val.TypeConstant;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeFilled;
@@ -48,13 +49,17 @@ public interface Nodes {
             return new PrimitiveConstant(val);
         }
     }
-    
+
     static Node conversion(Node node, BiFunction<Environment, CodeContext, TypeInformal> type) {
-        return new Conversion(node, type);
+        return new Conversion(node, type.andThen(Verification::success));
     }
     
     static Node conversion(Node node, TypeInformal type) {
         return conversion(node, (e, c) -> type);
+    }
+
+    static Node unwrapConversion(Node node) {
+        return node instanceof Conversion cnv ? cnv.value() : node;
     }
 
 }
