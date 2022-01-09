@@ -7,6 +7,9 @@ honeyroasted.cello.environment.bytecode.visitor.annotation
 honeyroasted.cello.environment.bytecode.visitor.signature
 honeyroasted.cello.environment.context
 honeyroasted.cello.node.instruction
+honeyroasted.cello.node.instruction.util
+honeyroasted.cello.node.instruction.val
+honeyroasted.cello.node.instruction.var
 honeyroasted.cello.node.modifier
 honeyroasted.cello.node.structure
 honeyroasted.cello.node.structure.annotation

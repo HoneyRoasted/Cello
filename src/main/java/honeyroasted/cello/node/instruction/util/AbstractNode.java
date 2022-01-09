@@ -2,7 +2,6 @@ package honeyroasted.cello.node.instruction.util;
 
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.context.CodeContext;
-import honeyroasted.cello.node.instruction.InvalidNodeException;
 import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.properties.AbstractPropertyHolder;
 import honeyroasted.cello.verify.Verification;
@@ -22,8 +21,12 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
     private TypeInformal type = Types.VOID;
     private Verification<TypeInformal> verification = Verification.success(this, Types.VOID);
 
+    private TypeInformal expected;
+
     @Override
     public Verification<TypeInformal> verify(Environment environment, CodeContext context) {
+        doExpected(environment, context);
+
         VerificationBuilder<Node> builder = Verification.builder();
         builder.source(this).value(this);
 
@@ -38,48 +41,56 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
 
                 try {
                     if (Node.class.isAssignableFrom(type)) {
-                        CodeContext codeContext = child.scope() == Child.SUB_SCOPE || child.scope() == Child.SHARED_SUB_SCOPE ? context.childScope() : context;
-                        codeContext = child.instance() == Child.INSTANCE || child.instance() == Child.SHARED_INSTANCE ? codeContext.copy() : codeContext;
+                        Node node = (Node) field.get(this);
 
-                        Verification<TypeInformal> childVerify = ((Node) field.get(this)).verify(environment, codeContext);
-                        builder.child(childVerify);
-                        if (!childVerify.success() && child.optional() != Child.OPTIONAL) {
-                            builder.error(Verify.Code.CHILD_FAILED_ERROR, "One or more required children failed");
+                        if (node != null) {
+                            CodeContext codeContext = child.scope() == Child.SUB_SCOPE || child.scope() == Child.SHARED_SUB_SCOPE ? context.childScope() : context;
+                            codeContext = child.instance() == Child.INSTANCE || child.instance() == Child.SHARED_INSTANCE ? codeContext.copy() : codeContext;
+
+                            Verification<TypeInformal> childVerify = node.verify(environment, codeContext);
+                            builder.child(childVerify);
+                            if (!childVerify.success() && child.optional() != Child.OPTIONAL) {
+                                builder.error(Verify.Code.CHILD_FAILED_ERROR, "One or more required children failed");
+                            }
                         }
                     } else if (Iterable.class.isAssignableFrom(type)) {
                         Iterable<?> list = (Iterable<?>) field.get(this);
-                        if (StreamSupport.stream(list.spliterator(), false).allMatch(n -> n instanceof Node)) {
-                            Iterable<Node> nodes = (Iterable<Node>) list;
+                        if (list != null) {
+                            if (StreamSupport.stream(list.spliterator(), false).allMatch(n -> n instanceof Node)) {
+                                Iterable<Node> nodes = (Iterable<Node>) list;
 
-                            CodeContext codeContext = child.scope() == Child.SHARED_SUB_SCOPE ? context.childScope() : context;
-                            codeContext = child.instance() == Child.SHARED_INSTANCE ? codeContext.copy() : context;
+                                CodeContext codeContext = child.scope() == Child.SHARED_SUB_SCOPE ? context.childScope() : context;
+                                codeContext = child.instance() == Child.SHARED_INSTANCE ? codeContext.copy() : context;
 
-                            boolean success = child.optional() != Child.ONE_REQUIRED;
+                                boolean success = child.optional() != Child.ONE_REQUIRED;
 
-                            for (Node node : nodes) {
-                                CodeContext myContext = child.scope() == Child.SUB_SCOPE ? codeContext.childScope() : codeContext;
-                                myContext = child.instance() == Child.INSTANCE ? myContext.copy() : myContext;
+                                for (Node node : nodes) {
+                                    if (node != null) {
+                                        CodeContext myContext = child.scope() == Child.SUB_SCOPE ? codeContext.childScope() : codeContext;
+                                        myContext = child.instance() == Child.INSTANCE ? myContext.copy() : myContext;
 
-                                Verification<TypeInformal> childVerify = node.verify(environment, myContext);
-                                builder.child(childVerify);
+                                        Verification<TypeInformal> childVerify = node.verify(environment, myContext);
+                                        builder.child(childVerify);
 
-                                if (child.optional() == Child.ONE_REQUIRED && childVerify.success()) {
-                                    success = true;
-                                } else if (child.optional() == Child.REQUIRED) {
-                                    success &= childVerify.success();
+                                        if (child.optional() == Child.ONE_REQUIRED && childVerify.success()) {
+                                            success = true;
+                                        } else if (child.optional() == Child.REQUIRED) {
+                                            success &= childVerify.success();
+                                        }
+                                    }
                                 }
-                            }
 
-                            if (!success) {
-                                if (child.optional() == Child.ONE_REQUIRED) {
-                                    builder.error(Verify.Code.CHILD_FAILED_ERROR, "All children failed");
-                                } else if (child.optional() == Child.REQUIRED) {
-                                    builder.error(Verify.Code.CHILD_FAILED_ERROR, "One or more children failed");
+                                if (!success) {
+                                    if (child.optional() == Child.ONE_REQUIRED) {
+                                        builder.error(Verify.Code.CHILD_FAILED_ERROR, "All children failed");
+                                    } else if (child.optional() == Child.REQUIRED) {
+                                        builder.error(Verify.Code.CHILD_FAILED_ERROR, "One or more children failed");
+                                    }
                                 }
+                            } else {
+                                throw new InvalidNodeException("@Child annotated Iterable " + field.getDeclaringClass().getName() + "#" + field.getName() +
+                                        " must only contain values of type Node, but non-node values were found");
                             }
-                        } else {
-                            throw new InvalidNodeException("@Child annotated Iterable " + field.getDeclaringClass().getName() + "#" + field.getName() +
-                                    " must only contain values of type Node, but non-node values were found");
                         }
                     } else {
                         throw new InvalidNodeException("@Child annotated field " + field.getDeclaringClass().getName() + "#" + field.getName() +
@@ -138,4 +149,19 @@ public abstract class AbstractNode extends AbstractPropertyHolder implements Nod
     public TypeInformal type() {
         return this.type;
     }
+
+    @Override
+    public void setExpected(TypeInformal type) {
+        this.expected = type;
+    }
+
+    @Override
+    public TypeInformal expected() {
+        return this.expected;
+    }
+
+    protected void doExpected(Environment environment, CodeContext context) {
+
+    }
+
 }

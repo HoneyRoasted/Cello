@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LocalScope {
+    private Label start = new Label(), end = new Label();
+
     private LocalScope parent;
     private Map<String, Var> vars;
     private int counter;
@@ -31,6 +33,14 @@ public class LocalScope {
         this.vars = vars;
         this.counter = counter;
         this.controls = controls;
+    }
+
+    public Label start() {
+        return this.start;
+    }
+
+    public Label end() {
+        return this.end;
     }
 
     public Optional<Control> fetchControl(Control.Kind kind) {
@@ -92,14 +102,10 @@ public class LocalScope {
         }
     }
 
-    public Optional<Var> define(String name, TypeInformal type) {
-        if (has(name) || type.equals(Types.VOID)) {
-            return Optional.empty();
-        } else {
-            Var v = new Var(type, defineIndex(type));
-            this.vars.put(name, v);
-            return Optional.of(v);
-        }
+    public Var define(String name, TypeInformal type) {
+        Var v = new Var(type, defineIndex(type));
+        this.vars.put(name, v);
+        return v;
     }
 
     public boolean has(String name) {

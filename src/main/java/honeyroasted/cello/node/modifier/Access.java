@@ -37,6 +37,10 @@ public enum Access {
         return false;
     }
 
+    public int code() {
+        return this.modifier != null ? this.modifier.code() : 0;
+    }
+
     public void apply(Modifiers modifiers) {
         if (this.modifier != null) {
             modifiers.add(this.modifier);

@@ -1,4 +1,4 @@
-package honeyroasted.cello.node.instruction;
+package honeyroasted.cello.node.instruction.util;
 
 public class InvalidNodeException extends RuntimeException {
 

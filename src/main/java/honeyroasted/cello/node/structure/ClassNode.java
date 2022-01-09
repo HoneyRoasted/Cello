@@ -1,5 +1,6 @@
 package honeyroasted.cello.node.structure;
 
+import honeyroasted.cello.node.modifier.Access;
 import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.informal.TypeClass;
@@ -7,8 +8,12 @@ import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ClassNode extends AbstractParameterized {
     private TypeParameterized type;
@@ -48,7 +53,37 @@ public class ClassNode extends AbstractParameterized {
         };
     }
 
+    public List<FieldNode> lookupFields(Predicate<FieldNode> predicate) {
+        List<FieldNode> fields = this.fields.stream().filter(predicate).collect(Collectors.toList());
+
+        if (this.superclass != null) {
+            fields.addAll(this.superclass.lookupFields(predicate));
+        }
+
+        for (ClassNode inter : this.interfaces) {
+            fields.addAll(inter.lookupFields(predicate));
+        }
+
+        return fields;
+    }
+
+    public Access accessTo(ClassNode other) {
+        if (other.equals(this) || other.equals(this.nestHost) || other.equals(this.outerClass)) {
+            return Access.PRIVATE;
+        } else if (other.type.namespace().packageName().equals(this.type.namespace().packageName())) {
+            return Access.PACKAGE_PROTECTED;
+        } else if (this.type.isSubclassOf(other.type)) {
+            return Access.PROTECTED;
+        } else {
+            return Access.PUBLIC;
+        }
+    }
+
     public TypeClass type(TypeInformal... arguments) {
+        return this.type(Arrays.asList(arguments));
+    }
+
+    public TypeClass type(List<TypeInformal> arguments) {
         if (this.type.namespace().isArray() && this.arrayElement != null) {
             return (TypeClass) this.arrayElement.type(arguments).array(1);
         } else {
@@ -192,5 +227,22 @@ public class ClassNode extends AbstractParameterized {
     public ClassNode addMethod(MethodNode method) {
         this.methods.add(method);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ClassNode node = (ClassNode) o;
+        return Objects.equals(type, node.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type);
     }
 }

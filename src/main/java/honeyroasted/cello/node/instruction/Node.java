@@ -16,6 +16,10 @@ import java.util.function.BiFunction;
 
 public interface Node extends PropertyHolder {
 
+    void setExpected(TypeInformal type);
+
+    TypeInformal expected();
+
     Verification<TypeInformal> verify(Environment environment, CodeContext context);
 
     void apply(InstructionAdapter adapter, Environment environment, CodeContext context);
@@ -44,7 +48,7 @@ public interface Node extends PropertyHolder {
             for (int i = 0; i < size / 2; i++) {
                 a.dup2();
             }
-        });
+        }).withProperties(this.properties());
     }
 
     static Node of(BiFunction<Environment, CodeContext, Verification<TypeInformal>> verify, TriConsumer<InstructionAdapter, Environment, CodeContext> apply) {

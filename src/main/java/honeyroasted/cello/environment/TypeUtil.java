@@ -4,6 +4,7 @@ import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.verify.VerificationBuilder;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeArray;
@@ -12,6 +13,7 @@ import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
 import honeyroasted.javatype.method.TypeMethodFilled;
 import honeyroasted.javatype.method.TypeMethodParameterized;
+import honeyroasted.javatype.parameterized.TypeParameterized;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,9 +31,14 @@ public interface TypeUtil {
         }
     }
 
+    static org.objectweb.asm.Type asmType(Namespace namespace) {
+        return asmType(TypeParameterized.builder().namespace(namespace).build());
+    }
+
     static org.objectweb.asm.Type asmType(Type type) {
         if (type instanceof TypeFilled ||
                 type instanceof TypeArray ||
+                type instanceof TypeParameterized ||
                 type instanceof TypeMethodFilled ||
                 type instanceof TypeMethodParameterized) {
             return org.objectweb.asm.Type.getType(type.descriptor());
