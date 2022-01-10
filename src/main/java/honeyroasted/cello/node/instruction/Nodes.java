@@ -91,4 +91,8 @@ public interface Nodes {
         return new Scope(node);
     }
 
+    static Node forLoop(Node init, Node cond, Node increment, Node body) {
+        return sequence(init, new While(cond, sequence(body, increment)));
+    }
+
 }

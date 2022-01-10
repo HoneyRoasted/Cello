@@ -1,4 +1,4 @@
-package honeyroasted.cello.node.instruction.operator;
+package honeyroasted.cello.node.instruction.operator.bool;
 
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.context.CodeContext;
@@ -18,11 +18,11 @@ import org.objectweb.asm.commons.InstructionAdapter;
 import java.util.ArrayList;
 
 public class Ternary extends AbstractNode implements Node {
-    @Child
+    @Child(order = Child.BOTH, scope = Child.SHARED_SUB_SCOPE)
     private Node condition;
-    @Child(order = Child.BOTH)
+    @Child(order = Child.BOTH, scope = Child.SHARED_SUB_SCOPE)
     private Node left;
-    @Child(order = Child.BOTH)
+    @Child(order = Child.BOTH, scope = Child.SUB_SCOPE)
     private Node right;
 
     public Ternary(Node condition, Node left, Node right) {
@@ -49,17 +49,19 @@ public class Ternary extends AbstractNode implements Node {
         Label right = new Label();
         Label end = new Label();
 
+        CodeContext child = context.childScope();
+
         if (this.condition instanceof BooleanValue bop) {
-            bop.jumpIfFalse(right, adapter, environment, context);
+            bop.jumpIfFalse(right, adapter, environment, child);
         } else {
-            this.condition.apply(adapter, environment, context);
+            this.condition.apply(adapter, environment, child);
             adapter.ifeq(right);
         }
 
-        this.left.apply(adapter, environment, context);
+        this.left.apply(adapter, environment, child);
         adapter.goTo(end);
         adapter.mark(right);
-        this.right.apply(adapter, environment, context);
+        this.right.apply(adapter, environment, context.childScope());
         adapter.mark(end);
     }
 }
