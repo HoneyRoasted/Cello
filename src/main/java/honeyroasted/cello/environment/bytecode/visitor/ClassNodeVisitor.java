@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 import static org.objectweb.asm.Opcodes.*;
 
-public class ClassNodeVisitor extends ClassVisitor {
+public class   ClassNodeVisitor extends ClassVisitor {
     private ClassNode node;
 
     private Environment environment;

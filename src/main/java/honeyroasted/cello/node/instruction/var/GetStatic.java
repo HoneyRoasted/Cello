@@ -41,24 +41,24 @@ public class GetStatic extends AbstractNode implements Node {
             List<FieldNode> fields = node.lookupFields(f -> f.name().equals(name));
 
             if (fields.isEmpty()) {
-                return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "Field '%s#%s' not found", cls.name(), name).build();
+                return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' not found", cls.name(), name).build();
             }
 
             fields = fields.stream().filter(f -> f.modifiers().has(Modifier.STATIC)).toList();
 
             if (fields.isEmpty()) {
-                return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "Field '%s#%s' is not static", cls.name(), name).build();
+                return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is not static", cls.name(), name).build();
             }
 
             fields = fields.stream().filter(f -> context.owner().owner().accessTo(f.owner()).canAccess(f.modifiers().access())).toList();
 
             if (fields.isEmpty()) {
-                return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "Field '%s#%s' is not accessible from class '%s'", cls.name(), name,
+                return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is not accessible from class '%s'", cls.name(), name,
                         context.owner().owner().parameterizedType().namespace().name()).build();
             }
 
             if (fields.size() > 1 && !fields.get(0).owner().equals(node)) {
-                return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "'%s#%s' is ambiguous, possible fields in %s",
+                return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "'%s#%s' is ambiguous, possible fields in %s",
                         cls.name(), name, fields.stream().map(f -> f.owner().parameterizedType().namespace().name()).toList()).build();
             }
 

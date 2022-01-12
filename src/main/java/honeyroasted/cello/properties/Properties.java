@@ -9,7 +9,12 @@ import java.util.Optional;
 import java.util.Set;
 
 public class Properties {
-    private Map<String, ?> map = new LinkedHashMap<>();
+    private Map<String, Object> map = new LinkedHashMap<>();
+
+    public Properties put(String key, Object value) {
+        this.map.put(key, value);
+        return this;
+    }
 
     public boolean has(String key) {
         return this.map.containsKey(key);

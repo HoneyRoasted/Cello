@@ -67,6 +67,20 @@ public class ClassNode extends AbstractParameterized {
         return fields;
     }
 
+    public List<MethodNode> lookupMethods(Predicate<MethodNode> predicate) {
+        List<MethodNode> fields = this.methods.stream().filter(predicate).collect(Collectors.toList());
+
+        if (this.superclass != null) {
+            fields.addAll(this.superclass.lookupMethods(predicate));
+        }
+
+        for (ClassNode inter : this.interfaces) {
+            fields.addAll(inter.lookupMethods(predicate));
+        }
+
+        return fields;
+    }
+
     public Access accessTo(ClassNode other) {
         if (other.equals(this) || other.equals(this.nestHost) || other.equals(this.outerClass)) {
             return Access.PRIVATE;

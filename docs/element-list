@@ -8,6 +8,7 @@ honeyroasted.cello.environment.bytecode.visitor.signature
 honeyroasted.cello.environment.context
 honeyroasted.cello.node.instruction
 honeyroasted.cello.node.instruction.control
+honeyroasted.cello.node.instruction.invoke
 honeyroasted.cello.node.instruction.operator
 honeyroasted.cello.node.instruction.operator.bitwise
 honeyroasted.cello.node.instruction.operator.bool

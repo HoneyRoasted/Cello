@@ -24,7 +24,7 @@ public class Break extends AbstractNode implements Node {
             return Verification.success(this, Types.VOID);
         } else {
             if (context.scope().fetchControl(Control.Kind.BREAK).isPresent()) {
-                return Verification.error(this, Verify.Code.CONTROL_FLOW_ERROR, "no block named %s found", this.name);
+                return Verification.error(this, Verify.Code.LABEL_NOT_FOUND, "no block named %s found", this.name);
             } else {
                 return Verification.error(this, Verify.Code.CONTROL_FLOW_ERROR, "break statement not allowed here");
             }

@@ -35,8 +35,9 @@ public class GetField extends AbstractNode implements Node {
 
     private FieldNode target;
 
-    public static Verification<FieldNode> lookupInstanceField(Node source, String name, Environment environment, CodeContext context) {
+    public static Verification<FieldNode> lookupInstanceField(Node owner, Node source, String name, Environment environment, CodeContext context) {
         VerificationBuilder<FieldNode> builder = Verification.builder();
+        builder.source(owner);
 
         Set<TypeClass> types = TypeUtil.flatten(source.type());
         List<List<FieldNode>> fieldCandidates = new ArrayList<>();
@@ -63,25 +64,25 @@ public class GetField extends AbstractNode implements Node {
         }
 
         if (fields.isEmpty()) {
-            return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "Field '%s#%s' not found", types.stream().map(Type::externalName).toList(), name).build();
+            return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' not found", types.stream().map(Type::externalName).toList(), name).build();
         }
 
         fields = fields.stream().filter(f -> !f.modifiers().has(Modifier.STATIC)).toList();
 
         if (fields.isEmpty()) {
-            return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "Field '%s#%s' is static", types.stream().map(Type::externalName).toList(), name).build();
+            return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is static", types.stream().map(Type::externalName).toList(), name).build();
         }
 
         fields = fields.stream().filter(f -> context.owner().owner().accessTo(f.owner()).canAccess(f.modifiers().access())).toList();
 
         if (fields.isEmpty()) {
-            return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "Field '%s#%s' is not accessible from class '%s'",
+            return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is not accessible from class '%s'",
                     types.stream().map(Type::externalName).toList(), name,
                     context.owner().owner().parameterizedType().namespace().name()).build();
         }
 
         if (fields.size() > 1) {
-            return builder.error(Verify.Code.VAR_NOT_FOUND_ERROR, "'%s' is ambiguous, possible fields in %s",
+            return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "'%s' is ambiguous, possible fields in %s",
                     name, fields.stream().map(f -> f.owner().parameterizedType().namespace().name()).toList()).build();
         }
 
@@ -90,7 +91,7 @@ public class GetField extends AbstractNode implements Node {
 
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
-        return lookupInstanceField(this.source, this.name, environment, context).map(f -> {
+        return lookupInstanceField(this, this.source, this.name, environment, context).map(f -> {
             this.target = f;
 
             Optional<TypeClass> parent = this.source.type().supertype(f.owner().parameterizedType());

@@ -90,6 +90,10 @@ public class VerificationBuilder<T> {
         return this;
     }
 
+    public VerificationBuilder<T> message(String message, Object... format) {
+        return this.message(String.format(message, format));
+    }
+
     public VerificationBuilder<T> source(Object source) {
         this.source = source;
         return this;

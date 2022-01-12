@@ -38,6 +38,19 @@ public class MethodNode extends AbstractParameterized implements PropertyHolder 
         };
     }
 
+    public String externalName() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.owner.externalName()).append("::").append(this.name).append(" ").append(this.returnType.externalName()).append("(");
+        for (int i = 0; i < parameters.size(); i++) {
+            ParameterNode node = parameters.get(i);
+            builder.append(node.type().externalName()).append(" ").append(node.name());
+            if (i < parameters.size() - 1) {
+                builder.append(", ");
+            }
+        }
+        return builder.append(")").toString();
+    }
+
     public TypeMethodParameterized type() {
         return Types.method()
                 .returnType(this.returnType)
