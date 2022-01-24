@@ -57,7 +57,7 @@ public class GetField extends AbstractNode implements Node {
 
         for (int i = 0; i < max; i++) {
             for (List<FieldNode> nodes : fieldCandidates) {
-                if (i < nodes.size()) {
+                if (i < nodes.size() && !fields.contains(nodes.get(i))) {
                     fields.add(nodes.get(i));
                 }
             }
@@ -78,12 +78,12 @@ public class GetField extends AbstractNode implements Node {
         if (fields.isEmpty()) {
             return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is not accessible from class '%s'",
                     types.stream().map(Type::externalName).toList(), name,
-                    context.owner().owner().parameterizedType().namespace().name()).build();
+                    context.owner().owner().externalName()).build();
         }
 
         if (fields.size() > 1) {
             return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "'%s' is ambiguous, possible fields in %s",
-                    name, fields.stream().map(f -> f.owner().parameterizedType().namespace().name()).toList()).build();
+                    name, fields.stream().map(f -> f.owner().externalName()).toList()).build();
         }
 
         return builder.value(fields.get(0)).andChildren().build();
