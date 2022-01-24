@@ -13,7 +13,9 @@ import honeyroasted.cello.node.structure.ParameterNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.verify.VerificationBuilder;
 import honeyroasted.cello.verify.Verify;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
+import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeArray;
 import honeyroasted.javatype.informal.TypeClass;
 import honeyroasted.javatype.informal.TypeInformal;
@@ -44,11 +46,15 @@ public class InvokeVirtual extends AbstractNode implements Node {
         return null;
     }
 
-    public static Verification<MethodNode> lookupVirtualMethod(Node owner, Node source, String name, List<Node> parameters, Environment environment, CodeContext context) {
+    public static Verification<MethodNode> lookupMethod(Node owner, Namespace sourceType, String name, List<Node> parameters, Environment environment, CodeContext context, boolean staticMethod, boolean specialMethod) {
+        return lookupMethod(owner, Types.parameterized().namespace(sourceType).build().withArguments(), name, parameters, environment, context, staticMethod, specialMethod);
+    }
+
+    public static Verification<MethodNode> lookupMethod(Node owner, TypeInformal sourceType, String name, List<Node> parameters, Environment environment, CodeContext context, boolean staticMethod, boolean specialMethod) {
         VerificationBuilder<MethodNode> builder = Verification.builder();
         builder.source(owner);
 
-        Set<TypeClass> types = TypeUtil.flatten(source.type());
+        Set<TypeClass> types = TypeUtil.flatten(sourceType);
         List<List<MethodNode>> methodCandidates = new ArrayList<>();
 
         for (TypeClass type : types) {
@@ -56,7 +62,11 @@ public class InvokeVirtual extends AbstractNode implements Node {
             builder.child(lookup);
 
             if (lookup.success() && lookup.value().isPresent()) {
-                methodCandidates.add(lookup.value().get().lookupMethods(m -> m.name().equals(name)));
+                if (specialMethod) {
+                    methodCandidates.add(lookup.value().get().methods().stream().filter(m -> m.name().equals(name)).toList());
+                } else {
+                    methodCandidates.add(lookup.value().get().lookupMethods(m -> m.name().equals(name)));
+                }
             }
         }
 
@@ -142,15 +152,19 @@ public class InvokeVirtual extends AbstractNode implements Node {
         methods = methods.stream().filter(m -> context.owner().owner().accessTo(m.owner()).canAccess(m.modifiers().access())).toList();
 
         if (methods.isEmpty()) {
-            return builder.error(Verify.Code.METHOD_NOT_FOUND, "Method(s) %s is/are not accessible from class '%s'",
+            return builder.error(Verify.Code.METHOD_NOT_FOUND, "Method(s) %s are not accessible from class '%s'",
                     previous.stream().map(MethodNode::externalName).toList(), context.owner().owner().externalName()).build();
         }
 
         previous = new ArrayList<>(methods);
-        methods = methods.stream().filter(m -> !m.modifiers().has(Modifier.STATIC)).toList();
+        if (staticMethod) {
+            methods = methods.stream().filter(m -> m.modifiers().has(Modifier.STATIC)).toList();
+        } else {
+            methods = methods.stream().filter(m -> !m.modifiers().has(Modifier.STATIC)).toList();
+        }
 
         if (methods.isEmpty()) {
-            return builder.error(Verify.Code.METHOD_NOT_FOUND, "Method(s) %s is/are static",
+            return builder.error(Verify.Code.METHOD_NOT_FOUND, "Method(s) %s are " + (staticMethod ? "not " : "") + " static",
                     previous.stream().map(MethodNode::externalName).toList()).build();
         }
 

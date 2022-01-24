@@ -29,7 +29,7 @@ public class SetField extends AbstractNode implements Node {
     public SetField(Node source, String name, Node value, boolean dup) {
         this.source = source;
         this.name = name;
-        this.value = new Convert(value, (e, c) -> GetField.lookupInstanceField(this, source, name, e, c).map(f -> {
+        this.value = new Convert(value, (e, c) -> GetField.lookupField(this, source.type(), name, e, c, false).map(f -> {
             Optional<TypeClass> parent = this.source.type().supertype(f.owner().parameterizedType());
             if (parent.isPresent() && parent.get() instanceof TypeFilled fld) {
                 return f.type().resolveTypeVariables(fld);
@@ -48,7 +48,7 @@ public class SetField extends AbstractNode implements Node {
 
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
-        return GetField.lookupInstanceField(this, this.source, this.name, environment, context).map(f -> {
+        return GetField.lookupField(this, this.source.type(), this.name, environment, context, false).map(f -> {
             this.target = f;
 
             if (this.dup) {

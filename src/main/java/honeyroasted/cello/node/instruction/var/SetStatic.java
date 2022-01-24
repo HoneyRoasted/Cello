@@ -25,7 +25,7 @@ public class SetStatic extends AbstractNode implements Node {
     public SetStatic(Namespace cls, String name, Node value, boolean dup) {
         this.cls = cls;
         this.name = name;
-        this.value = new Convert(value, (e, c) -> GetStatic.lookupStaticField(cls, name, e, c).map(FieldNode::type));
+        this.value = new Convert(value, (e, c) -> GetField.lookupField(this, cls, name, e, c, true).map(FieldNode::type));
         this.dup = dup;
     }
 
@@ -37,7 +37,7 @@ public class SetStatic extends AbstractNode implements Node {
 
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
-        return GetStatic.lookupStaticField(cls, name, environment, context).map(f -> {
+        return GetField.lookupField(this, cls, name, environment, context, true).map(f -> {
             this.target = f;
             return this.dup ? f.type() : Types.VOID;
         });

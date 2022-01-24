@@ -10,11 +10,9 @@ import honeyroasted.cello.node.instruction.invoke.InvokeVirtual;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.MethodNode;
 import honeyroasted.cello.verify.Verification;
-import honeyroasted.cello.verify.Verify;
-import honeyroasted.javatype.Types;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Test implements Serializable {
 
@@ -25,10 +23,12 @@ public class Test implements Serializable {
 
         CodeContext context = new CodeContext(strClass.methods().get(0), new LocalScope());
 
-        Node source = Nodes.cast(Nodes.cast(Nodes.constant(5), Types.OBJECT), Types.type(Test.class));
-        System.out.println(source.verify(environment, context).format());
+        Node source = Nodes.constant("Hello ");
+        Node param = Nodes.constant(" world");
+        param.verify(environment, context);
+        source.verify(environment, context).format();
 
-        Verification<MethodNode> v = InvokeVirtual.lookupVirtualMethod(new NoOp(), source, "toString", new ArrayList<>(), environment, context);
+        Verification<MethodNode> v = InvokeVirtual.lookupMethod(new NoOp(), source.type(), "concat", Arrays.asList(param), environment, context, false, false);
         System.out.println(v.format());
     }
 

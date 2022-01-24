@@ -12,7 +12,9 @@ import honeyroasted.cello.node.structure.FieldNode;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.verify.VerificationBuilder;
 import honeyroasted.cello.verify.Verify;
+import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Type;
+import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeClass;
 import honeyroasted.javatype.informal.TypeFilled;
 import honeyroasted.javatype.informal.TypeInformal;
@@ -35,11 +37,15 @@ public class GetField extends AbstractNode implements Node {
 
     private FieldNode target;
 
-    public static Verification<FieldNode> lookupInstanceField(Node owner, Node source, String name, Environment environment, CodeContext context) {
+    public static Verification<FieldNode> lookupField(Node owner, Namespace sourceType, String name, Environment environment, CodeContext context, boolean staticField) {
+        return lookupField(owner, Types.parameterized().namespace(sourceType).build().withArguments(), name, environment, context, staticField);
+    }
+
+    public static Verification<FieldNode> lookupField(Node owner, TypeInformal sourceType, String name, Environment environment, CodeContext context, boolean staticField) {
         VerificationBuilder<FieldNode> builder = Verification.builder();
         builder.source(owner);
 
-        Set<TypeClass> types = TypeUtil.flatten(source.type());
+        Set<TypeClass> types = TypeUtil.flatten(sourceType);
         List<List<FieldNode>> fieldCandidates = new ArrayList<>();
 
         for (TypeClass type : types) {
@@ -67,10 +73,14 @@ public class GetField extends AbstractNode implements Node {
             return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' not found", types.stream().map(Type::externalName).toList(), name).build();
         }
 
-        fields = fields.stream().filter(f -> !f.modifiers().has(Modifier.STATIC)).toList();
+        if (staticField) {
+            fields = fields.stream().filter(f -> f.modifiers().has(Modifier.STATIC)).toList();
+        } else {
+            fields = fields.stream().filter(f -> !f.modifiers().has(Modifier.STATIC)).toList();
+        }
 
         if (fields.isEmpty()) {
-            return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is static", types.stream().map(Type::externalName).toList(), name).build();
+            return builder.error(Verify.Code.FIELD_NOT_FOUND_ERROR, "Field '%s#%s' is " + (staticField ? "not " : "") + "static", types.stream().map(Type::externalName).toList(), name).build();
         }
 
         fields = fields.stream().filter(f -> context.owner().owner().accessTo(f.owner()).canAccess(f.modifiers().access())).toList();
@@ -91,7 +101,7 @@ public class GetField extends AbstractNode implements Node {
 
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
-        return lookupInstanceField(this, this.source, this.name, environment, context).map(f -> {
+        return lookupField(this, this.source.type(), this.name, environment, context, false).map(f -> {
             this.target = f;
 
             Optional<TypeClass> parent = this.source.type().supertype(f.owner().parameterizedType());
