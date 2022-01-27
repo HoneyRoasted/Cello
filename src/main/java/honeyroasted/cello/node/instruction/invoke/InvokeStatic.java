@@ -18,8 +18,6 @@ public class InvokeStatic extends AbstractNode implements Node {
     @Child
     private List<Node> parameters;
 
-
-
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
         return null;

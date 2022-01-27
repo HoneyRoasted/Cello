@@ -105,11 +105,13 @@ public class TypeSignatureVisitor extends CelloSignatureVisitor<TypeInformal> {
 
     @Override
     public void finish() {
-        if (this.builder().value().isPresent()) {
+        if (this.builder().value().isEmpty()) {
             if (this.filled != null) {
                 this.setValue(this.filled.build());
             } else if (this.wild != null) {
                 this.setValue(this.wild.build());
+            } else {
+                this.setValue(Types.OBJECT);
             }
         }
 

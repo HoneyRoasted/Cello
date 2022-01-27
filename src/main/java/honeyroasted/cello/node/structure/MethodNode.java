@@ -40,7 +40,21 @@ public class MethodNode extends AbstractParameterized implements PropertyHolder 
 
     public String externalName() {
         StringBuilder builder = new StringBuilder();
-        builder.append(this.owner.externalName()).append("::").append(this.name).append(" ").append(this.returnType.externalName()).append("(");
+
+        if (!this.definedTypeVars().isEmpty()) {
+            builder.append("<");
+            for (int i = 0; i < this.definedTypeVars().size(); i++) {
+                TypeVar var = this.definedTypeVars().get(i);
+                builder.append(var.externalName());
+                if (i < this.definedTypeVars().size() - 1) {
+                    builder.append(", ");
+                }
+            }
+            builder.append("> ");
+        }
+
+        builder.append(this.returnType.externalName()).append(" ").append(this.owner.externalName()).append("::").append(this.name).append(" ").append("(");
+
         for (int i = 0; i < parameters.size(); i++) {
             ParameterNode node = parameters.get(i);
             builder.append(node.type().externalName()).append(" ").append(node.name());
@@ -48,6 +62,7 @@ public class MethodNode extends AbstractParameterized implements PropertyHolder 
                 builder.append(", ");
             }
         }
+
         return builder.append(")").toString();
     }
 
@@ -165,5 +180,10 @@ public class MethodNode extends AbstractParameterized implements PropertyHolder 
     public MethodNode setErased(TypeMethodParameterized erased) {
         this.erased = erased;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return externalName();
     }
 }
