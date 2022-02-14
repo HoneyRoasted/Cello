@@ -9,8 +9,9 @@ import java.util.Optional;
 public class FieldNode extends AbstractAnnotated {
     private String name;
     private TypeInformal type;
-    private Node value;
     private ClassNode owner;
+
+    private Node value;
 
     public FieldNode(String name, ClassNode owner, TypeInformal type, Node value) {
         this.name = name;

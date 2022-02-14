@@ -1,5 +1,6 @@
 package honeyroasted.cello.node.structure;
 
+import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.modifier.Modifier;
 import honeyroasted.cello.node.modifier.Modifiers;
 import honeyroasted.cello.properties.Properties;
@@ -12,6 +13,7 @@ import honeyroasted.javatype.parameterized.TypeVar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MethodNode extends AbstractParameterized implements PropertyHolder {
@@ -26,6 +28,8 @@ public class MethodNode extends AbstractParameterized implements PropertyHolder 
 
     private TypeMethodParameterized erased;
 
+    private Node body;
+
     public MethodNode(String name, ClassNode owner) {
         this.name = name;
         this.owner = owner;
@@ -36,6 +40,15 @@ public class MethodNode extends AbstractParameterized implements PropertyHolder 
                 return null;
             }
         };
+    }
+
+    public Optional<Node> body() {
+        return Optional.ofNullable(this.body);
+    }
+
+    public MethodNode setBody(Node body) {
+        this.body = body;
+        return this;
     }
 
     public String externalName() {

@@ -19,7 +19,6 @@ public class SimpleNode extends AbstractNode implements Node {
         this.apply = apply;
     }
 
-
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
         return this.verify.apply(environment, context);
