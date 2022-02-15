@@ -64,7 +64,7 @@ public class If extends AbstractNode implements Node {
 
         public IfBlock(Node condition, Node body) {
             this.condition = Nodes.convert(condition, Types.BOOLEAN);
-            this.body = body;
+            this.body = body.toUntyped();
         }
 
         public Convert condition() {

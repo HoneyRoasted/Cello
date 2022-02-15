@@ -23,7 +23,7 @@ import java.util.function.BiFunction;
 
 public interface Nodes {
 
-    static Constant<?> defaultValue(TypeInformal type) {
+    static Node defaultValue(TypeInformal type) {
         if (type.equals(Types.BOOLEAN)) {
             return constant(false);
         } else if (type.equals(Types.BYTE)) {
@@ -41,7 +41,7 @@ public interface Nodes {
         } else if (type.equals(Types.DOUBLE)) {
             return constant(0D);
         } else {
-            return constant(null);
+            return Nodes.convert(Nodes.constant(null), type);
         }
     }
 
