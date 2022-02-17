@@ -36,6 +36,7 @@ public class Control {
 
     public enum Kind {
         BREAK,
-        CONTINUE
+        CONTINUE,
+        FINALLY
     }
 }

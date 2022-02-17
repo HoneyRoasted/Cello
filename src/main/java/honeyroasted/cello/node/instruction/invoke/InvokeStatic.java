@@ -81,7 +81,7 @@ public class InvokeStatic extends AbstractNode implements Node {
         }
 
         adapter.invokestatic(this.target.method().owner().parameterizedType().internalName(), this.name,
-                this.target.method().type().descriptor(),
+                this.target.method().erased().descriptor(),
                 this.target.method().owner().modifiers().has(Modifier.INTERFACE));
     }
 }

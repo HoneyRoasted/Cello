@@ -5,6 +5,7 @@ import honeyroasted.cello.environment.context.CodeContext;
 import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.instruction.util.AbstractNode;
+import honeyroasted.cello.node.instruction.util.Child;
 import honeyroasted.cello.node.instruction.val.Convert;
 import honeyroasted.cello.verify.Verification;
 import honeyroasted.cello.verify.VerificationBuilder;
@@ -17,9 +18,12 @@ import java.util.List;
 
 public class If extends AbstractNode implements Node {
     private List<IfBlock> blocks;
+    @Child(scope = Child.SUB_SCOPE)
+    private Node elseBlock;
 
-    public If(List<IfBlock> blocks) {
+    public If(List<IfBlock> blocks, Node elseBlock) {
         this.blocks = blocks;
+        this.elseBlock = elseBlock != null ? elseBlock.toUntyped() : elseBlock;
     }
 
     @Override
@@ -39,6 +43,7 @@ public class If extends AbstractNode implements Node {
     @Override
     protected void doApply(InstructionAdapter adapter, Environment environment, CodeContext context) {
         Label end = new Label();
+        Label elseBlock = new Label();
 
         List<IfBlock> ifBlocks = this.blocks;
         for (int i = 0; i < ifBlocks.size(); i++) {
@@ -51,11 +56,21 @@ public class If extends AbstractNode implements Node {
                 adapter.goTo(end);
                 adapter.mark(blockEnd);
             } else {
-                block.condition().jumpIfFalse(end, adapter, environment, child);
+                block.condition().jumpIfFalse(this.elseBlock == null ? end : elseBlock, adapter, environment, child);
             }
         }
 
+        if (this.elseBlock != null) {
+            adapter.mark(elseBlock);
+            this.elseBlock.apply(adapter, environment, context);
+        }
+
         adapter.mark(end);
+    }
+
+    @Override
+    public boolean terminal() {
+        return this.elseBlock != null && this.elseBlock.terminal() && this.blocks.stream().allMatch(i -> i.body().terminal());
     }
 
     public static class IfBlock {

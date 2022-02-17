@@ -31,4 +31,8 @@ public class Scope extends AbstractNode implements Node {
         adapter.visitLabel(child.scope().end());
     }
 
+    @Override
+    public boolean terminal() {
+        return this.child.terminal();
+    }
 }

@@ -29,6 +29,10 @@ public interface Node extends PropertyHolder {
 
     TypeInformal type();
 
+    default boolean terminal() {
+        return false;
+    }
+
     default boolean success() {
         return this.verification().success();
     }

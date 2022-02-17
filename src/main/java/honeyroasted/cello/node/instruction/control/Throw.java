@@ -29,4 +29,9 @@ public class Throw extends AbstractNode implements Node {
         this.node.apply(adapter, environment, context);
         adapter.athrow();
     }
+
+    @Override
+    public boolean terminal() {
+        return true;
+    }
 }

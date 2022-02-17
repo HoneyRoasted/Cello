@@ -105,7 +105,7 @@ public class InvokeSpecial extends AbstractNode implements Node {
 
         this.source.apply(adapter, environment, context);
         adapter.invokespecial(this.target.method().owner().parameterizedType().internalName(), this.name,
-                this.target.method().type().descriptor(),
+                this.target.method().erased().descriptor(),
                 this.target.method().owner().modifiers().has(Modifier.INTERFACE));
     }
 

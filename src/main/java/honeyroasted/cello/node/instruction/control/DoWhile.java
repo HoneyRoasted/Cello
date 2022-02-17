@@ -54,4 +54,9 @@ public class DoWhile extends AbstractNode implements Node {
         this.condition.jumpIfTrue(child.scope().start(), adapter, environment, child);
         adapter.mark(child.scope().end());
     }
+
+    @Override
+    public boolean terminal() {
+        return this.body.terminal();
+    }
 }

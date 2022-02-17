@@ -4,6 +4,7 @@ import com.sun.jdi.InvalidStackFrameException;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.Control;
 import honeyroasted.cello.environment.context.Var;
 import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.instruction.Nodes;
@@ -24,7 +25,6 @@ import java.util.Set;
 public class TryCatch extends AbstractNode implements Node {
     private static final TypeInformal THROWABLE = Types.type(Throwable.class);
 
-    @Child(scope = Child.SUB_SCOPE)
     private Node body;
     private List<CatchBlock> catchBlocks;
     @Child(scope = Child.SUB_SCOPE)
@@ -39,6 +39,14 @@ public class TryCatch extends AbstractNode implements Node {
     @Override
     protected Verification<TypeInformal> doVerify(Environment environment, CodeContext context) {
         VerificationBuilder<TypeInformal> builder = Verification.builder();
+
+        CodeContext subBody = context.childScope();
+        if (this.finalBlock != null) {
+            subBody.withinTryFinally(true);
+            subBody.scope().createControl(Control.Kind.FINALLY, null);
+        }
+
+        builder.child(this.body.verify(environment, context));
 
         this.catchBlocks.forEach(c -> {
             VerificationBuilder<?> block = Verification.builder();
@@ -86,8 +94,15 @@ public class TryCatch extends AbstractNode implements Node {
         Label endBody = new Label();
         Label endTries = new Label();
 
+        Label end = this.catchBlocks.isEmpty() ? endBody : endTries;
+
         adapter.mark(startBody);
-        this.body.apply(adapter, environment, context.childScope());
+        CodeContext subBody = context.childScope();
+        if (this.finalBlock != null) {
+            subBody.withinTryFinally(true);
+            subBody.scope().createControl(Control.Kind.FINALLY, null, end);
+        }
+        this.body.apply(adapter, environment, subBody);
         if (!this.catchBlocks.isEmpty()) {
             adapter.goTo(endTries);
         }
@@ -112,10 +127,20 @@ public class TryCatch extends AbstractNode implements Node {
         }
 
         if (this.finalBlock != null) {
-            Label end = this.catchBlocks.isEmpty() ? endBody : endTries;
             adapter.visitTryCatchBlock(startBody, end, end, null);
             this.finalBlock.apply(adapter, environment, context.childScope());
+
+            if (!context.withinTryFinally() && context.common().delayedReturn().isPresent()) {
+                Var var = context.common().delayedReturn().get();
+                adapter.load(var.index(), TypeUtil.asmType(context.owner().erased().returnType()));
+                adapter.areturn(TypeUtil.asmType(context.owner().erased().returnType()));
+            }
         }
+    }
+
+    @Override
+    public boolean terminal() {
+        return this.body.terminal() && this.catchBlocks.stream().allMatch(c -> c.body().terminal());
     }
 
     public static class CatchBlock {

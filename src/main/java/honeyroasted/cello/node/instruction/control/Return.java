@@ -3,6 +3,8 @@ package honeyroasted.cello.node.instruction.control;
 import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.TypeUtil;
 import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.Control;
+import honeyroasted.cello.environment.context.Var;
 import honeyroasted.cello.node.instruction.NoOp;
 import honeyroasted.cello.node.instruction.Node;
 import honeyroasted.cello.node.instruction.Nodes;
@@ -13,6 +15,8 @@ import honeyroasted.javatype.Types;
 import honeyroasted.javatype.informal.TypeInformal;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.InstructionAdapter;
+
+import java.util.Optional;
 
 public class Return extends AbstractNode implements Node {
     @Child
@@ -30,11 +34,29 @@ public class Return extends AbstractNode implements Node {
 
     @Override
     protected void doApply(InstructionAdapter adapter, Environment environment, CodeContext context) {
-        if (this.value.type().equals(Types.VOID)) {
-            adapter.visitInsn(Opcodes.RETURN);
+        if (context.withinTryFinally()) {
+            Var delayed = context.common().delayedReturn().orElse(context.scope().define("#return", context.owner().erased().returnType()));
+            context.common().delayedReturn(delayed);
+
+            delayed.setInitialized(true);
+            adapter.store(delayed.index(), TypeUtil.asmType(delayed.type()));
+
+            Optional<Control> control = context.scope().fetchControl(Control.Kind.FINALLY);
+            if (control.isPresent()) {
+                adapter.goTo(control.get().label());
+            }
         } else {
-            this.value.apply(adapter, environment, context);
-            adapter.areturn(TypeUtil.asmType(this.value.type()));
+            if (this.value.type().equals(Types.VOID)) {
+                adapter.visitInsn(Opcodes.RETURN);
+            } else {
+                this.value.apply(adapter, environment, context);
+                adapter.areturn(TypeUtil.asmType(this.value.type()));
+            }
         }
+    }
+
+    @Override
+    public boolean terminal() {
+        return true;
     }
 }
