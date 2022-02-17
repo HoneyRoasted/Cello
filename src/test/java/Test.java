@@ -2,6 +2,7 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.environment.bytecode.BytecodeEnvironment;
 import honeyroasted.cello.environment.bytecode.provider.RuntimeBytecodeProvider;
 import honeyroasted.cello.environment.context.CodeContext;
+import honeyroasted.cello.environment.context.CommonContext;
 import honeyroasted.cello.environment.context.LocalScope;
 import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.instruction.invoke.InvokeVirtual;

@@ -17,6 +17,10 @@ public class CodeContext {
         this.common = common;
     }
 
+    public CodeContext(MethodNode owner, LocalScope scope) {
+        this(owner, scope, new CommonContext(), false);
+    }
+
     public MethodNode owner() {
         return this.owner;
     }

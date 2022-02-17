@@ -94,6 +94,11 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(honeyroasted.cello.node.structure.MethodNode,honeyroasted.cello.environment.context.LocalScope)">CodeContext</a></span>&#8203;(<a href="../../node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;owner,
  <a href="LocalScope.html" title="class in honeyroasted.cello.environment.context">LocalScope</a>&nbsp;scope)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><span class="member-name-link"><a href="#%3Cinit%3E(honeyroasted.cello.node.structure.MethodNode,honeyroasted.cello.environment.context.LocalScope,honeyroasted.cello.environment.context.CommonContext,boolean)">CodeContext</a></span>&#8203;(<a href="../../node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;owner,
+ <a href="LocalScope.html" title="class in honeyroasted.cello.environment.context">LocalScope</a>&nbsp;scope,
+ <a href="CommonContext.html" title="class in honeyroasted.cello.environment.context">CommonContext</a>&nbsp;common,
+ boolean&nbsp;withinTryFinally)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -111,15 +116,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#childScope()">childScope</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#copy()">copy</a></span>()</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="CommonContext.html" title="class in honeyroasted.cello.environment.context">CommonContext</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#common()">common</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></code></div>
-<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#owner()">owner</a></span>()</code></div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#copy()">copy</a></span>()</code></div>
 <div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="LocalScope.html" title="class in honeyroasted.cello.environment.context">LocalScope</a></code></div>
-<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#scope()">scope</a></span>()</code></div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="../../node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#owner()">owner</a></span>()</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="LocalScope.html" title="class in honeyroasted.cello.environment.context">LocalScope</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#scope()">scope</a></span>()</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#withinTryFinally()">withinTryFinally</a></span>()</code></div>
+<div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#withinTryFinally(boolean)">withinTryFinally</a></span>&#8203;(boolean&nbsp;withinTryFinally)</code></div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -137,6 +151,15 @@ loadScripts(document, 'script');</script>
 <section class="constructor-details" id="constructor.detail">
 <h2>Constructor Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;(honeyroasted.cello.node.structure.MethodNode,honeyroasted.cello.environment.context.LocalScope,honeyroasted.cello.environment.context.CommonContext,boolean)">
+<h3>CodeContext</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CodeContext</span>&#8203;<span class="parameters">(<a href="../../node/structure/MethodNode.html" title="class in honeyroasted.cello.node.structure">MethodNode</a>&nbsp;owner,
+ <a href="LocalScope.html" title="class in honeyroasted.cello.environment.context">LocalScope</a>&nbsp;scope,
+ <a href="CommonContext.html" title="class in honeyroasted.cello.environment.context">CommonContext</a>&nbsp;common,
+ boolean&nbsp;withinTryFinally)</span></div>
+</section>
+</li>
 <li>
 <section class="detail" id="&lt;init&gt;(honeyroasted.cello.node.structure.MethodNode,honeyroasted.cello.environment.context.LocalScope)">
 <h3>CodeContext</h3>
@@ -174,6 +197,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="childScope()">
 <h3>childScope</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></span>&nbsp;<span class="element-name">childScope</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="common()">
+<h3>common</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CommonContext.html" title="class in honeyroasted.cello.environment.context">CommonContext</a></span>&nbsp;<span class="element-name">common</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="withinTryFinally()">
+<h3>withinTryFinally</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">withinTryFinally</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="withinTryFinally(boolean)">
+<h3>withinTryFinally</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CodeContext.html" title="class in honeyroasted.cello.environment.context">CodeContext</a></span>&nbsp;<span class="element-name">withinTryFinally</span>&#8203;<span class="parameters">(boolean&nbsp;withinTryFinally)</span></div>
 </section>
 </li>
 </ul>
