@@ -4,6 +4,7 @@ import honeyroasted.cello.environment.Environment;
 import honeyroasted.cello.node.instruction.Nodes;
 import honeyroasted.cello.node.structure.ClassNode;
 import honeyroasted.cello.node.structure.annotation.AnnotationValue;
+import honeyroasted.cello.verify.Verification;
 import honeyroasted.javatype.Namespace;
 import honeyroasted.javatype.Types;
 import honeyroasted.javatype.parameterized.TypeParameterized;
@@ -33,7 +34,20 @@ public class AnnotationArrayNodeVisitor extends AnnotationVisitor {
 
     @Override
     public void visitEnum(String name, String descriptor, String value) {
-        this.array.add(new AnnotationValue.Enum(Namespace.descriptor(descriptor), value));
+        Namespace namespace = Namespace.descriptor(descriptor);
+        TypeParameterized type = new TypeParameterized(namespace);
+
+        Verification<ClassNode> lookup = this.environment.lookup(namespace);
+        if (lookup.success() && lookup.value().isPresent()) {
+            type = lookup.value().get().parameterizedType();
+        } else {
+            Types.parameterized()
+                    .namespace(namespace)
+                    .superclass(Types.parameterized(Enum.class).withArguments(type.withArguments()))
+                    .build(type);
+        }
+
+        this.array.add(new AnnotationValue.Enum(type, value));
     }
 
     @Override
